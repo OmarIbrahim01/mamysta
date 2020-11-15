@@ -15,6 +15,7 @@ class CreateAgesTable extends Migration
     {
         Schema::create('ages', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->timestamps();
         });
     }

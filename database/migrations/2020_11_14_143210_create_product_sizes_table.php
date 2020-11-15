@@ -15,6 +15,8 @@ class CreateProductSizesTable extends Migration
     {
         Schema::create('product_sizes', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->integer('sub_category_id');
             $table->timestamps();
         });
     }
