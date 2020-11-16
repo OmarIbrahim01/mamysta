@@ -15,6 +15,7 @@ class CreateVendorFieldTypesTable extends Migration
     {
         Schema::create('vendor_field_types', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->timestamps();
         });
     }

@@ -17,10 +17,10 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('title');
             $table->text('description')->nullable();
-            $table->integer('section_id');
-            $table->integer('category_id');
-            $table->integer('sub_category_id');
-            $table->integer('brand_id');
+            $table->integer('product_section_id');
+            $table->integer('product_category_id');
+            $table->integer('product_sub_category_id');
+            $table->integer('product_brand_id');
             $table->integer('gender_id');
             $table->integer('min_age_id');
             $table->integer('max_age_id');

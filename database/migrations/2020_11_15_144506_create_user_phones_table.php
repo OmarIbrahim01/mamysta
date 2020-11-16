@@ -15,6 +15,10 @@ class CreateUserPhonesTable extends Migration
     {
         Schema::create('user_phones', function (Blueprint $table) {
             $table->id();
+            $table->integer('user_id');
+            $table->string('phone');
+            $table->string('confirmation_code')->nullable();
+            $table->integer('confirmation_status')->nullable();
             $table->timestamps();
         });
     }
