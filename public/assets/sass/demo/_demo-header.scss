@@ -1,0 +1,84 @@
+// 1. Header Base
+.header {
+	background-color: $primary-color;
+
+	.mobile-menu-toggler {
+		color: #fff;
+	}
+}
+
+.header-top {
+	color: #bde1f5;
+	font-size: 1.1rem;
+	font-weight: 600;
+	letter-spacing: .025em;
+	line-height: 24px;
+
+	a {
+		color: inherit;
+	}
+
+	.container {
+		height: 42px;
+
+		&:after {
+			content: '';
+			display: block;
+			position: absolute;
+			bottom: 0;
+			left: 10px;
+			right: 10px;
+			border-top: 1px solid #0e95d8;
+			flex: 0 0 100%;
+			-ms-flex: 0 0 100%;
+		}
+	}
+}
+
+// 2. Header Elements
+
+// 2.1) Header Dropdown
+.header-dropdown {
+	font-size: 11px;
+	font-weight: 600;
+
+	.dropdown-toggle:after {
+		font-size: 17px;
+	}
+
+	.badge-circle {
+		left: 21px;
+	}
+}
+
+// 2.3) Header Top - Divider
+
+// 2.4) Header Search
+.header-search select {
+	font-size: 1.2rem;
+}
+
+// 2.5) Header Contact with Phone Image
+.header-contact h6 {
+	color: #bde1f5;
+}
+
+// 2.7) Main Nav
+.main-nav .tip-top {
+	padding-top: 2px;
+	padding-left: 3px;
+}
+
+// 3. Responsive
+@media (min-width: 992px) and (max-width: 1199px) {
+	.dropdown-expanded li:not(:first-child) {
+		margin-left: 1.3rem;
+	}
+}
+
+@include mq( lg, max ) {
+	.header-top .container:after {
+		left: 15px;
+		right: 15px;
+	}
+}

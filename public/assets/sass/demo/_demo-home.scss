@@ -1,0 +1,559 @@
+// Home
+
+// 1. Home Page
+
+// 1.1) Components
+.coupon-sale-text {
+	position: relative;
+	display: inline-block;
+	padding: .544em .667em;
+	font-family: $font-family;
+	transform: rotate(-2deg);
+
+	i {
+		position: absolute;
+		left: -2.25em;
+		top: 50%;
+		transform: translateY(-50%) rotate(-90deg);
+		font-size: .65em;
+		font-style: normal;
+		opacity: .6;
+		letter-spacing: 0;
+	}
+
+	b {
+		display: inline-block;
+		padding: 5px 8px;
+		font-size: 1.6em;
+		background-color: #fff;
+	}
+}
+
+.heading-border {
+	display: flex;
+	display: -ms-flexbox;
+	align-items: center;
+	-ms-flex-align: center;
+	margin: 0 -8px;
+
+	&:before,
+	&:after {
+		content: '';
+		margin: 0 8px;
+		flex: 1;
+		-ms-flex: 1;
+		height: 0;
+		border-top: 1px solid #e0e2e4;
+	}
+}
+
+// 1.3) Home Slider
+
+.home-slider {
+	img {
+		height: 415px;
+	}
+	.banner-layer {
+		left: 7.25%;
+	}
+
+	h4 {
+		color: #777;
+		font-size: 1em;
+		font-weight:500;
+		letter-spacing: .08em;
+		opacity: .7;
+	}
+
+	h5 {
+		font-size: .875em;
+		margin-top: -4px;
+
+		b {
+			font-size: 0.93em;
+		}
+	}
+
+	em {
+		font-size: 2em;
+		font-style: normal;
+		vertical-align: middle;
+	}
+
+	.btn {
+		font-weight: 600;
+		padding: .86em 2.7em;
+		font-size: .875em;
+	}
+
+	.owl-dots {
+		position: absolute;
+		bottom: 33px;
+		left: 7.25%;
+
+		.owl-dot {
+			span {
+				width: 14px;
+				height: 14px;
+				border-color: #fff;
+			}
+
+			&:hover span,
+			&.active span {
+				border-color: #222529;
+				
+				&:before {
+					width: 4px;
+					height: 4px;
+					margin-left: -2px;
+					margin-top: -2px;
+					background: #222529;
+				}
+			}
+		}
+	}
+}
+
+.home-slide1 {
+	h2 {
+		font-size: 2.875em;
+		letter-spacing: .005em;
+		font-family: 'Segoe Script','Savoye LET';
+	}
+
+	h3 {
+		font-size: 5em;
+	}
+
+	h5 {
+		font-size: .75em;
+		font-weight: 500;
+		vertical-align: super;
+	}
+	
+	.coupon-sale-text {
+		padding: .47em .4em .1em .47em;
+		margin: 0 .5em 0 1em;
+		font-size: 1.06em;
+		font-family: inherit;
+		transform: none;
+
+		&:before {
+			content: '';
+			z-index: -1;
+			position:absolute;
+			left: 0;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			background: #fff;
+			transform: rotate(-2deg);
+		}
+	}
+}
+
+.home-slide2 h2 {
+	font-size: 3.4375em;
+}
+
+.home-slide3 h2 {
+	font-size: 3em;
+}
+
+// 1.4) Info Boxes
+
+.info-boxes-container {
+	border: 1px solid #e7e7e7;
+
+	.info-box {
+		margin: 1.2rem 0;
+		padding: 1.2rem;
+	}
+
+	.info-box:not(:last-child) {
+		border-right: 1px solid #e7e7e7;
+	}
+
+	i {
+		line-height: 0;
+	}
+}
+
+// 1.5) Banner Section
+
+.banners-grid {
+	margin-left: -10px;
+	margin-right: -10px;
+
+	.banner {
+		border: 10px solid transparent;
+	}
+}
+
+
+.banner1 {
+	h5 {
+		font-size: 1.875em;;
+
+		del {
+			font-size: .467em;
+			font-weight:500;
+		}
+	}
+
+	h4 {
+		font-size: .875em;
+		font-weight: 500;
+	}
+
+	h3 {
+		font-size: 1.1875em;
+		font-weight: 500;
+	}
+
+	.banner-layer {
+		right: 10%;
+	}
+
+	.banner-layer-circle-item {
+		font-size: 2.625em;
+		font-weight: 700;
+	}
+}
+
+.banner-layer-circle-item {
+	display: flex;
+	display: -ms-flexbox;
+	align-items:center;
+	-ms-flex-align: center;
+	justify-content: center;
+	-ms-flex-pack: center;
+	width: 2.239em;
+	height: 2.239em;
+	border-radius: 50%;
+	color: #fff;
+	background: $primary-color-dark;
+	letter-spacing: -.08em;
+
+	sup {
+		margin-left: .0866em;
+		line-height: 1;
+		top: 0;
+		letter-spacing: 0;
+		font-size: 55%;
+	}
+
+	small {
+		display: block;
+		font-size: .4329em;
+		letter-spacing: -.025em;
+		opacity: .5;
+	}
+}
+
+.banner2 {
+	h3 {
+		font-size: 1.75em;
+	}
+
+	h2 {
+		font-size: 1.875em;
+	}
+
+	h4 {
+		font-size: .9375em;
+		font-weight:600;
+	}
+
+	.btn {
+		padding: .88em 1.17em;
+		font-size: .75em;
+	}
+
+	.banner-layer {
+		top: 8.2%;
+		right: 10%;
+	}
+}
+
+.banner3 {
+	h2 {
+		font-size: 1.625em;
+		letter-spacing: .14em;
+	}
+
+	h3 {
+		font-size: 1.375em;
+		letter-spacing: .14em;
+	}
+
+	h4 {
+		font-size: .625em;
+		font-weight:500;
+		letter-spacing: .14em;
+	}
+
+	.btn {
+		font-size: .75em;
+		padding: .88em 1.67em;
+	}
+
+	.banner-layer-top {
+		top: 12.5%;
+	}
+
+	.banner-layer-bottom {
+		bottom: 11.66%;
+	}
+}
+
+.banner4 {
+	h2 {
+		font-size: 1.0625em;
+	}
+
+	h3 {
+		font-size: .9375em;
+		color: #a2a2a2;
+		line-height: 1.25;
+		font-weight:500;
+	}
+
+	h4 {
+		font-size: 1.375em;
+		line-height: 1.1;
+	}
+
+	.btn {
+		font-size: .75em;
+		padding: .88em 1.85em;
+		font-weight: 600;
+	}
+
+	.banner-layer {
+		right: 7.92%;
+	}
+}
+
+.banner5 {
+	h4 {
+		font-size: .75em;
+		font-weight:600;
+		letter-spacing: .2em;
+	}
+	
+	h3 {
+		font-size: 1.6875em;
+	}
+
+	h5 {
+		font-size: .75em;
+		opacity: .7;
+		font-weight:500;
+		letter-spacing: .2em;
+	}
+
+	.btn {
+		font-size: .75em;
+		padding: .96em 1.5em;
+	}
+
+	hr {
+		border-color: #e0e2e4;
+	}
+
+	.banner-layer {
+		left: 8.3%;
+		right: 8.3%;
+		bottom: 10%;
+	}
+}
+
+.banner6 {
+	h3 {
+		font-size: 1.375em;
+		line-height: 1.2;
+	}
+
+	h4 {
+		font-size: .9375em;
+		font-weight: 600;
+	}
+	
+	.btn {
+		font-size: .75em;
+		padding: .88em 2.05em;
+	}
+}
+
+.banner7 {
+	h3 {
+		font-size: 2.25em;
+	}
+
+	h4 {
+		font-size: 1.125em;
+		padding: .6em;
+	}
+
+	h5 {
+		font-size: 1em;
+
+		b {
+			padding: .14em .33em;
+			background-color: #e8e3e1;
+		}
+	}
+
+	.btn {
+		padding: 1.03em;
+		font-size: 0.82em;
+	}
+
+	.banner-layer {
+		right: 8.363%;
+	}
+}
+
+.banner8 {
+	h3 {
+		font-size: 1.8125em;
+		font-family: 'Segoe Script','Savoye LET';
+		letter-spacing: .001em;
+	}
+
+	h4 {
+		font-size: 2.5em;
+	}
+
+	.btn {
+		font-size: .75em;
+		padding: .88em 1.27em;
+	}
+}
+
+.banner9 {
+	h4 {
+		font-size: .75em;
+		font-weight: 500;
+		letter-spacing: .2em;
+	}
+
+	h3 {
+		font-size: 1.625em;
+		letter-spacing: .15em;
+
+		span {
+			font-size: 1.0769em;
+		}
+	}
+
+	h5 {
+		font-size: 1em;
+	}
+
+	hr {
+		border-top-color: #e0e2e4;
+	}
+
+	.btn {
+		padding: 1.03em 2.65em;
+		font-size: .82em;
+	}
+
+	.banner-layer-left {
+		right: 58.18%;
+		left: 5%;
+	}
+
+	.banner-layer-right {
+		left: 55.27%
+	}
+}
+
+// Products Section, Brands Section
+.products-section {
+	.section-title {
+		font-size: 1.6rem;
+	}
+
+	.owl-dots .owl-dot span {
+		border-color: #e7e7e7;
+	}
+}
+
+.section-bg-gray {
+	background: #f6f7f9;
+}
+
+// 2. Category Page Banner
+
+.category-banner {
+	padding: 6.8rem 0;
+
+	h3 {
+		font-size: 3.125em;
+	}
+
+	h4 {
+		font-size: 1.125em;
+	}
+
+	h5 {
+		font-size: 1em;
+	}
+
+	.btn {
+		font-size: .82em;
+		padding: 1.03em 2.81em;
+	}
+}
+
+// 3. Buttons
+
+.btn-light {
+	background-color: #fff;
+	border-color: #fff;
+}
+
+.btn-secondary {
+	@include button-variant( #fff, $secondary-color, $secondary-color);
+}
+
+.btn-black {
+	border-color: #0e0f11;
+	background-color: #0e0f11;
+}
+
+// 4. Responsive
+
+@include mq(lg, max) {
+	.info-boxes-container .info-box {
+		justify-content: flex-start;
+		-ms-flex-pack: start;
+		margin: 0;
+		padding: 2.4rem 3rem;
+
+		&:not(:last-child) {
+			border-right: 0;
+			border-bottom: 1px solid #e7e7e7;
+		}
+	}
+
+	.banners-grid .banner {
+		font-size: 1.4vw;
+		border-width: 8px;
+	}
+}
+
+@include mq(md, max) {
+	.banners-grid .banner {
+		font-size: 2.3vw;
+	}
+}
+
+@include mq(400px, max) {
+	.banners-grid .banner.w-25 {
+		font-size: 4vw;
+	}
+}

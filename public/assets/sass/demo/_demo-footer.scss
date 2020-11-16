@@ -1,0 +1,133 @@
+// 1. Footer Base
+.footer-middle {
+	padding: 5.8rem 0 1.2rem;
+}
+
+.footer-bottom {
+	padding: 1.5rem 0;
+	border-top: 1px solid #313438;
+}
+
+.footer {
+	a:hover,
+	a:focus {
+		color: #fff;
+	}
+
+// 2. Footer Components
+
+// 2.1) Ribbon
+	.footer-ribbon {
+		position: absolute;
+		top: -7.5rem;
+		left: 1.5rem;
+		min-width: 14rem;
+		padding: 1rem;
+		font-family: 'Shadows Into Light', cursive;
+		font-size: 2.1rem;
+		line-height: 1;
+		text-align: center;
+
+		&:before {
+			display: block;
+			position: absolute;
+			top: 0;
+			left: -1.5rem;
+			width: 0;
+			height: 0;
+			border-top: 17px solid transparent;
+			border-right: 15px solid #005580;
+			content: '';
+		}
+	}
+
+// 2.2) Social Icon
+ 	.social-icon {
+		height: 3.8rem;
+		width: 3.8rem;
+		font-size: 1.4rem;
+		line-height: 3.6rem;
+		border: 1px solid transparent;
+		border-radius: 50%;
+
+		&:not(:hover):not(:active):not(:focus) {
+			background-color: transparent;
+			border-color: #313438;
+			color: #fff;
+		}
+
+		& + .social-icon {
+			margin-left: 1.3rem;
+		}
+	}
+
+// 2.4) Contact Info
+	.contact-info li {
+		position: relative;
+		margin-bottom: 1.3rem;
+		line-height: 1.4;
+	}
+
+	.contact-info li:last-child {
+		margin-bottom: 1.8rem;
+	}
+
+	.contact-info-label {
+		display: block;
+		color: #fff;
+		font-weight: 400;
+		text-transform: uppercase;
+	}
+	
+// 2.5) Newsletter
+	.widget-newsletter {
+		margin: 1rem 0 3.4rem;
+		padding-bottom: 3.7rem;
+		border-bottom: 1px solid #313438;
+
+		p {
+			max-width: 360px;
+			margin-top: -.5rem;
+			margin-bottom: 1.5rem;
+			line-height: 1.6;
+		}
+
+		form {
+			background: #292c30;
+			border-radius: 5rem;
+			padding-left: 2.5rem;
+		}
+
+		.form-control {
+			height: 4.8rem;
+			padding: .8rem 2.5rem .8rem 0;
+			border: 0;
+			box-shadow: none;
+			outline: none;
+			background: #292c30;
+			color: #777;
+			font-size: inherit;
+
+			@include only_for_ie() {
+				flex: 1;
+			}
+
+			&::placeholder {
+				color: #666;
+			}
+		}
+
+		.btn {
+			padding: 1rem 2.475rem;
+			border-radius: 0 5rem 5rem 0;
+			font-size: inherit;
+		}
+	}
+}
+
+// 2.6) Copyright
+.footer-copyright {
+	color: #777;
+	font-size: 1.2rem;
+	letter-spacing: .005em;
+}
