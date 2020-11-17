@@ -212,47 +212,28 @@
 					<nav class="main-nav w-100">
 						<ul class="menu">
 							<li>
-								<a href="index.html">Home</a>
+								<a href="{{ route('shop_home') }}">Home</a>
 							</li>
 
 
 							@foreach($product_sections as $product_section)
 							<li>
-								<a >{{ $product_section->name }}</a>
+								<a href="{{ route('shop_categories', [$product_section->id]) }}">{{ $product_section->name }}</a>
 								<div class="megamenu megamenu-fixed-width">
 									<div class="row">
+										@foreach($product_section->product_categories as $product_category)
+										<div class="col-lg-3">
+											<a href="{{ route('shop_subcategories', [$product_section->id, $product_category->id]) }}" class="black-text">{{ $product_category->name }}</a>
+											<ul class="submenu">
+												@foreach($product_category->product_subcategories as $product_subcategories)
+												<li><a href="product.html">{{ $product_subcategories->name }}</a></li>
+												@endforeach
+											</ul>
+										</div><!-- End .col-lg-4 -->
+										@endforeach
+										
 
-										<div class="col-lg-3">
-											<a href="#" class="nolink">Variations 1</a>
-											<ul class="submenu">
-												<li><a href="product.html">Horizontal Thumbs</a></li>
-												<li><a href="product-full-width.html">Vertical Thumbnails</a></li>
-												<li><a href="product.html">Inner Zoom</a></li>
-												<li><a href="product-addcart-sticky.html">Addtocart Sticky</a></li>
-												<li><a href="product-sidebar-left.html">Accordion Tabs</a></li>
-											</ul>
-										</div><!-- End .col-lg-4 -->
-										<div class="col-lg-3">
-											<a href="#" class="nolink">Variations 2</a>
-											<ul class="submenu">
-												<li><a href="product-sticky-tab.html">Sticky Tabs</a></li>
-												<li><a href="product-simple.html">Simple Product</a></li>
-												<li><a href="product-sidebar-left.html">With Left Sidebar</a></li>
-											</ul>
-										</div><!-- End .col-lg-4 -->
-										<div class="col-lg-3">
-											<a href="#" class="nolink">Product Layout Types</a>
-											<ul class="submenu">
-												<li><a href="product.html">Default Layout</a></li>
-												<li><a href="product-extended-layout.html">Extended Layout</a></li>
-												<li><a href="product-full-width.html">Full Width Layout</a></li>
-												<li><a href="product-grid-layout.html">Grid Images Layout</a></li>
-												<li><a href="product-sticky-both.html">Sticky Both Side Info</a></li>
-												<li><a href="product-sticky-info.html">Sticky Right Side Info</a></li>
-											</ul>
-										</div><!-- End .col-lg-4 -->
-
-										<div class="col-lg-3 p-0">
+										<div class="col-lg-3 p-0 span-right">
 											<img src="/assets/images/menu-bg.png" alt="Menu banner" class="product-promo">
 										</div><!-- End .col-lg-4 -->
 									</div><!-- End .row -->

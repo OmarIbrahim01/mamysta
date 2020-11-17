@@ -26,6 +26,24 @@ Route::get('/shop', [
 	'uses' => 'App\Http\Controllers\Shop\HomeController@index'
 ]);
 
+// Product Sections Index
+Route::get('/shop/sections', [
+	'as' => 'shop_sections',
+	'uses' => 'App\Http\Controllers\Shop\SectionsController@index'
+]);
+
+// Product Categories Index
+Route::get('/shop/{id}/categories', [
+	'as' => 'shop_categories',
+	'uses' => 'App\Http\Controllers\Shop\CategoriesController@index'
+]);
+
+// Product SubCategories Index
+Route::get('/shop/{section_id}/{category_id}/subcategories', [
+	'as' => 'shop_subcategories',
+	'uses' => 'App\Http\Controllers\Shop\SubCategoriesController@index'
+]);
+
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();

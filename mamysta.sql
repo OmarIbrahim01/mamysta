@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 17, 2020 at 06:34 AM
--- Server version: 5.7.26
--- PHP Version: 7.3.5
+-- Generation Time: Nov 17, 2020 at 12:10 PM
+-- Server version: 5.7.31
+-- PHP Version: 7.3.21
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -683,7 +682,14 @@ CREATE TABLE IF NOT EXISTS `product_categories` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `product_categories`
+--
+
+INSERT INTO `product_categories` (`id`, `product_section_id`, `name`, `description`, `created_at`, `updated_at`) VALUES
+(1, 2, 'Boy Wear', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -732,7 +738,17 @@ CREATE TABLE IF NOT EXISTS `product_sections` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `product_sections`
+--
+
+INSERT INTO `product_sections` (`id`, `name`, `description`, `created_at`, `updated_at`) VALUES
+(1, 'Fashion', 'Clothes, Footwear, etc', NULL, NULL),
+(2, 'Essentials', 'All Essentials stuff', NULL, NULL),
+(3, 'Toys', 'Children Play toys', NULL, NULL),
+(4, 'Gears', 'Babay and children gears', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -780,7 +796,14 @@ CREATE TABLE IF NOT EXISTS `product_sub_categories` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `product_sub_categories`
+--
+
+INSERT INTO `product_sub_categories` (`id`, `category_id`, `name`, `description`, `created_at`, `updated_at`) VALUES
+(1, 1, 'T-Shirts', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
