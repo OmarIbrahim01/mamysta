@@ -1,0 +1,24 @@
+.outlined-btn {
+  border: 2px solid black !important;
+  background-color: white !important;
+  color: black !important;
+  padding: 14px 28px !important;
+  font-size: 16px;
+  cursor: pointer !important;
+  border-radius: 50px !important;
+  padding: 10px 30px !important;
+  margin: 10px 0px !important;
+  text-transform: uppercase !important;
+  font-weight: normal; !important;
+}
+
+/* Green */
+.outlined-btn-success {
+  border-color: #d93c81 !important;
+  color: #d93c81 !important;
+}
+
+.outlined-btn-success:hover {
+  background-color: #d93c81 !important;
+  color: white !important;
+}

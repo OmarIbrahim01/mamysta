@@ -12,7 +12,7 @@
 	<meta name="author" content="SW-THEMES">
 		
 	<!-- Favicon -->
-	<link rel="icon" type="image/x-icon" href="assets/images/icons/favicon.ico">
+	<link rel="icon" type="image/x-icon" href="/assets/images/icons/favicon.ico">
 	
 	
 	<script type="text/javascript">
@@ -21,7 +21,7 @@
 		};
 		(function(d) {
 			var wf = d.createElement('script'), s = d.scripts[0];
-			wf.src = 'assets/js/webfont.js';
+			wf.src = '/assets/js/webfont.js';
 			wf.async = true;
 			s.parentNode.insertBefore(wf, s);
 		})(document);
@@ -33,6 +33,7 @@
 	<!-- Main CSS File -->
 	<link rel="stylesheet" href="/assets/css/style.min.css">
 	<link rel="stylesheet" type="text/css" href="/assets/vendor/fontawesome-free/css/all.min.css"> 
+	<link rel="stylesheet" href="/assets/css/custom.css">
 	{{-- CSS Section --}}
 	@yield('css')
 </head>
@@ -52,7 +53,7 @@
 			<div class="header-top">
 				<div class="container">
 					<div class="header-left">
-						<p class="top-message ls-0 text-uppercase text-white d-none d-sm-block">FREE Returns. Standard Shipping Orders $99+</p>
+						<p class="top-message ls-0 text-uppercase text-white d-none d-sm-block">All Mom and Kids Shopping Needs</p>
 					</div><!-- End .header-left -->
 
 					<div class="header-right header-dropdowns w-sm-100">
@@ -62,8 +63,6 @@
 								<ul>
 									<li><a href="my-account.html">Track Order </a></li>
 									<li><a href="about.html">About</a></li>
-									<li><a href="category.html">Our Stores</a></li>
-									<li><a href="blog.html">Blog</a></li>
 									<li><a href="contact.html">Contact</a></li>
 									<li><a href="#">Help &amp; FAQs</a></li>
 								</ul>
@@ -72,32 +71,16 @@
 
 						<span class="separator"></span>
 
-						<div class="header-dropdown">
-							<a href="#">USD</a>
-							<div class="header-menu">
-								<ul>
-									<li><a href="#">EUR</a></li>
-									<li><a href="#">USD</a></li>
-								</ul>
-							</div><!-- End .header-menu -->
-						</div><!-- End .header-dropown -->
-
 						<div class="header-dropdown mr-auto mr-sm-3 mr-md-0">
-							<a href="#"><img src="assets/images/flags/en.png" alt="England flag">ENG</a>
-							<div class="header-menu">
-								<ul>
-									<li><a href="#"><img src="assets/images/flags/en.png" alt="England flag">ENG</a></li>
-									<li><a href="#"><img src="assets/images/flags/fr.png" alt="France flag">FRA</a></li>
-								</ul>
-							</div><!-- End .header-menu -->
+							<a href="#"><img src="/assets/images/flags/eg.png" alt="Egypt Flag">Egypt</a>
 						</div><!-- End .header-dropown -->
 
 						<span class="separator"></span>
 
 						<div class="social-icons">
+							<a href="#" class="social-icon social-facebook icon-facebook" target="_blank"></a>
 							<a href="#" class="social-icon social-instagram icon-instagram" target="_blank"></a>
 							<a href="#" class="social-icon social-twitter icon-twitter" target="_blank"></a>
-							<a href="#" class="social-icon social-facebook icon-facebook" target="_blank"></a>
 						</div><!-- End .social-icons -->
 					</div><!-- End .header-right -->
 				</div><!-- End .container -->
@@ -110,12 +93,12 @@
 							<i class="icon-menu"></i>
 						</button>
 						<a href="index.html" class="logo">
-							<img src="assets/images/logo.png" alt="Porto Logo">
+							<img src="/assets/images/logo.png" alt="Porto Logo">
 						</a>
 					</div><!-- End .header-left -->
 
 					<div class="header-right w-lg-max ml-0">
-						<div class="header-icon header-search header-search-inline header-search-category w-lg-max pl-3">
+						<div class="header-icon header-search header-search-inline header-search-category w-lg-max pl-3" style="margin-right: 100px;">
 							<a href="#" class="search-toggle" role="button"><i class="icon-search-3"></i></a>
 							<form action="#" method="get">
 								<div class="header-search-wrapper">
@@ -146,10 +129,7 @@
 							</form>
 						</div><!-- End .header-search -->
 
-						<div class="header-contact d-none d-lg-flex pl-4 ml-3 mr-xl-5 pr-4">
-							<img alt="phone" src="assets/images/phone.png" width="30" height="30" class="pb-1">
-							<h6>Call us now<a href="tel:#" class="font1">+123 5678 890</a></h6>
-						</div>
+						
 
 						<a href="login.html" class="header-icon login-link"><i class="icon-user-2"></i></a>
 
@@ -184,7 +164,7 @@
 												
 											<figure class="product-image-container">
 												<a href="product.html" class="product-image">
-													<img src="assets/images/products/cart/product-1.jpg" alt="product" width="80" height="80">
+													<img src="/assets/images/products/cart/product-1.jpg" alt="product" width="80" height="80">
 												</a>
 												<a href="#" class="btn-remove icon-cancel" title="Remove Product"></a>
 											</figure>
@@ -204,7 +184,7 @@
 											
 											<figure class="product-image-container">
 												<a href="product.html" class="product-image">
-													<img src="assets/images/products/cart/product-2.jpg" alt="product" width="80" height="80">
+													<img src="/assets/images/products/cart/product-2.jpg" alt="product" width="80" height="80">
 												</a>
 												<a href="#" class="btn-remove icon-cancel" title="Remove Product"></a>
 											</figure>
@@ -227,53 +207,21 @@
 				</div><!-- End .container -->
 			</div><!-- End .header-middle -->
 
-			<div class="header-bottom sticky-header d-none d-lg-block">
+			<div class="header-bottom sticky-header d-none d-lg-block" style="background-color: #eee;">
 				<div class="container">
 					<nav class="main-nav w-100">
 						<ul class="menu">
 							<li>
 								<a href="index.html">Home</a>
 							</li>
+
+
+							@foreach($product_sections as $product_section)
 							<li>
-								<a href="category.html">Categories<span class="tip tip-new tip-top">New</span></a>
-								<div class="megamenu megamenu-fixed-width megamenu-3cols">
-									<div class="row">
-										<div class="col-lg-4">
-											<a href="#" class="nolink">VARIATION 1</a>
-											<ul class="submenu">
-												<li><a href="category.html">Fullwidth Banner</a></li>
-												<li><a href="category-banner-boxed-slider.html">Boxed Slider Banner</a></li>
-												<li><a href="category-banner-boxed-image.html">Boxed Image Banner</a></li>
-												<li><a href="category.html">Left Sidebar</a></li>
-												<li><a href="category-sidebar-right.html">Right Sidebar</a></li>
-												<li><a href="category-flex-grid.html">Product Flex Grid</a></li>
-												<li><a href="category-horizontal-filter1.html">Horizontal Filter1</a></li>
-												<li><a href="category-horizontal-filter2.html">Horizontal Filter2</a></li>
-											</ul>
-										</div>
-										<div class="col-lg-4">
-											<a href="#" class="nolink">VARIATION 2</a>
-											<ul class="submenu">
-												<li><a href="category-list.html">List Types</a></li>
-												<li><a href="category-infinite-scroll.html">Ajax Infinite Scroll</a></li>
-												<li><a href="category.html">3 Columns Products</a></li>
-												<li><a href="category-4col.html">4 Columns Products</a></li>
-												<li><a href="category-5col.html">5 Columns Products</a></li>
-												<li><a href="category-6col.html">6 Columns Products</a></li>
-												<li><a href="category-7col.html">7 Columns Products</a></li>
-												<li><a href="category-8col.html">8 Columns Products</a></li>
-											</ul>
-										</div>
-										<div class="col-lg-4 p-0">
-											<img src="assets/images/menu-banner.jpg" alt="Menu banner">
-										</div>
-									</div>
-								</div><!-- End .megamenu -->
-							</li>
-							<li>
-								<a href="product.html">Products</a>
+								<a >{{ $product_section->name }}</a>
 								<div class="megamenu megamenu-fixed-width">
 									<div class="row">
+
 										<div class="col-lg-3">
 											<a href="#" class="nolink">Variations 1</a>
 											<ul class="submenu">
@@ -305,45 +253,15 @@
 										</div><!-- End .col-lg-4 -->
 
 										<div class="col-lg-3 p-0">
-											<img src="assets/images/menu-bg.png" alt="Menu banner" class="product-promo">
+											<img src="/assets/images/menu-bg.png" alt="Menu banner" class="product-promo">
 										</div><!-- End .col-lg-4 -->
 									</div><!-- End .row -->
 								</div><!-- End .megamenu -->
 							</li>
-							<li>
-								<a href="#">Pages</a>
-								<ul>
-									<li><a href="cart.html">Shopping Cart</a></li>
-									<li><a href="#">Checkout</a>
-										<ul>
-											<li><a href="checkout-shipping.html">Checkout Shipping</a></li>
-											<li><a href="checkout-shipping-2.html">Checkout Shipping 2</a></li>
-											<li><a href="checkout-review.html">Checkout Review</a></li>
-										</ul>
-									</li>
-									<li><a href="#">Dashboard</a>
-										<ul>
-											<li><a href="dashboard.html">Dashboard</a></li>
-											<li><a href="my-account.html">My Account</a></li>
-										</ul>
-									</li>
-									<li><a href="about.html">About Us</a></li>
-									<li><a href="#">Blog</a>
-										<ul>
-											<li><a href="blog.html">Blog</a></li>
-											<li><a href="single.html">Blog Post</a></li>
-										</ul>
-									</li>
-									<li><a href="contact.html">Contact Us</a></li>
-									<li><a href="#" class="login-link">Login</a></li>
-									<li><a href="forgot-password.html">Forgot Password</a></li>
-								</ul>
-							</li>
-							<li><a href="blog.html">Blog</a></li>
-							<li><a href="about.html">About Us</a></li>
-							<li><a href="contact.html">Contact Us</a></li>
-							<li class="float-right"><a href="https://1.envato.market/DdLk5" target="_blank">Buy Porto!</a></li>
-							<li class="float-right"><a href="#">Special Offer!</a></li>
+							@endforeach
+
+							
+							<li class="float-right"><a class="outlined-btn outlined-btn-success">Mamysta Parenting</a></li>
 						</ul>
 					</nav>
 				</div><!-- End .container -->
@@ -357,12 +275,12 @@
 		<div class="brands-section mt-5 mb-5">
 			<div class="container">
 				<div class="brands-slider owl-carousel owl-theme images-center">
-					<img src="assets/images/brands/brand1.png" width="140" height="60" alt="brand">
-					<img src="assets/images/brands/brand2.png" width="140" height="60" alt="brand">
-					<img src="assets/images/brands/brand3.png" width="140" height="60" alt="brand">
-					<img src="assets/images/brands/brand4.png" width="140" height="60" alt="brand">
-					<img src="assets/images/brands/brand5.png" width="140" height="60" alt="brand">
-					<img src="assets/images/brands/brand6.png" width="140" height="60" alt="brand">
+					<img src="/assets/images/brands/brand1.png" width="140" height="60" alt="brand">
+					<img src="/assets/images/brands/brand2.png" width="140" height="60" alt="brand">
+					<img src="/assets/images/brands/brand3.png" width="140" height="60" alt="brand">
+					<img src="/assets/images/brands/brand4.png" width="140" height="60" alt="brand">
+					<img src="/assets/images/brands/brand5.png" width="140" height="60" alt="brand">
+					<img src="/assets/images/brands/brand6.png" width="140" height="60" alt="brand">
 				</div><!-- End .brands-slider -->
 			</div>
 		</div>
@@ -466,7 +384,7 @@
 				<div class="footer-bottom d-flex justify-content-between align-items-center flex-wrap">
 					<p class="footer-copyright py-3 pr-4 mb-0">&copy; Porto eCommerce. 2020. All Rights Reserved</p>
 
-					<img src="assets/images/payments.png" alt="payment methods" class="footer-payments py-3">
+					<img src="/assets/images/payments.png" alt="payment methods" class="footer-payments py-3">
 				</div><!-- End .footer-bottom -->
 			</div><!-- End .container -->
 		</footer><!-- End .footer -->

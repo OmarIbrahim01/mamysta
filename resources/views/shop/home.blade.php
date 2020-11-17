@@ -1,4 +1,4 @@
-@extends('layouts.market_main');
+@extends('layouts.market_main')
 
 @section('css')
 @endsection

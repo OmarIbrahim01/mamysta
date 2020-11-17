@@ -1,0 +1,23 @@
+Pink: #d93c81
+Blue: #08C
+
+
+Dark Background Blue: #005580
+Dark Background Pink: #852650
+
+
+Border Blue: #0e95d8
+Border Pink: #db5690
+
+
+From
+@media (min-width: 1160px)
+.container {
+    max-width: 1140px;
+}
+
+To
+@media (min-width: 1160px)
+.container {
+    max-width: 1450px
+}
