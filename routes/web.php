@@ -26,6 +26,18 @@ Route::get('/shop', [
 	'uses' => 'App\Http\Controllers\Shop\HomeController@index'
 ]);
 
+// Product SubCategories Products Index
+Route::get('/shop/{subcategory_id}', [
+	'as' => 'shop_products_index',
+	'uses' => 'App\Http\Controllers\Shop\ProductsController@index'
+]);
+
+// Product Products Show
+Route::get('/shop/{subcategory_id}/{product_id}', [
+	'as' => 'shop_products_show',
+	'uses' => 'App\Http\Controllers\Shop\ProductsController@show'
+]);
+
 // Product Sections Index
 Route::get('/shop/sections', [
 	'as' => 'shop_sections',
@@ -33,7 +45,7 @@ Route::get('/shop/sections', [
 ]);
 
 // Product Categories Index
-Route::get('/shop/{id}/categories', [
+Route::get('/shop/{section_id}/categories', [
 	'as' => 'shop_categories',
 	'uses' => 'App\Http\Controllers\Shop\CategoriesController@index'
 ]);

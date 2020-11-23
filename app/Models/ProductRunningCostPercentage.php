@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductVariant extends Model
+class ProductRunningCostPercentage extends Model
 {
     use HasFactory;
 
-    public function stocks()
+    public function products()
     {
-    	return $this->hasMany('App\Models\ProductVariantStock');
+    	return $this->hasMany('App\Models\Product');
     }
 }

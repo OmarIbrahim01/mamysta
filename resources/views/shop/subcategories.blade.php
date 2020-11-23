@@ -1,4 +1,4 @@
-@extends('layouts.market_main');
+@extends('layouts.market_main')
 
 @section('css')
 @endsection
@@ -27,7 +27,7 @@
             	@foreach($subcategories as $subcategory)
                 <div class="col-6 col-sm-4 col-lg-3">
                     <div class="product-category">
-                        <a href="#">
+                        <a href="{{ route('shop_products_index', [$subcategory->id]) }}">
                             <figure>
                                 <img src="{{ $subcategory->image }}">
                             </figure>
