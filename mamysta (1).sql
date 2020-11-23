@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 17, 2020 at 12:10 PM
--- Server version: 5.7.31
--- PHP Version: 7.3.21
+-- Generation Time: Nov 23, 2020 at 07:04 PM
+-- Server version: 5.7.26
+-- PHP Version: 7.3.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -35,6 +36,29 @@ CREATE TABLE IF NOT EXISTS `ages` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `brands`
+--
+
+DROP TABLE IF EXISTS `brands`;
+CREATE TABLE IF NOT EXISTS `brands` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
+  `description` text COLLATE utf8_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `brands`
+--
+
+INSERT INTO `brands` (`id`, `name`, `description`, `created_at`, `updated_at`) VALUES
+(1, 'Zara', 'Zara Brand', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -222,7 +246,17 @@ CREATE TABLE IF NOT EXISTS `genders` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `genders`
+--
+
+INSERT INTO `genders` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'Mom', NULL, NULL),
+(2, 'Boy', NULL, NULL),
+(3, 'Girl', NULL, NULL),
+(4, 'Unisex', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -304,7 +338,7 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `migrations`
@@ -362,7 +396,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (49, '2020_11_16_002552_create_product_categories_table', 4),
 (50, '2020_11_16_005912_create_product_tags_table', 4),
 (51, '2020_11_16_015315_create_payment_methods_table', 4),
-(52, '2020_11_16_015353_create_shipping_types_table', 4);
+(52, '2020_11_16_015353_create_shipping_types_table', 4),
+(53, '2020_11_23_165722_create_product_revenue_percentages_table', 5),
+(54, '2020_11_23_165854_create_product_running_cost_percentages_table', 5);
 
 -- --------------------------------------------------------
 
@@ -637,35 +673,28 @@ CREATE TABLE IF NOT EXISTS `products` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
   `description` text COLLATE utf8_unicode_ci,
+  `sku` varchar(191) COLLATE utf8_unicode_ci DEFAULT NULL,
   `product_section_id` int(11) NOT NULL,
   `product_category_id` int(11) NOT NULL,
   `product_sub_category_id` int(11) NOT NULL,
-  `product_brand_id` int(11) NOT NULL,
+  `brand_id` int(11) NOT NULL,
   `gender_id` int(11) NOT NULL,
   `min_age_id` int(11) NOT NULL,
   `max_age_id` int(11) NOT NULL,
   `thumbnail` text COLLATE utf8_unicode_ci,
+  `product_running_cost_percentage_id` int(11) NOT NULL,
   `product_status_id` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Table structure for table `product_brands`
+-- Dumping data for table `products`
 --
 
-DROP TABLE IF EXISTS `product_brands`;
-CREATE TABLE IF NOT EXISTS `product_brands` (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
-  `description` text COLLATE utf8_unicode_ci,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+INSERT INTO `products` (`id`, `title`, `description`, `sku`, `product_section_id`, `product_category_id`, `product_sub_category_id`, `brand_id`, `gender_id`, `min_age_id`, `max_age_id`, `thumbnail`, `product_running_cost_percentage_id`, `product_status_id`, `created_at`, `updated_at`) VALUES
+(1, 'Basic T-shirt', 'Zara Basic T-shirt Full Description', 'HGJU543', 1, 1, 1, 1, 2, 1, 3, '/products/1/zara-tshirt-basic-thumbnail.jpg', 3, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -679,6 +708,7 @@ CREATE TABLE IF NOT EXISTS `product_categories` (
   `product_section_id` int(11) NOT NULL,
   `name` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
   `description` text COLLATE utf8_unicode_ci,
+  `image` text COLLATE utf8_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -688,8 +718,8 @@ CREATE TABLE IF NOT EXISTS `product_categories` (
 -- Dumping data for table `product_categories`
 --
 
-INSERT INTO `product_categories` (`id`, `product_section_id`, `name`, `description`, `created_at`, `updated_at`) VALUES
-(1, 2, 'Boy Wear', NULL, NULL, NULL);
+INSERT INTO `product_categories` (`id`, `product_section_id`, `name`, `description`, `image`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Boy Wear', NULL, '/categories/boy_fashion.jpg', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -705,7 +735,47 @@ CREATE TABLE IF NOT EXISTS `product_colors` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `product_colors`
+--
+
+INSERT INTO `product_colors` (`id`, `name`, `code`, `created_at`, `updated_at`) VALUES
+(1, 'Blue', '#111111', NULL, NULL),
+(2, 'Black', '#1b70f7', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_revenue_percentages`
+--
+
+DROP TABLE IF EXISTS `product_revenue_percentages`;
+CREATE TABLE IF NOT EXISTS `product_revenue_percentages` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `percent` int(11) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `product_revenue_percentages`
+--
+
+INSERT INTO `product_revenue_percentages` (`id`, `percent`, `status`, `created_at`, `updated_at`) VALUES
+(0, 0, 1, NULL, NULL),
+(1, 1, 1, NULL, NULL),
+(2, 2, 1, NULL, NULL),
+(3, 3, 1, NULL, NULL),
+(4, 4, 1, NULL, NULL),
+(5, 5, 1, NULL, NULL),
+(6, 6, 1, NULL, NULL),
+(7, 7, 1, NULL, NULL),
+(8, 8, 1, NULL, NULL),
+(9, 9, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -727,6 +797,38 @@ CREATE TABLE IF NOT EXISTS `product_reviews` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `product_running_cost_percentages`
+--
+
+DROP TABLE IF EXISTS `product_running_cost_percentages`;
+CREATE TABLE IF NOT EXISTS `product_running_cost_percentages` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `percent` int(11) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `product_running_cost_percentages`
+--
+
+INSERT INTO `product_running_cost_percentages` (`id`, `percent`, `status`, `created_at`, `updated_at`) VALUES
+(0, 0, 1, NULL, NULL),
+(1, 1, 1, NULL, NULL),
+(2, 2, 1, NULL, NULL),
+(3, 3, 1, NULL, NULL),
+(4, 4, 1, NULL, NULL),
+(5, 5, 1, NULL, NULL),
+(6, 6, 1, NULL, NULL),
+(7, 7, 1, NULL, NULL),
+(8, 8, 1, NULL, NULL),
+(9, 9, 1, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `product_sections`
 --
 
@@ -735,6 +837,7 @@ CREATE TABLE IF NOT EXISTS `product_sections` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
   `description` text COLLATE utf8_unicode_ci,
+  `image` text COLLATE utf8_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -744,11 +847,11 @@ CREATE TABLE IF NOT EXISTS `product_sections` (
 -- Dumping data for table `product_sections`
 --
 
-INSERT INTO `product_sections` (`id`, `name`, `description`, `created_at`, `updated_at`) VALUES
-(1, 'Fashion', 'Clothes, Footwear, etc', NULL, NULL),
-(2, 'Essentials', 'All Essentials stuff', NULL, NULL),
-(3, 'Toys', 'Children Play toys', NULL, NULL),
-(4, 'Gears', 'Babay and children gears', NULL, NULL);
+INSERT INTO `product_sections` (`id`, `name`, `description`, `image`, `created_at`, `updated_at`) VALUES
+(1, 'Fashion', 'Clothes, Footwear, etc', '/sections/fashion.jpg', NULL, NULL),
+(2, 'Essentials', 'All Essentials stuff', '/sections/essintials.jpg', NULL, NULL),
+(3, 'Toys', 'Children Play toys', '/sections/toys.jpg', NULL, NULL),
+(4, 'Gears', 'Babay and children gears', '/sections/gears.jpg', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -764,7 +867,16 @@ CREATE TABLE IF NOT EXISTS `product_sizes` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `product_sizes`
+--
+
+INSERT INTO `product_sizes` (`id`, `name`, `sub_category_id`, `created_at`, `updated_at`) VALUES
+(1, 'Small', 1, NULL, NULL),
+(2, 'Medium', 1, NULL, NULL),
+(3, 'Large', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -779,7 +891,16 @@ CREATE TABLE IF NOT EXISTS `product_statuses` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `product_statuses`
+--
+
+INSERT INTO `product_statuses` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'Active', NULL, NULL),
+(2, 'Under Review', NULL, NULL),
+(3, 'Disabled', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -790,9 +911,10 @@ CREATE TABLE IF NOT EXISTS `product_statuses` (
 DROP TABLE IF EXISTS `product_sub_categories`;
 CREATE TABLE IF NOT EXISTS `product_sub_categories` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `category_id` int(11) NOT NULL,
+  `product_category_id` int(11) NOT NULL,
   `name` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
   `description` text COLLATE utf8_unicode_ci,
+  `image` text COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -802,8 +924,8 @@ CREATE TABLE IF NOT EXISTS `product_sub_categories` (
 -- Dumping data for table `product_sub_categories`
 --
 
-INSERT INTO `product_sub_categories` (`id`, `category_id`, `name`, `description`, `created_at`, `updated_at`) VALUES
-(1, 1, 'T-Shirts', NULL, NULL, NULL);
+INSERT INTO `product_sub_categories` (`id`, `product_category_id`, `name`, `description`, `image`, `created_at`, `updated_at`) VALUES
+(1, 1, 'T-Shirts', NULL, '/subcategories/t-shirts.jpg', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -837,7 +959,19 @@ CREATE TABLE IF NOT EXISTS `product_variants` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `product_variants`
+--
+
+INSERT INTO `product_variants` (`id`, `product_id`, `product_color_id`, `product_size_id`, `dimensions`, `weight`, `sku`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 1, '25x25', '0.5', 'FFDDSS', NULL, NULL),
+(2, 1, 1, 2, '25x25', '0.5', 'FFDDSS', NULL, NULL),
+(3, 1, 1, 3, '25x25', '0.5', 'FFDDSS', NULL, NULL),
+(4, 1, 2, 1, '25x25', '0.5', 'FFDDSS', NULL, NULL),
+(5, 1, 2, 2, '25x25', '0.5', 'FFDDSS', NULL, NULL),
+(6, 1, 2, 3, '25x25', '0.5', 'FFDDSS', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -853,7 +987,25 @@ CREATE TABLE IF NOT EXISTS `product_variant_images` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `product_variant_images`
+--
+
+INSERT INTO `product_variant_images` (`id`, `product_variant_id`, `image`, `created_at`, `updated_at`) VALUES
+(1, 1, 'products/1/zara-tshirt-basic-black-1.jpg', NULL, NULL),
+(2, 2, 'products/1/zara-tshirt-basic-black-1.jpg', NULL, NULL),
+(3, 3, 'products/1/zara-tshirt-basic-black-1.jpg', NULL, NULL),
+(5, 1, 'products/1/zara-tshirt-basic-black-2.jpg', NULL, NULL),
+(6, 2, 'products/1/zara-tshirt-basic-black-2.jpg', NULL, NULL),
+(7, 3, 'products/1/zara-tshirt-basic-black-2.jpg', NULL, NULL),
+(8, 1, 'products/1/zara-tshirt-basic-blue-1.jpg', NULL, NULL),
+(9, 2, 'products/1/zara-tshirt-basic-blue-1.jpg', NULL, NULL),
+(10, 3, 'products/1/zara-tshirt-basic-blue-1.jpg', NULL, NULL),
+(11, 1, 'products/1/zara-tshirt-basic-blue-2.jpg', NULL, NULL),
+(12, 2, 'products/1/zara-tshirt-basic-blue-2.jpg', NULL, NULL),
+(13, 3, 'products/1/zara-tshirt-basic-blue-2.jpg', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -868,11 +1020,24 @@ CREATE TABLE IF NOT EXISTS `product_variant_stocks` (
   `vendor_id` int(11) NOT NULL,
   `stock` int(11) NOT NULL,
   `price` double(8,2) NOT NULL,
+  `product_revenue_percentage_id` int(11) NOT NULL,
   `discount_precentage` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `product_variant_stocks`
+--
+
+INSERT INTO `product_variant_stocks` (`id`, `product_variant_id`, `vendor_id`, `stock`, `price`, `product_revenue_percentage_id`, `discount_precentage`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 50, 100.00, 6, 0, NULL, NULL),
+(2, 1, 1, 30, 110.00, 6, 0, NULL, NULL),
+(3, 1, 1, 10, 120.00, 6, 0, NULL, NULL),
+(4, 1, 1, 70, 130.00, 6, 0, NULL, NULL),
+(5, 1, 1, 67, 140.00, 6, 0, NULL, NULL),
+(6, 1, 1, 90, 150.00, 6, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -945,12 +1110,20 @@ DROP TABLE IF EXISTS `shipping_types`;
 CREATE TABLE IF NOT EXISTS `shipping_types` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
+  `shipping_days` int(11) NOT NULL,
   `fee` double(8,2) NOT NULL,
   `status` tinyint(1) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `shipping_types`
+--
+
+INSERT INTO `shipping_types` (`id`, `name`, `shipping_days`, `fee`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Standard', 7, 30.00, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1106,7 +1279,14 @@ CREATE TABLE IF NOT EXISTS `vendors` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `vendors`
+--
+
+INSERT INTO `vendors` (`id`, `name`, `vendor_type_id`, `vendor_field_type`, `address`, `maps_link`, `note`, `created_at`, `updated_at`) VALUES
+(1, 'Jumbo Stores', 1, 1, ' vendor adress, vendor adress, Cairo', 'wefwefwefe.com', '', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1118,13 +1298,20 @@ DROP TABLE IF EXISTS `vendor_contacts`;
 CREATE TABLE IF NOT EXISTS `vendor_contacts` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `vendor_id` int(11) NOT NULL,
-  `name` int(11) NOT NULL,
+  `name` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
   `title` varchar(191) COLLATE utf8_unicode_ci DEFAULT NULL,
   `phone` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `vendor_contacts`
+--
+
+INSERT INTO `vendor_contacts` (`id`, `vendor_id`, `name`, `title`, `phone`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Omar Ibrahim', 'Manager', '01114030995', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1139,7 +1326,14 @@ CREATE TABLE IF NOT EXISTS `vendor_field_types` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `vendor_field_types`
+--
+
+INSERT INTO `vendor_field_types` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'Supplier', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1154,7 +1348,15 @@ CREATE TABLE IF NOT EXISTS `vendor_types` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `vendor_types`
+--
+
+INSERT INTO `vendor_types` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'Statndard', NULL, NULL),
+(2, 'Sponser', NULL, NULL);
 
 --
 -- Constraints for dumped tables
