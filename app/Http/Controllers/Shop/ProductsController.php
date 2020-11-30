@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ProductSubCategory;
 use App\Models\Product;
+use App\Models\ProductVariant;
+use App\Models\ProductRevenuePercent;
 
 class ProductsController extends Controller
 {
@@ -17,7 +19,12 @@ class ProductsController extends Controller
     public function index($subcategory_id)
     {
         $subcategory = ProductSubCategory::findOrFail($subcategory_id);
-        return view('shop.products_index', ['subcategory' => $subcategory]);
+        $products = $subcategory->products->where('product_status_id', 1);
+
+        return view('shop.products_index', [
+                                    'subcategory' => $subcategory,
+                                    'products' => $products
+                                ]);
     }
 
     /**
@@ -47,11 +54,33 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($subcategory_id, $product_id)
+    public function show($subcategory_id, $variant_id)
     {
-        $product = Product::findOrFail($product_id);
-        $product_variants = $product->variants;
-        return view('shop.show', ['product' => $product]);
+        $product_variant = ProductVariant::findOrFAil($variant_id);
+        $product = $product_variant->product;
+        $product_stock = $product_variant->stocks->where('stock', '>', 0)->sortBy('price')->first();
+
+        $product_stock_price = $product_stock->price;
+        $product_stock_discount_percent = $product_stock->discount_precentage;
+
+        $product_stock_price_after_discount = $product_stock_price - ($product_stock_price * $product_stock_discount_percent / 100);
+
+        $product_running_cost_percent = $product->running_cost_percentage->percent;
+
+
+        $product_total_price_before_discount = $product_stock_price + ($product_stock_price * $product_running_cost_percent /100);
+        $product_total_price = $product_stock_price_after_discount + ($product_stock_price_after_discount * $product_running_cost_percent /100);
+        
+
+
+
+        return view('shop.show', [
+                        'product' => $product,
+                        'product_variant' => $product_variant,
+                        'product_stock' => $product_stock,
+                        'product_total_price_before_discount' => number_format((float)$product_total_price_before_discount, 2, '.', ''),
+                        'product_total_price' => number_format((float)$product_total_price, 2, '.', '')
+                    ]);
     }
 
     /**

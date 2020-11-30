@@ -9,7 +9,12 @@ class ProductVariantStock extends Model
 {
     use HasFactory;
 
-    public function variant()
+    public function product()
+    {
+        return $this->belongsTo('App\Models\Product');
+    }
+
+    public function product_variant()
     {
     	return $this->belongsTo('App\Models\ProductVariant');
     }
@@ -21,6 +26,6 @@ class ProductVariantStock extends Model
 
     public function revenue_percentage()
     {
-    	return $this->belongsTo('App\Models\ProductRevenuePercent');
+    	return $this->belongsTo('App\Models\ProductRevenuePercentage', 'product_revenue_percentage_id');
     }
 }

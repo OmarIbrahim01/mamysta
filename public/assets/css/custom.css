@@ -24,9 +24,21 @@
 }
 
 
-
-
-
 .black-text{
   color: black !important;
+}
+
+.product_option{
+  border: none;
+  border-radius: 3px;
+}
+
+.product_option:hover {
+  background-color: #d93c81 !important;
+  color: white !important;
+}
+
+.product_option_active{
+  border: 4px solid #d93c81 !important;
+  border-radius: 3px;
 }

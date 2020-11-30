@@ -225,7 +225,7 @@
 											<a href="{{ route('shop_subcategories', [$product_section->id, $product_category->id]) }}" class="black-text">{{ $product_category->name }}</a>
 											<ul class="submenu">
 												@foreach($product_category->product_subcategories as $product_subcategories)
-												<li><a href="product.html">{{ $product_subcategories->name }}</a></li>
+												<li><a href="{{ route('shop_products_index', [$product_subcategories->id]) }}">{{ $product_subcategories->name }}</a></li>
 												@endforeach
 											</ul>
 										</div><!-- End .col-lg-4 -->

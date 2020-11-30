@@ -19,18 +19,11 @@
 				<div class="col-md-5 product-single-gallery">
 					<div class="product-slider-container">
 						<div class="product-single-carousel owl-carousel owl-theme">
+							@foreach($product_variant->images as $image)
 							<div class="product-item">
-								<img class="product-single-image" src="/assets/images/products/zoom/product-1.jpg" data-zoom-image="assets/images/products/zoom/product-1-big.jpg"/>
+								<img class="product-single-image" src="{{ $image->image }}" data-zoom-image="{{ $image->image }}"/>
 							</div>
-							<div class="product-item">
-								<img class="product-single-image" src="/assets/images/products/zoom/product-2.jpg" data-zoom-image="assets/images/products/zoom/product-2-big.jpg"/>
-							</div>
-							<div class="product-item">
-								<img class="product-single-image" src="/assets/images/products/zoom/product-3.jpg" data-zoom-image="assets/images/products/zoom/product-3-big.jpg"/>
-							</div>
-							<div class="product-item">
-								<img class="product-single-image" src="/assets/images/products/zoom/product-4.jpg" data-zoom-image="assets/images/products/zoom/product-4-big.jpg"/>
-							</div>
+							@endforeach
 						</div>
 						<!-- End .product-single-carousel -->
 						<span class="prod-full-screen">
@@ -38,26 +31,22 @@
 						</span>
 					</div>
 					<div class="prod-thumbnail owl-dots" id='carousel-custom-dots'>
+						@foreach($product_variant->images as $image)
 						<div class="owl-dot">
-							<img src="/assets/images/products/zoom/product-1.jpg"/>
+							<img src="{{ $image->image }}"/>
 						</div>
-						<div class="owl-dot">
-							<img src="/assets/images/products/zoom/product-2.jpg"/>
-						</div>
-						<div class="owl-dot">
-							<img src="/assets/images/products/zoom/product-3.jpg"/>
-						</div>
-						<div class="owl-dot">
-							<img src="/assets/images/products/zoom/product-4.jpg"/>
-						</div>
+						@endforeach
 					</div>
 				</div><!-- End .product-single-gallery -->
 
 				<div class="col-md-7 product-single-details">
-					<h1 class="product-title">{{ $product->brand->name }} {{ $product->title }} - {{ $product->sku }}</h1>
+					<h1 class="product-title">
+						{{ $product->brand->name }} 
+						{{ $product->title }} - 
+						{{ $product->sku }}
 
-					<h1 class="product-title">Current Variant: {{ $product->variants->first()->id }}</h1>
-
+					</h1>
+					<p>Black - Small</p>
 					<div class="ratings-container">
 						<div class="product-ratings">
 							<span class="ratings" style="width:60%"></span><!-- End .ratings -->
@@ -68,43 +57,28 @@
 
 					<hr class="short-divider">
 
+
 					<div class="price-box">
-						<span class="product-price">49.00 EGP</span>
+						<span class="old-price">{{ $product_total_price_before_discount }} EGP</span>
+						<span class="product-price">{{ $product_total_price }} EGP</span>
 					</div><!-- End .price-box -->
+
 
 					<div class="product-desc">
 						<p>
-							Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolre eu fugiat nulla pariatur excepteur sint occaecat cupidatat non. Duis aute irure dolor in reprehenderit in voluptate velit esse.
-							<a href="#">(read more)</a>
+							{{ $product->description }}
 						</p>
 					</div><!-- End .product-desc -->
 					<div class="product-filters-container">
-						<div class="product-single-filter">
-							<label>Colors:</label>
-							<ul class="config-swatch-list">
-								<li class="active">
-									<a href="#" style="background-color: #0188cc;"></a>
-								</li>
-								<li>
-									<a href="#" style="background-color: #ab6e6e;"></a>
-								</li>
-								<li>
-									<a href="#" style="background-color: #ddb577;"></a>
-								</li>
-								<li>
-									<a href="#" style="background-color: #6085a5;"></a>
-								</li>
-							</ul>
-						</div><!-- End .product-single-filter -->
-						<div class="product-single-filter mb-2">
-							<label>Sizes:</label>
-							<ul class="config-size-list">
-								<li class="active"><a href="#">S</a></li>
-								<li><a href="#">M</a></li>
-								<li><a href="#">L</a></li>
-								<li><a href="#">X</a></li>
-							</ul>
-						</div><!-- End .product-single-filter -->
+						<label>Options:</label><br>
+
+						@foreach($product->variants->sortBy('product_color_id') as $variant)
+						
+						@if($variant->stocks->count() != 0)
+						<a href="{{ route('shop_products_show', [$product->subcategory->id, $variant->id]) }}" class="btn btn-sm btn-primary product_option {{ $variant->id == $product_variant->id ? 'product_option_active' : '' }}" style="background-color: {{ $variant->color->code }};">{{ $variant->size->name }}</a>
+						@endif
+
+						@endforeach
 					</div><!-- End .product-filters-container -->
 
 					<hr class="divider">

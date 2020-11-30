@@ -67,17 +67,20 @@
 				</nav>
 
 				<div class="row">
-					@foreach($subcategory->products as $product)
+					@foreach($products as $product)
+					@if($product->variants->count() > 0)
 					<div class="col-6 col-sm-4">
 						<div class="product-default inner-quickview inner-icon">
 							<figure>
-								<a href="{{ route('shop_products_show', [$subcategory->id, $product->id]) }}">
-									<img src="{{ $product->thumbnail }}">
+								<a href="{{ route('shop_products_show', [$subcategory->id, $product->cheapest_variant_id($product->id)]) }}">
+									<img src="{{ $product->cheapest_variant_image($product->id) }}" style="width: 270px; height: 244px; object-fit: contain;">
 								</a>
 								{{-- Labels --}}
 								<div class="label-group">
 									<div class="product-label label-hot">HOT</div>
-									<div class="product-label label-sale">-20%</div>
+									@if($product->cheapest_discount_percentage($product->id) > 0)
+									<div class="product-label label-sale">-{{ $product->cheapest_discount_percentage($product->id) }}%</div>
+									@endif
 								</div>
 								<div class="btn-icon-group">
 									<button class="btn-icon btn-add-cart" data-toggle="modal" data-target="#addCartModal"><i class="icon-shopping-cart"></i></button>
@@ -101,12 +104,14 @@
 									</div><!-- End .product-ratings -->
 								</div><!-- End .product-container -->
 								<div class="price-box">
-									<span class="old-price">90.00 EGP</span>
-									<span class="product-price">70.00 EGP</span>
+
+									<span class="old-price">{{ $product->cheapest_price_befor_discount($product->id) }} EGP</span>
+									<span class="product-price">{{ $product->cheapest_price_after_discount($product->id) }} EGP</span>
 								</div><!-- End .price-box -->
 							</div><!-- End .product-details -->
 						</div>
 					</div><!-- End .col-sm-4 -->
+					@endif
 					@endforeach
 
 				</div><!-- End .row -->

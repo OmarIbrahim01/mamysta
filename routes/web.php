@@ -33,7 +33,7 @@ Route::get('/shop/{subcategory_id}', [
 ]);
 
 // Product Products Show
-Route::get('/shop/{subcategory_id}/{product_id}', [
+Route::get('/shop/{subcategory_id}/{variant_id}', [
 	'as' => 'shop_products_show',
 	'uses' => 'App\Http\Controllers\Shop\ProductsController@show'
 ]);

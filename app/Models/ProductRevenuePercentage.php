@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class ProductRevenuePercentage extends Model
 {
     use HasFactory;
+
+    public function product_stock()
+    {
+    	return $this->hasMany('App\Models\ProductVariantStock');
+    }
 }
