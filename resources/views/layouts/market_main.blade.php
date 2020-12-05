@@ -129,6 +129,18 @@
 						</div><!-- End .header-search -->
 
 						
+						@auth
+
+						<a href="{{ route('logout') }}" class="header-icon" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" title="Logout">
+						    <i class="icon-export"></i>
+						</a>
+
+						<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+						    @csrf
+						</form>
+
+
+
 
 						<a href="login.html" class="header-icon login-link"><i class="icon-user-2"></i></a>
 
@@ -202,6 +214,11 @@
 								</div><!-- End .dropdownmenu-wrapper -->
 							</div><!-- End .dropdown-menu -->
 						</div><!-- End .dropdown -->
+						@else
+						<a href="{{ route('login') }}" class="header-icon" style="text-decoration: underline;">Login</a>
+						<p class="header-icon">/</p>
+						<a href="{{ route('register') }}" class="header-icon" style="text-decoration: underline;">Sign Up</a>
+						@endif
 					</div><!-- End .header-right -->
 				</div><!-- End .container -->
 			</div><!-- End .header-middle -->
@@ -214,18 +231,22 @@
 								<a href="{{ route('shop_home') }}">Home</a>
 							</li>
 
+							<li>
+								<a href="{{ route('shop_products_index') }}">All Products</a>
+							</li>
+
 
 							@foreach($product_sections as $product_section)
 							<li>
-								<a href="{{ route('shop_categories', [$product_section->id]) }}">{{ $product_section->name }}</a>
+								<a href="{{ route('shop_products_index', ['section' => $product_section->id]) }}">{{ $product_section->name }}</a>
 								<div class="megamenu megamenu-fixed-width">
 									<div class="row">
 										@foreach($product_section->product_categories as $product_category)
 										<div class="col-lg-3">
-											<a href="{{ route('shop_subcategories', [$product_section->id, $product_category->id]) }}" class="black-text">{{ $product_category->name }}</a>
+											<a href="{{ route('shop_products_index', ['section' => $product_section->id, 'category' => $product_category->id]) }}" class="black-text">{{ $product_category->name }}</a>
 											<ul class="submenu">
-												@foreach($product_category->product_subcategories as $product_subcategories)
-												<li><a href="{{ route('shop_products_index', [$product_subcategories->id]) }}">{{ $product_subcategories->name }}</a></li>
+												@foreach($product_category->product_subcategories as $product_subcategory)
+												<li><a href="{{ route('shop_products_index', ['section' => $product_section->id, 'category' => $product_category->id , 'subcategory' => $product_subcategory->id ]) }}">{{ $product_subcategory->name }}</a></li>
 												@endforeach
 											</ul>
 										</div><!-- End .col-lg-4 -->
@@ -247,6 +268,32 @@
 				</div><!-- End .container -->
 			</div><!-- End .header-bottom -->
 		</header><!-- End .header -->
+
+
+		@if ($errors->any())
+	        <div class="alert alert-danger alert-dismissible fade show notification_popup">
+	            <ul>
+	                @foreach ($errors->all() as $error)
+	                    <li>{{ $error }}</li>
+	                @endforeach
+	            </ul>
+	            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	              <span aria-hidden="true">&times;</span>
+	            </button>
+	        </div>
+	    @endif
+
+	    @if (session()->has('message'))
+	        <div class="alert alert-success alert-dismissible fade show notification_popup">
+	            <ul>
+	              <li>{{ session('message') }}</li>
+	            </ul>
+	            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	              <span aria-hidden="true">&times;</span>
+	            </button>
+	        </div>
+	    @endif
+
 
 		{{-- Content Section --}}
 		@yield('content')

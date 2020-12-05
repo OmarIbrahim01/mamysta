@@ -4,7 +4,12 @@ namespace App\Http\Controllers\Shop;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+
+use App\Models\ProductSection;
+use App\Models\ProductCategory;
 use App\Models\ProductSubCategory;
+use App\Models\Brand;
+
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\ProductRevenuePercent;
@@ -16,14 +21,62 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($subcategory_id)
+    public function index(Request $request)
     {
-        $subcategory = ProductSubCategory::findOrFail($subcategory_id);
-        $products = $subcategory->products->where('product_status_id', 1);
+        $all_sections = ProductSection::all();
+        $all_categories = ProductCategory::all();
+        $all_subcategories = ProductSubcategory::all();
+        $all_brands = Brand::all();
+
+        if(isset($request->section)){
+            $current_section = ProductSection::findOrFail($request->section);
+        }else{
+            $current_section = null;
+        }
+
+        if(isset($request->category)){
+            $current_category = ProductCategory::findOrFail($request->category);
+        }else{
+            $current_category = null;
+        }
+
+        if(isset($request->subcategory)){
+            $current_subcategory = ProductSubcategory::findOrFail($request->subcategory);
+        }else{
+            $current_subcategory = null;
+        }
+        
+
+        $products = Product::all()->where('product_status_id', 1);
+
+
+        if(isset($request->section)){
+            $products = $products->where('product_section_id', $request->section);
+        }
+
+        if(isset($request->category)){
+            $products = $products->where('product_category_id', $request->category);
+        }
+
+        if(isset($request->subcategory)){
+            $products = $products->where('product_sub_category_id', $request->subcategory);
+        }
+
+
+        $products = $products->sortByDesc('sold_times');
+
 
         return view('shop.products_index', [
-                                    'subcategory' => $subcategory,
-                                    'products' => $products
+                                    'all_sections' => $all_sections,
+                                    'all_categories' => $all_categories,
+                                    'all_subcategories' => $all_subcategories,
+                                    'all_brands' => $all_brands,
+
+                                    'current_section' => $current_section,
+                                    'current_category' => $current_category,
+                                    'current_subcategory' => $current_subcategory,
+
+                                    'products' => $products                                
                                 ]);
     }
 
@@ -54,8 +107,9 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($subcategory_id, $variant_id)
+    public function show($variant_id)
     {
+
         $product_variant = ProductVariant::findOrFAil($variant_id);
         $product = $product_variant->product;
         $product_stock = $product_variant->stocks->where('stock', '>', 0)->sortBy('price')->first();

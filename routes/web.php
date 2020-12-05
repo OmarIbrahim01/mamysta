@@ -17,6 +17,11 @@ Route::get('/', function () {
     return redirect()->route('shop_home');
 });
 
+Route::get('/home', [
+	'as' => 'home',
+	'uses' => 'App\Http\Controllers\Shop\HomeController@index'
+]);
+
 
 ////////////////////////////////////////////////////////
 /////////////////////Market Routes/////////////////////
@@ -27,33 +32,15 @@ Route::get('/shop', [
 ]);
 
 // Product SubCategories Products Index
-Route::get('/shop/{subcategory_id}', [
+Route::get('/shop/products/', [
 	'as' => 'shop_products_index',
 	'uses' => 'App\Http\Controllers\Shop\ProductsController@index'
 ]);
 
 // Product Products Show
-Route::get('/shop/{subcategory_id}/{variant_id}', [
+Route::get('/shop/products/{product_variant_id}', [
 	'as' => 'shop_products_show',
 	'uses' => 'App\Http\Controllers\Shop\ProductsController@show'
-]);
-
-// Product Sections Index
-Route::get('/shop/sections', [
-	'as' => 'shop_sections',
-	'uses' => 'App\Http\Controllers\Shop\SectionsController@index'
-]);
-
-// Product Categories Index
-Route::get('/shop/{section_id}/categories', [
-	'as' => 'shop_categories',
-	'uses' => 'App\Http\Controllers\Shop\CategoriesController@index'
-]);
-
-// Product SubCategories Index
-Route::get('/shop/{section_id}/{category_id}/subcategories', [
-	'as' => 'shop_subcategories',
-	'uses' => 'App\Http\Controllers\Shop\SubCategoriesController@index'
 ]);
 
 

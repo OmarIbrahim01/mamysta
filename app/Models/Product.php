@@ -49,7 +49,7 @@ class Product extends Model
     public function cheapest_price_befor_discount($product_id){
         $product = Product::findOrFail($product_id);
 
-        $price = $product->stocks->where('stock', '>', 0)->sortBy('price')->first()->price;
+        $price = $product->stocks->where('stock', '>', 0)->sortByDesc('price')->first()->price;
 
         $running_cost_percent = $product->running_cost_percentage->percent;
 

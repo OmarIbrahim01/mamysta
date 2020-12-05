@@ -30,13 +30,13 @@
 							<i class="icon-plus"></i>
 						</span>
 					</div>
-					<div class="prod-thumbnail owl-dots" id='carousel-custom-dots'>
+					{{-- <div class="prod-thumbnail owl-dots" id='carousel-custom-dots'>
 						@foreach($product_variant->images as $image)
 						<div class="owl-dot">
 							<img src="{{ $image->image }}"/>
 						</div>
 						@endforeach
-					</div>
+					</div> --}}
 				</div><!-- End .product-single-gallery -->
 
 				<div class="col-md-7 product-single-details">
@@ -46,7 +46,7 @@
 						{{ $product->sku }}
 
 					</h1>
-					<p>Black - Small</p>
+					<p>Color: ({{ $product_variant->color->name }}) - Size: ({{ $product_variant->size->name }})</p>
 					<div class="ratings-container">
 						<div class="product-ratings">
 							<span class="ratings" style="width:60%"></span><!-- End .ratings -->
@@ -75,7 +75,7 @@
 						@foreach($product->variants->sortBy('product_color_id') as $variant)
 						
 						@if($variant->stocks->count() != 0)
-						<a href="{{ route('shop_products_show', [$product->subcategory->id, $variant->id]) }}" class="btn btn-sm btn-primary product_option {{ $variant->id == $product_variant->id ? 'product_option_active' : '' }}" style="background-color: {{ $variant->color->code }};">{{ $variant->size->name }}</a>
+						<a href="{{ route('shop_products_show', [$variant->id]) }}" class="btn btn-sm btn-primary product_option {{ $variant->id == $product_variant->id ? 'product_option_active' : '' }}" style="background-color: {{ $variant->color->code }};">{{ $variant->size->name }}</a>
 						@endif
 
 						@endforeach

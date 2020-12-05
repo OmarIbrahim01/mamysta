@@ -6,6 +6,9 @@
 @section('content')
 
 <main class="main">
+
+	
+
 	
 	{{-- Banner Goes Here --}}
 
@@ -13,66 +16,100 @@
 		<nav aria-label="breadcrumb" class="breadcrumb-nav">
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item"><a href="index.html"><i class="icon-home"></i></a></li>
-				<li class="breadcrumb-item"><a href="index.html">Home</a></li>
-				<li class="breadcrumb-item"><a href="#">Shop</a></li>
-				<li class="breadcrumb-item"><a href="#">{{ $subcategory->product_category->name }}</a></li>	
-				<li class="breadcrumb-item active" aria-current="page">{{ $subcategory->name }}</li>
+				<li class="breadcrumb-item"><a href="index.html">Shop</a></li>
+
+				@if(isset(request()->section))
+				<li class="breadcrumb-item"><a href="{{ route('shop_products_index', ['section' => request()->section]) }}">{{ $current_section->name }}</a></li>
+				@endif
+
+				@if(isset(request()->category))
+				<li class="breadcrumb-item"><a href="{{ route('shop_products_index', ['section' => request()->section, 'category' => request()->category]) }}">{{ $current_category->name }}</a></li>
+				@endif
+
+				@if(isset(request()->subcategory))
+				<li class="breadcrumb-item"><a href="{{ route('shop_products_index', ['section' => request()->section, 'category' => request()->category, 'subcategory' => request()->subcategory]) }}">{{ $current_subcategory->name }}</a></li>
+				@endif
+
+			
+				
+				
 			</ol>
 		</nav>
 
 		<div class="row">
 			<div class="col-lg-9 main-content">
-				<nav class="toolbox">
-					<div class="toolbox-left">
-						<div class="toolbox-item toolbox-sort">
-							<label>Sort By:</label>
 
-							<div class="select-custom">
-								<select name="orderby" class="form-control">
-									<option value="menu_order" selected="selected">Default sorting</option>
-									<option value="popularity">Sort by popularity</option>
-									<option value="rating">Sort by average rating</option>
-									<option value="date">Sort by newness</option>
-									<option value="price">Sort by price: low to high</option>
-									<option value="price-desc">Sort by price: high to low</option>
-								</select>
-							</div><!-- End .select-custom -->
+				@if(!isset(request()->section) && !isset(request()->category) && !isset(request()->subcategory))
+				<section class="product-category-panel" style="margin-bottom: 0 !important;">
+			        <div class="row row-sm">
+			        	@foreach($all_sections as $section)
+			            <div class="col-6 col-sm-4 col-lg-3">
+			                <div class="product-category">
+			                    <a href="{{ route('shop_products_index', ['section' => $section->id]) }}">
+			                        <figure>
+			                            <img src="{{ $section->image }}">
+			                        </figure>
+			                        <div class="category-content">
+			                            <h3>{{ $section->name }}</h3>
+			                        </div>
+			                    </a>
+			                </div>
+			            </div>
+			            @endforeach
+			        </div>
+			    </section>
+			    @endif
 
-							
-						</div><!-- End .toolbox-item -->
-					</div><!-- End .toolbox-left -->
+				@if(isset(request()->section) && !isset(request()->category) && !isset(request()->subcategory))
+				<section class="product-category-panel">
+			        <div class="row row-sm">
+			        	@foreach($current_section->product_categories as $category)
+			            <div class="col-6 col-sm-4 col-lg-3">
+			                <div class="product-category">
+			                    <a href="{{ route('shop_products_index', ['section' => request()->section, 'category' => $category->id]) }}">
+			                        <figure>
+			                            <img src="{{ $category->image }}">
+			                        </figure>
+			                        <div class="category-content">
+			                            <h3>{{ $category->name }}</h3>
+			                        </div>
+			                    </a>
+			                </div>
+			            </div>
+			            @endforeach
+			        </div>
+			    </section>
+			    @endif
 
-					<div class="toolbox-right">
-						<div class="toolbox-item toolbox-show">
-							<label>Show:</label>
+			    @if(isset(request()->section) && isset(request()->category) && !isset(request()->subcategory))
+				<section class="product-category-panel">
+			        <div class="row row-sm">
+			        	@foreach($current_category->product_subcategories as $subcategory)
+			            <div class="col-6 col-sm-4 col-lg-3">
+			                <div class="product-category">
+			                    <a href="{{ route('shop_products_index', ['section' => request()->section, 'category' => request()->category, 'subcategory' => $subcategory->id]) }}">
+			                        <figure>
+			                            <img src="{{ $subcategory->image }}">
+			                        </figure>
+			                        <div class="category-content">
+			                            <h3>{{ $subcategory->name }}</h3>
+			                        </div>
+			                    </a>
+			                </div>
+			            </div>
+			            @endforeach
+			        </div>
+			    </section>
+			    @endif
 
-							<div class="select-custom">
-								<select name="count" class="form-control">
-									<option value="12">12</option>
-									<option value="24">24</option>
-									<option value="36">36</option>
-								</select>
-							</div><!-- End .select-custom -->
-						</div><!-- End .toolbox-item -->
-
-						<div class="toolbox-item layout-modes">
-							<a href="category.html" class="layout-btn btn-grid active" title="Grid">
-								<i class="icon-mode-grid"></i>
-							</a>
-							<a href="category-list.html" class="layout-btn btn-list" title="List">
-								<i class="icon-mode-list"></i>
-							</a>
-						</div><!-- End .layout-modes -->
-					</div><!-- End .toolbox-right -->
-				</nav>
-
+			    <hr>
 				<div class="row">
 					@foreach($products as $product)
-					@if($product->variants->count() > 0)
+					@if($product->variants->count() > 0 && $product->stocks->count() > 0)
 					<div class="col-6 col-sm-4">
 						<div class="product-default inner-quickview inner-icon">
 							<figure>
-								<a href="{{ route('shop_products_show', [$subcategory->id, $product->cheapest_variant_id($product->id)]) }}">
+								<a href="{{ route('shop_products_show', [$product->cheapest_variant_id($product->id)]) }}">
 									<img src="{{ $product->cheapest_variant_image($product->id) }}" style="width: 270px; height: 244px; object-fit: contain;">
 								</a>
 								{{-- Labels --}}
@@ -85,17 +122,17 @@
 								<div class="btn-icon-group">
 									<button class="btn-icon btn-add-cart" data-toggle="modal" data-target="#addCartModal"><i class="icon-shopping-cart"></i></button>
 								</div>
-								<a href="{{ route('shop_products_show', [$subcategory->id, $product->id]) }}" class="btn-quickview" title="Quick View">View</a> 
+								<a href="{{ route('shop_products_show', [$product->cheapest_variant_id($product->id)]) }}" class="btn-quickview" title="Quick View">View</a> 
 							</figure>
 							<div class="product-details">
 								<div class="category-wrap">
 									<div class="category-list">
-										<a href="#" class="product-category">{{ $subcategory->name }}</a>
+										<a href="#" class="product-category">product subcategory</a>
 									</div>
 									<a href="#" class="btn-icon-wish"><i class="icon-heart"></i></a>
 								</div>
 								<h2 class="product-title">
-									<a href="{{ route('shop_products_show', [$subcategory->id, $product->id]) }}">{{ $product->brand->name }} - {{ $product->title }}</a>
+									<a href="{{ route('shop_products_show', [$product->cheapest_variant_id($product->id)]) }}">{{ $product->brand->name }} - {{ $product->title }}</a>
 								</h2>
 								<div class="ratings-container">
 									<div class="product-ratings">
@@ -140,64 +177,60 @@
 			<div class="sidebar-toggle"><i class="fas fa-sliders-h"></i></div>
 			<aside class="sidebar-shop col-lg-3 order-lg-first mobile-sidebar">
 				<div class="sidebar-wrapper">
+
+
+
 					<div class="widget">
 						<h3 class="widget-title">
-							<a data-toggle="collapse" href="#widget-body-2" role="button" aria-expanded="true" aria-controls="widget-body-2">Categories</a>
+							<a data-toggle="collapse" href="#sections-widget" role="button" aria-expanded="true" aria-controls="sections-widget">Sections</a>
 						</h3>
-
-						<div class="collapse show" id="widget-body-2">
+						<div class="collapse show" id="sections-widget">
 							<div class="widget-body">
 								<ul class="cat-list">
-									<li><a href="#">Accessories</a></li>
-									<li><a href="#">Watch Fashion</a></li>
-									<li><a href="#">Tees, Knits &amp; Polos</a></li>
-									<li><a href="#">Pants &amp; Denim</a></li>
+									@foreach($all_sections as $section)
+									<li><a href="{{ route('shop_products_index', ['section' => $section->id]) }}" class="{{ $section->id == request()->section ? 'text-active' : '' }}">{{ $section->name }}</a></li>
+									@endforeach
 								</ul>
 							</div><!-- End .widget-body -->
 						</div><!-- End .collapse -->
 					</div><!-- End .widget -->
 
+					@if(isset(request()->section))
 					<div class="widget">
 						<h3 class="widget-title">
-							<a data-toggle="collapse" href="#widget-body-3" role="button" aria-expanded="true" aria-controls="widget-body-3">Price</a>
+							<a data-toggle="collapse" href="#categories-widget" role="button" aria-expanded="true" aria-controls="categories-widget">Categories</a>
 						</h3>
-
-						<div class="collapse show" id="widget-body-3">
-							<div class="widget-body">
-								<form action="#">
-									<div class="price-slider-wrapper">
-										<div id="price-slider"></div><!-- End #price-slider -->
-									</div><!-- End .price-slider-wrapper -->
-
-									<div class="filter-price-action d-flex align-items-center justify-content-between flex-wrap">
-										<button type="submit" class="btn btn-primary">Filter</button>
-
-										<div class="filter-price-text">
-											Price:
-											<span id="filter-price-range"></span>
-										</div><!-- End .filter-price-text -->
-									</div><!-- End .filter-price-action -->
-								</form>
-							</div><!-- End .widget-body -->
-						</div><!-- End .collapse -->
-					</div><!-- End .widget -->
-
-					<div class="widget">
-						<h3 class="widget-title">
-							<a data-toggle="collapse" href="#widget-body-4" role="button" aria-expanded="true" aria-controls="widget-body-4">Size</a>
-						</h3>
-
-						<div class="collapse show" id="widget-body-4">
+						<div class="collapse show" id="categories-widget">
 							<div class="widget-body">
 								<ul class="cat-list">
-									<li><a href="#">Small</a></li>
-									<li><a href="#">Medium</a></li>
-									<li><a href="#">Large</a></li>
-									<li><a href="#">Extra Large</a></li>
+									@foreach($current_section->product_categories as $category)
+									<li><a href="{{ route('shop_products_index', ['section' => request()->section, 'category' => $category->id]) }}" class="{{ $category->id == request()->category ? 'text-active' : '' }}">{{ $category->name }}</a></li>
+									@endforeach
 								</ul>
 							</div><!-- End .widget-body -->
 						</div><!-- End .collapse -->
 					</div><!-- End .widget -->
+					@endif
+
+
+					@if(isset(request()->category))
+					<div class="widget">
+						<h3 class="widget-title">
+							<a data-toggle="collapse" href="#subcategory-widget" role="button" aria-expanded="true" aria-controls="subcategory-widge">SubCategories</a>
+						</h3>
+						<div class="collapse show" id="subcategory-widge">
+							<div class="widget-body">
+								<ul class="cat-list">
+									@foreach($current_category->product_subcategories as $subcategory)
+									<li><a href="{{ route('shop_products_index', ['section' => request()->section, 'category' => request()->category, 'subcategory' => $subcategory->id]) }}" class="{{ $subcategory->id == request()->subcategory ? 'text-active' : '' }}">{{ $subcategory->name }}</a></li>
+									@endforeach
+								</ul>
+							</div><!-- End .widget-body -->
+						</div><!-- End .collapse -->
+					</div><!-- End .widget -->
+					@endif
+
+
 
 					<div class="widget">
 						<h3 class="widget-title">
@@ -207,59 +240,15 @@
 						<div class="collapse show" id="widget-body-5">
 							<div class="widget-body">
 								<ul class="cat-list">
-									<li><a href="#">Adidas</a></li>
-									<li><a href="#">Calvin Klein (26)</a></li>
-									<li><a href="#">Diesel (3)</a></li>
-									<li><a href="#">Lacoste (8)</a></li>
+									@foreach($all_brands as $brand)
+									<li><a href="#">{{ $brand->name }}</a></li>
+									@endforeach
 								</ul>
 							</div><!-- End .widget-body -->
 						</div><!-- End .collapse -->
 					</div><!-- End .widget -->
 
-					<div class="widget">
-						<h3 class="widget-title">
-							<a data-toggle="collapse" href="#widget-body-6" role="button" aria-expanded="true" aria-controls="widget-body-6">Color</a>
-						</h3>
-
-						<div class="collapse show" id="widget-body-6">
-							<div class="widget-body">
-								<ul class="config-swatch-list">
-									<li class="active">
-										<a href="#" style="background-color: #000;"></a>
-										<span>Black</span>
-									</li>
-									<li>
-										<a href="#" style="background-color: #0188cc;"></a>
-										<span>Blue</span>
-									</li>
-									<li>
-										<a href="#" style="background-color: #81d742;"></a>
-										<span>Green</span>
-									</li>
-									<li>
-										<a href="#" style="background-color: #6085a5;"></a>
-										<span>Indigo</span>
-									</li>
-									<li>
-										<a href="#" style="background-color: #ab6e6e;"></a>
-										<span>Red</span>
-									</li>
-									<li>
-										<a href="#" style="background-color: #ddb373;"></a>
-										<span>Brown</span>
-									</li>
-									<li>
-										<a href="#" style="background-color: #6b97bf;"></a>
-										<span>Light-Blue</span>
-									</li>
-									<li>
-										<a href="#" style="background-color: #eded68;"></a>
-										<span>Yellow</span>
-									</li>
-								</ul>
-							</div><!-- End .widget-body -->
-						</div><!-- End .collapse -->
-					</div><!-- End .widget -->
+					
 
 					<div class="widget widget-featured">
 						<h3 class="widget-title">Featured</h3>
