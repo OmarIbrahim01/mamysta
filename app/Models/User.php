@@ -40,4 +40,23 @@ class User extends \TCG\Voyager\Models\User
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+
+    public function cart_items()
+    {
+        return $this->hasMany('App\Models\UserCartItem');
+    }
+
+
+    public function phones()
+    {
+        return $this->hasMany('App\Models\UserPhone');
+    }
+
+
+    public function addresses()
+    {
+        return $this->hasMany('App\Models\UserAddress');
+    }
 }

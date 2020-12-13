@@ -19,7 +19,7 @@
     <div class="container" style="width: 40%;">
         <div class="heading mb-4">
             <h2 class="title">Login</h2>
-            <p>Please enter your email and Password to login.</p>
+            <p>Please enter your Email and Password to login.</p>
         </div><!-- End .heading -->
 
         <form method="POST" action="{{ route('login') }}">

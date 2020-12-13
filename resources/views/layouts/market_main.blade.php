@@ -131,85 +131,96 @@
 						
 						@auth
 
-						<a href="{{ route('logout') }}" class="header-icon" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" title="Logout">
-						    <i class="icon-export"></i>
-						</a>
-
-						<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-						    @csrf
-						</form>
-
-
-
-
-						<a href="login.html" class="header-icon login-link"><i class="icon-user-2"></i></a>
-
-						<a href="#" class="header-icon"><i class="icon-wishlist-2"></i></a>
+						<div class="dropdown cart-dropdown" style="margin-right: 20px;">
+							<a href="#" class="dropdown-toggle dropdown-arrow" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+								<i class="icon-user-2"></i>
+							</a>
+							<div class="dropdown-menu">
+								<div class="dropdownmenu-wrapper">
+									<div class="dropdown-cart-header">
+										<p class="text-center">Hello, {{ Auth::user()->name }}</p>
+									</div><!-- End .dropdown-cart-header -->
+									<div class="row" style="margin: 20px 45px 10px 45px;">
+										<a href="#" class="btn btn-link link-primary"><i class="icon-user-2"></i> Account</a>
+									</div>
+									<div class="row" style="margin: 10px 45px;">
+										<a href="#" class="btn btn-link link-primary"><i class="icon-bag-2"></i> My Orders</a>
+									</div>
+									<div class="row" style="margin: 10px 45px;">
+										<a href="#" class="btn btn-link link-primary"><i class="icon-wishlist-2"></i> Favourites</a>
+									</div>
+									<br>
+									<div class="row" style="margin: 10px 45px;">
+										<a href="#" class="btn btn-link link-primary" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="icon-right-open-big"></i> Logout</a>
+										<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+										    @csrf
+										</form>
+									</div>
+								</div><!-- End .dropdownmenu-wrapper -->
+							</div><!-- End .dropdown-menu -->
+						</div><!-- End .dropdown -->
 
 						<div class="dropdown cart-dropdown">
 							<a href="#" class="dropdown-toggle dropdown-arrow" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
 								<i class="icon-shopping-cart"></i>
-								<span class="cart-count badge-circle">2</span>
+								<?php $cart_items_count = 0 ?>
+								@foreach($user_cart_items as $user_cart_item)
+								<?php $cart_items_count += $user_cart_item->quantity ?>
+								@endforeach
+								<span class="cart-count badge-circle">{{ $cart_items_count }}</span>
 							</a>
 
 							<div class="dropdown-menu">
 								<div class="dropdownmenu-wrapper">
 									<div class="dropdown-cart-header">
-										<span>2 Items</span>
-										
-										<a href="cart.html" class="float-right">View Cart</a>
+										<span>{{ $cart_items_count }}</span>
+										<a href="{{ route('shop_cart_index') }}" class="float-right">View Cart</a>
 									</div><!-- End .dropdown-cart-header -->
 									
 									<div class="dropdown-cart-products">
+										<?php $items_total_price = 0; ?>
+										@if($user_cart_items->count() > 0)
+										@foreach($user_cart_items as $user_cart_item)
+										<?php $items_total_price += $user_cart_item->stock->total($user_cart_item->stock->id) * $user_cart_item->quantity; ?>
 										<div class="product">
 											<div class="product-details">
 												<h4 class="product-title">
-													<a href="product.html">Woman Ring</a>
+													<a href="{{ route('shop_products_show', [$user_cart_item->variant->id]) }}">{{ $user_cart_item->product->brand->name }} {{ $user_cart_item->product->title }}</a>
 												</h4>
 												
 												<span class="cart-product-info">
-													<span class="cart-product-qty">1</span>
-													x $99.00
+													<span class="cart-product-qty">{{ $user_cart_item->quantity }}</span>
+													x <span style="color: darkred;">{{ $user_cart_item->stock->total($user_cart_item->stock->id) }} EGP </span>
 												</span>
 											</div><!-- End .product-details -->
 												
 											<figure class="product-image-container">
-												<a href="product.html" class="product-image">
-													<img src="/assets/images/products/cart/product-1.jpg" alt="product" width="80" height="80">
+												<a href="{{ route('shop_products_show', [$user_cart_item->variant->id]) }}" class="product-image">
+													<img src="{{ $user_cart_item->variant->images->first()->image }}" alt="product" style="width: 70px; height: 70px; object-fit: contain;">
 												</a>
-												<a href="#" class="btn-remove icon-cancel" title="Remove Product"></a>
+												<a href="#" onclick="event.preventDefault(); document.getElementById('remove_cart_item_{{ $user_cart_item->id }}').submit();" class="btn-remove icon-cancel" title="Remove Product"></a>
+												<form id="remove_cart_item_{{ $user_cart_item->id }}" action="{{ route('shop_cart_delete_item', [$user_cart_item->id]) }}" method="POST" style="display: none;">
+													@method('delete')
+												    @csrf
+												</form>
 											</figure>
 										</div><!-- End .product -->
+										@endforeach
+										@endif
 										
-										<div class="product">
-											<div class="product-details">
-												<h4 class="product-title">
-													<a href="product.html">Woman Necklace</a>
-												</h4>
-												
-												<span class="cart-product-info">
-													<span class="cart-product-qty">1</span>
-													x $35.00
-												</span>
-											</div><!-- End .product-details -->
-											
-											<figure class="product-image-container">
-												<a href="product.html" class="product-image">
-													<img src="/assets/images/products/cart/product-2.jpg" alt="product" width="80" height="80">
-												</a>
-												<a href="#" class="btn-remove icon-cancel" title="Remove Product"></a>
-											</figure>
-										</div><!-- End .product -->
 									</div><!-- End .cart-product -->
 									
 									<div class="dropdown-cart-total">
 										<span>Total</span>
 										
-										<span class="cart-total-price float-right">$134.00</span>
+										<span class="cart-total-price float-right">{{ $items_total_price }} EGP</span>
 									</div><!-- End .dropdown-cart-total -->
 									
 									<div class="dropdown-cart-action">
-										<a href="checkout-shipping.html" class="btn btn-dark btn-block">Checkout</a>
+										<a href="{{ route('shop_cart_index') }}" class="btn btn-dark btn-block">View Shopping Cart</a>
+									</div><!-- End .dropdown-cart-total -->
+									<div class="dropdown-cart-action">
+										<a href="{{ route('shop_checkout') }}" class="btn btn-primary btn-block">Proceed To Checkout</a>
 									</div><!-- End .dropdown-cart-total -->
 								</div><!-- End .dropdownmenu-wrapper -->
 							</div><!-- End .dropdown-menu -->

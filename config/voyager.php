@@ -11,8 +11,8 @@ return [
     */
 
     'user' => [
-        'add_default_role_on_register' => true,
-        'default_role'                 => 'user',
+        'add_default_role_on_register' => false,
+        'default_role'                 => 'customer',
         'default_avatar'               => 'users/default.png',
         'redirect'                     => '/admin',
     ],

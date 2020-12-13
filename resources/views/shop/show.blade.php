@@ -83,13 +83,18 @@
 
 					<hr class="divider">
 
-					<div class="product-action">
-						<div class="product-single-qty">
-							<input class="horizontal-quantity form-control" type="text">
-						</div><!-- End .product-single-qty -->
-
-						<a href="cart.html" class="btn btn-dark add-cart icon-shopping-cart" title="Add to Cart">Add to Cart</a>
-					</div><!-- End .product-action -->
+					<form id="add_to_cart" action="{{ route('shop_cart_add_item') }}" method="POST">
+						@csrf
+						<input type="hidden" name="product_id" value="{{ $product->id }}">
+					    <input type="hidden" name="variant_id" value="{{ $product_variant->id }}">
+					    <input type="hidden" name="stock_id" value="{{ $product_stock->id }}">
+						<div class="product-action">
+							<div class="product-single-qty">
+								<input class="horizontal-quantity form-control" type="text" name="quantity">
+							</div><!-- End .product-single-qty -->
+							<a href="#" class="btn btn-dark add-cart icon-shopping-cart" title="Add to Cart" onclick="event.preventDefault(); document.getElementById('add_to_cart').submit();">Add to Cart</a>
+						</div><!-- End .product-action -->
+					</form>
 
 					<hr class="divider mb-1">
 

@@ -1,3 +1,7 @@
+.link-primary{
+  color: #d93c81 !important;
+}
+
 .outlined-btn {
   border: 2px solid black !important;
   background-color: white !important;
@@ -54,4 +58,5 @@
   bottom: 2px !important;
   right: 25px !important;
   width: 250px !important;
+  z-index: 100;
 }

@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UserPhone extends Model
+class Region extends Model
 {
     use HasFactory;
 
-    public function user()
+    public function cities()
     {
-        return $this->belongTo('App\Models\User');
+        return $this->hasMany('App\Models\City');
     }
 }

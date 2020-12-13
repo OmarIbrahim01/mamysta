@@ -48,15 +48,9 @@ class Product extends Model
 
     public function cheapest_price_befor_discount($product_id){
         $product = Product::findOrFail($product_id);
-
         $price = $product->stocks->where('stock', '>', 0)->sortByDesc('price')->first()->price;
-
         $running_cost_percent = $product->running_cost_percentage->percent;
-
-
         $final_price = $price + ($price * $running_cost_percent / 100);
-
-
         
         return number_format((float)$final_price, 2, '.', '');
     }
@@ -64,18 +58,14 @@ class Product extends Model
 
     public function cheapest_price_after_discount($product_id){
         $product = Product::findOrFail($product_id);
-
-        $price = $product->stocks->where('stock', '>', 0)->sortBy('price')->first()->price;
-        $discount_percent = $product->stocks->where('stock', '>', 0)->sortBy('price')->first()->discount_precentage;
-
-        $price_after_discount = $price - ($price * $discount_percent/100);
-
+        $product_variant_stock = $product->stocks->where('stock', '>', 0)->sortBy('price')->first();
+        $price = $product_variant_stock->price;
+        $vendor_discount_percentage = $product_variant_stock->vendor_discount_percentage;
+        $our_discount_percentage = $product_variant_stock->our_discount_percentage;
+        $total_discount_percentage = $vendor_discount_percentage + $our_discount_percentage;
+        $price_after_discount = $price - ($price * $total_discount_percentage/100);
         $running_cost_percent = $product->running_cost_percentage->percent;
-
-
         $final_price = $price_after_discount + ($price_after_discount * $running_cost_percent / 100);
-
-
 
         return number_format((float)$final_price, 2, '.', '');
     }
@@ -83,9 +73,12 @@ class Product extends Model
 
      public function cheapest_discount_percentage($product_id){
         $product = Product::findOrFail($product_id);
-        $discount_percent = $product->stocks->where('stock', '>', 0)->sortBy('price')->first()->discount_precentage;
+        $product_stock = $product->stocks->where('stock', '>', 0)->sortBy('price')->first();
+        $vendor_discount_percentage = $product_stock->vendor_discount_percentage;
+        $our_discount_percentage = $product_stock->our_discount_percentage;
+        $total_discount_percentage = $vendor_discount_percentage + $our_discount_percentage;
 
-        return $discount_percent;
+        return $total_discount_percentage;
     }
 
      public function cheapest_variant_id($product_id){

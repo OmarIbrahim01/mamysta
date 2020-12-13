@@ -115,9 +115,12 @@ class ProductsController extends Controller
         $product_stock = $product_variant->stocks->where('stock', '>', 0)->sortBy('price')->first();
 
         $product_stock_price = $product_stock->price;
-        $product_stock_discount_percent = $product_stock->discount_precentage;
 
-        $product_stock_price_after_discount = $product_stock_price - ($product_stock_price * $product_stock_discount_percent / 100);
+        $product_stock_vendor_discount_percentage = $product_stock->vendor_discount_percentage;
+        $product_stock_our_discount_percentage = $product_stock->our_discount_percentage;
+        $product_stock_total_discount_percentage = $product_stock_vendor_discount_percentage + $product_stock_our_discount_percentage;
+
+        $product_stock_price_after_discount = $product_stock_price - ($product_stock_price * $product_stock_total_discount_percentage / 100);
 
         $product_running_cost_percent = $product->running_cost_percentage->percent;
 

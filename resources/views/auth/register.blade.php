@@ -20,7 +20,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h2>Sign Up</h2>
-                
+                <p>Please enter the information required to create your account.</p>
                 <form  method="POST" action="{{ route('register') }}" oninput='confirm_password.setCustomValidity(confirm_password.value != password.value ? "Passwords do not match." : "")'>
                     @csrf
 
@@ -61,7 +61,7 @@
 
                     <div class="col-md-12">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="terms" id="terms" required>
+                            <input class="form-check-input" type="checkbox" name="terms" id="terms">
                             <label class="form-check-label" for="terms" style="margin-left: 5px;">I accept the Terms & Conditions</label>
                         </div>
                     </div>
@@ -75,7 +75,7 @@
                     </div>
 
                     <div class="mb-2"></div><!-- margin -->
-
+                    
                     <div class="row">
                         <div class="col-md-6 mx-auto">
                             <div class="form-footer">
