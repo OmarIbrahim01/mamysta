@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 23, 2020 at 07:04 PM
+-- Generation Time: Dec 25, 2020 at 09:18 PM
 -- Server version: 5.7.26
 -- PHP Version: 7.3.5
 
@@ -51,14 +51,15 @@ CREATE TABLE IF NOT EXISTS `brands` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `brands`
 --
 
 INSERT INTO `brands` (`id`, `name`, `description`, `created_at`, `updated_at`) VALUES
-(1, 'Zara', 'Zara Brand', NULL, NULL);
+(1, 'Zara', 'Zara Brand', NULL, NULL),
+(2, 'Nania', 'Nania Brand', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -91,6 +92,31 @@ INSERT INTO `categories` (`id`, `parent_id`, `order`, `name`, `slug`, `created_a
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `cities`
+--
+
+DROP TABLE IF EXISTS `cities`;
+CREATE TABLE IF NOT EXISTS `cities` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `region_id` int(11) NOT NULL,
+  `name` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `cities`
+--
+
+INSERT INTO `cities` (`id`, `region_id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Nasr City', NULL, NULL),
+(2, 1, '5th Settlement', NULL, NULL),
+(3, 2, 'Haram', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `data_rows`
 --
 
@@ -111,24 +137,23 @@ CREATE TABLE IF NOT EXISTS `data_rows` (
   `order` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `data_rows_data_type_id_foreign` (`data_type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `data_rows`
 --
 
 INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, `required`, `browse`, `read`, `edit`, `add`, `delete`, `details`, `order`) VALUES
-(1, 1, 'id', 'number', 'ID', 1, 0, 0, 0, 0, 0, NULL, 1),
-(2, 1, 'name', 'text', 'Name', 1, 1, 1, 1, 1, 1, NULL, 2),
-(3, 1, 'email', 'text', 'Email', 1, 1, 1, 1, 1, 1, NULL, 3),
-(4, 1, 'password', 'password', 'Password', 1, 0, 0, 1, 1, 0, NULL, 4),
-(5, 1, 'remember_token', 'text', 'Remember Token', 0, 0, 0, 0, 0, 0, NULL, 5),
-(6, 1, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 0, 0, 0, NULL, 6),
-(7, 1, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, NULL, 7),
-(8, 1, 'avatar', 'image', 'Avatar', 0, 1, 1, 1, 1, 1, NULL, 8),
-(9, 1, 'user_belongsto_role_relationship', 'relationship', 'Role', 0, 1, 1, 1, 1, 0, '{\"model\":\"TCG\\\\Voyager\\\\Models\\\\Role\",\"table\":\"roles\",\"type\":\"belongsTo\",\"column\":\"role_id\",\"key\":\"id\",\"label\":\"display_name\",\"pivot_table\":\"roles\",\"pivot\":0}', 10),
-(10, 1, 'user_belongstomany_role_relationship', 'relationship', 'Roles', 0, 1, 1, 1, 1, 0, '{\"model\":\"TCG\\\\Voyager\\\\Models\\\\Role\",\"table\":\"roles\",\"type\":\"belongsToMany\",\"column\":\"id\",\"key\":\"id\",\"label\":\"display_name\",\"pivot_table\":\"user_roles\",\"pivot\":\"1\",\"taggable\":\"0\"}', 11),
-(11, 1, 'settings', 'hidden', 'Settings', 0, 0, 0, 0, 0, 0, NULL, 12),
+(1, 1, 'id', 'number', 'ID', 1, 0, 0, 0, 0, 0, '{}', 1),
+(3, 1, 'email', 'text', 'Email', 1, 1, 1, 1, 1, 1, '{}', 2),
+(4, 1, 'password', 'password', 'Password', 1, 0, 0, 1, 1, 0, '{}', 5),
+(5, 1, 'remember_token', 'text', 'Remember Token', 0, 0, 0, 0, 0, 0, '{}', 6),
+(6, 1, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 0, 0, 0, '{}', 7),
+(7, 1, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '{}', 8),
+(8, 1, 'avatar', 'image', 'Avatar', 0, 1, 1, 1, 1, 1, '{}', 10),
+(9, 1, 'user_belongsto_role_relationship', 'relationship', 'Role', 0, 1, 1, 1, 1, 0, '{\"model\":\"TCG\\\\Voyager\\\\Models\\\\Role\",\"table\":\"roles\",\"type\":\"belongsTo\",\"column\":\"role_id\",\"key\":\"id\",\"label\":\"display_name\",\"pivot_table\":\"roles\",\"pivot\":\"0\",\"taggable\":\"0\"}', 12),
+(10, 1, 'user_belongstomany_role_relationship', 'relationship', 'Roles', 0, 1, 1, 1, 1, 0, '{\"model\":\"TCG\\\\Voyager\\\\Models\\\\Role\",\"table\":\"roles\",\"type\":\"belongsToMany\",\"column\":\"id\",\"key\":\"id\",\"label\":\"display_name\",\"pivot_table\":\"user_roles\",\"pivot\":\"1\",\"taggable\":\"0\"}', 13),
+(11, 1, 'settings', 'hidden', 'Settings', 0, 0, 0, 0, 0, 0, '{}', 14),
 (12, 2, 'id', 'number', 'ID', 1, 0, 0, 0, 0, 0, NULL, 1),
 (13, 2, 'name', 'text', 'Name', 1, 1, 1, 1, 1, 1, NULL, 2),
 (14, 2, 'created_at', 'timestamp', 'Created At', 0, 0, 0, 0, 0, 0, NULL, 3),
@@ -138,7 +163,7 @@ INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, 
 (18, 3, 'created_at', 'timestamp', 'Created At', 0, 0, 0, 0, 0, 0, NULL, 3),
 (19, 3, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, NULL, 4),
 (20, 3, 'display_name', 'text', 'Display Name', 1, 1, 1, 1, 1, 1, NULL, 5),
-(21, 1, 'role_id', 'text', 'Role', 1, 1, 1, 1, 1, 1, NULL, 9),
+(21, 1, 'role_id', 'text', 'Role', 0, 1, 1, 1, 1, 1, '{}', 11),
 (22, 4, 'id', 'number', 'ID', 1, 0, 0, 0, 0, 0, NULL, 1),
 (23, 4, 'parent_id', 'select_dropdown', 'Parent', 0, 0, 1, 1, 1, 1, '{\"default\":\"\",\"null\":\"\",\"options\":{\"\":\"-- None --\"},\"relationship\":{\"key\":\"id\",\"label\":\"name\"}}', 2),
 (24, 4, 'order', 'text', 'Order', 1, 1, 1, 1, 1, 1, '{\"default\":1}', 3),
@@ -172,7 +197,10 @@ INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, 
 (52, 6, 'status', 'select_dropdown', 'Status', 1, 1, 1, 1, 1, 1, '{\"default\":\"INACTIVE\",\"options\":{\"INACTIVE\":\"INACTIVE\",\"ACTIVE\":\"ACTIVE\"}}', 9),
 (53, 6, 'created_at', 'timestamp', 'Created At', 1, 1, 1, 0, 0, 0, NULL, 10),
 (54, 6, 'updated_at', 'timestamp', 'Updated At', 1, 0, 0, 0, 0, 0, NULL, 11),
-(55, 6, 'image', 'image', 'Page Image', 0, 1, 1, 1, 1, 1, NULL, 12);
+(55, 6, 'image', 'image', 'Page Image', 0, 1, 1, 1, 1, 1, NULL, 12),
+(58, 1, 'email_verified_at', 'timestamp', 'Email Verified At', 0, 1, 1, 1, 1, 1, '{}', 9),
+(61, 1, 'last_name', 'text', 'Last Name', 0, 1, 1, 1, 1, 1, '{}', 4),
+(62, 1, 'name', 'text', 'Name', 1, 1, 1, 1, 1, 1, '{}', 3);
 
 -- --------------------------------------------------------
 
@@ -207,12 +235,66 @@ CREATE TABLE IF NOT EXISTS `data_types` (
 --
 
 INSERT INTO `data_types` (`id`, `name`, `slug`, `display_name_singular`, `display_name_plural`, `icon`, `model_name`, `policy_name`, `controller`, `description`, `generate_permissions`, `server_side`, `details`, `created_at`, `updated_at`) VALUES
-(1, 'users', 'users', 'User', 'Users', 'voyager-person', 'TCG\\Voyager\\Models\\User', 'TCG\\Voyager\\Policies\\UserPolicy', 'TCG\\Voyager\\Http\\Controllers\\VoyagerUserController', '', 1, 0, NULL, '2020-11-14 12:06:00', '2020-11-14 12:06:00'),
+(1, 'users', 'users', 'User', 'Users', 'voyager-person', 'TCG\\Voyager\\Models\\User', 'TCG\\Voyager\\Policies\\UserPolicy', 'TCG\\Voyager\\Http\\Controllers\\VoyagerUserController', NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"desc\",\"default_search_key\":null,\"scope\":null}', '2020-11-14 12:06:00', '2020-12-05 15:42:53'),
 (2, 'menus', 'menus', 'Menu', 'Menus', 'voyager-list', 'TCG\\Voyager\\Models\\Menu', NULL, '', '', 1, 0, NULL, '2020-11-14 12:06:00', '2020-11-14 12:06:00'),
 (3, 'roles', 'roles', 'Role', 'Roles', 'voyager-lock', 'TCG\\Voyager\\Models\\Role', NULL, 'TCG\\Voyager\\Http\\Controllers\\VoyagerRoleController', '', 1, 0, NULL, '2020-11-14 12:06:00', '2020-11-14 12:06:00'),
 (4, 'categories', 'categories', 'Category', 'Categories', 'voyager-categories', 'TCG\\Voyager\\Models\\Category', NULL, '', '', 1, 0, NULL, '2020-11-14 12:06:01', '2020-11-14 12:06:01'),
 (5, 'posts', 'posts', 'Post', 'Posts', 'voyager-news', 'TCG\\Voyager\\Models\\Post', 'TCG\\Voyager\\Policies\\PostPolicy', '', '', 1, 0, NULL, '2020-11-14 12:06:01', '2020-11-14 12:06:01'),
 (6, 'pages', 'pages', 'Page', 'Pages', 'voyager-file-text', 'TCG\\Voyager\\Models\\Page', NULL, '', '', 1, 0, NULL, '2020-11-14 12:06:02', '2020-11-14 12:06:02');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `discount_codes`
+--
+
+DROP TABLE IF EXISTS `discount_codes`;
+CREATE TABLE IF NOT EXISTS `discount_codes` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `code` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
+  `discount_percentage` int(11) NOT NULL,
+  `max_use_times` int(11) NOT NULL,
+  `expire_in_days` int(11) NOT NULL DEFAULT '360',
+  `discount_code_type_id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `status` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `discount_codes`
+--
+
+INSERT INTO `discount_codes` (`id`, `code`, `discount_percentage`, `max_use_times`, `expire_in_days`, `discount_code_type_id`, `user_id`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'mamy111', 10, 100, 30, 1, NULL, 1, NULL, NULL),
+(2, 'mamy222', 9, 100, 30, 1, NULL, 1, NULL, NULL),
+(3, 'mamy333', 8, 1, 30, 2, NULL, 1, NULL, NULL),
+(4, 'mamy444', 7, 1, 30, 2, NULL, 1, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `discount_code_types`
+--
+
+DROP TABLE IF EXISTS `discount_code_types`;
+CREATE TABLE IF NOT EXISTS `discount_code_types` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `discount_code_types`
+--
+
+INSERT INTO `discount_code_types` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'Multiple Times Use', NULL, NULL),
+(2, 'One Time Use', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -338,7 +420,7 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `migrations`
@@ -398,7 +480,16 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (51, '2020_11_16_015315_create_payment_methods_table', 4),
 (52, '2020_11_16_015353_create_shipping_types_table', 4),
 (53, '2020_11_23_165722_create_product_revenue_percentages_table', 5),
-(54, '2020_11_23_165854_create_product_running_cost_percentages_table', 5);
+(54, '2020_11_23_165854_create_product_running_cost_percentages_table', 5),
+(55, '2020_12_05_185442_create_user_cart_items_table', 6),
+(56, '2020_12_10_104306_create_regions_table', 7),
+(57, '2020_12_10_104411_create_cities_table', 7),
+(58, '2020_12_13_175936_create_shipping_methods_table', 8),
+(59, '2020_12_16_160842_create_discount_codes_table', 9),
+(60, '2020_12_16_163124_create_discount_code_types_table', 10),
+(61, '2020_12_16_163644_create_user_discount_codes_table', 11),
+(62, '2020_12_21_171629_create_order_statuses_table', 12),
+(63, '2020_12_21_203424_create_user_discounts_table', 13);
 
 -- --------------------------------------------------------
 
@@ -410,13 +501,26 @@ DROP TABLE IF EXISTS `orders`;
 CREATE TABLE IF NOT EXISTS `orders` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
+  `order_status_id` int(11) NOT NULL,
   `user_adress_id` int(11) NOT NULL,
-  `shipping_type_id` int(11) NOT NULL,
+  `user_phone_id` int(11) NOT NULL,
+  `shipping_method_id` int(11) NOT NULL,
+  `shipping_cost` float NOT NULL,
   `payment_method_id` int(11) NOT NULL,
+  `payment_cost` float NOT NULL DEFAULT '0',
+  `tracking_number` varchar(191) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `note` text COLLATE utf8_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `user_id`, `order_status_id`, `user_adress_id`, `user_phone_id`, `shipping_method_id`, `shipping_cost`, `payment_method_id`, `payment_cost`, `tracking_number`, `note`, `created_at`, `updated_at`) VALUES
+(7, 1, 1, 1, 5, 2, 25, 1, 0, NULL, NULL, '2020-12-23 13:23:23', '2020-12-23 13:23:23');
 
 -- --------------------------------------------------------
 
@@ -431,12 +535,50 @@ CREATE TABLE IF NOT EXISTS `order_items` (
   `product_id` int(11) NOT NULL,
   `product_variant_id` int(11) NOT NULL,
   `product_variant_stock_id` int(11) NOT NULL,
-  `price` double(8,2) NOT NULL,
-  `discount` double(8,2) NOT NULL,
+  `vendor_id` int(11) NOT NULL,
+  `price` float NOT NULL,
+  `running_cost_percentage` int(11) NOT NULL,
+  `product_revenue_percentage` int(11) NOT NULL,
+  `our_discount_percentage` int(11) NOT NULL DEFAULT '0',
+  `vendor_discount_percentage` int(11) NOT NULL DEFAULT '0',
+  `taxes_percentage` int(11) NOT NULL DEFAULT '14',
+  `discount_code_percentage` int(11) NOT NULL DEFAULT '0',
+  `user_discount_percentage` int(11) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `order_items`
+--
+
+INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `product_variant_id`, `product_variant_stock_id`, `vendor_id`, `price`, `running_cost_percentage`, `product_revenue_percentage`, `our_discount_percentage`, `vendor_discount_percentage`, `taxes_percentage`, `discount_code_percentage`, `user_discount_percentage`, `created_at`, `updated_at`) VALUES
+(34, 7, 1, 1, 8, 1, 90, 3, 6, 7, 7, 14, 0, 3, '2020-12-23 13:23:23', '2020-12-23 13:23:23');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_statuses`
+--
+
+DROP TABLE IF EXISTS `order_statuses`;
+CREATE TABLE IF NOT EXISTS `order_statuses` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
+  `color` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
+  `icon` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `order_statuses`
+--
+
+INSERT INTO `order_statuses` (`id`, `name`, `color`, `icon`, `created_at`, `updated_at`) VALUES
+(1, 'Placed', '#d4c604', '', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -493,12 +635,19 @@ DROP TABLE IF EXISTS `payment_methods`;
 CREATE TABLE IF NOT EXISTS `payment_methods` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
-  `fee` double(8,2) NOT NULL,
-  `status` tinyint(1) NOT NULL,
+  `cost` double(8,2) NOT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `payment_methods`
+--
+
+INSERT INTO `payment_methods` (`id`, `name`, `cost`, `active`, `created_at`, `updated_at`) VALUES
+(1, 'Cash On Delivery', 0.00, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -683,18 +832,22 @@ CREATE TABLE IF NOT EXISTS `products` (
   `max_age_id` int(11) NOT NULL,
   `thumbnail` text COLLATE utf8_unicode_ci,
   `product_running_cost_percentage_id` int(11) NOT NULL,
+  `product_taxes_percentage` int(11) NOT NULL DEFAULT '14',
   `product_status_id` int(11) NOT NULL,
+  `sold_timex` int(11) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `title`, `description`, `sku`, `product_section_id`, `product_category_id`, `product_sub_category_id`, `brand_id`, `gender_id`, `min_age_id`, `max_age_id`, `thumbnail`, `product_running_cost_percentage_id`, `product_status_id`, `created_at`, `updated_at`) VALUES
-(1, 'Basic T-shirt', 'Zara Basic T-shirt Full Description', 'HGJU543', 1, 1, 1, 1, 2, 1, 3, '/products/1/zara-tshirt-basic-thumbnail.jpg', 3, 1, NULL, NULL);
+INSERT INTO `products` (`id`, `title`, `description`, `sku`, `product_section_id`, `product_category_id`, `product_sub_category_id`, `brand_id`, `gender_id`, `min_age_id`, `max_age_id`, `thumbnail`, `product_running_cost_percentage_id`, `product_taxes_percentage`, `product_status_id`, `sold_timex`, `created_at`, `updated_at`) VALUES
+(1, 'Zara \r\n Basic T-shirt', 'Zara Basic T-shirt Full Description', 'HGJU543', 1, 1, 1, 1, 2, 1, 3, '/products/1/zara-tshirt-basic-thumbnail.jpg', 3, 14, 1, 5, NULL, NULL),
+(2, 'Beone SP Group Baby Car Seat', 'Beone SP Group Baby Car SeatBeone SP Group Baby Car SeatBeone SP Group Baby Car SeatBeone SP Group Baby Car SeatBeone SP Group Baby Car SeatBeone SP Group Baby Car Seat', NULL, 4, 2, 2, 2, 4, 1, 4, '/products/2/img1.jpg', 3, 14, 1, 2, NULL, NULL),
+(3, 'Slim Fit Jeans Pant For Men', 'Is Adult Product : 1\r\nTargeted Group : Men\r\nType : Jeans\r\nFabric Type : Denim\r\nMaterial Composition : 85.5% Cotton 13% Polyester 1.5% Elastane\r\nPants Style : Slim Fit\r\nBrand : Other', 'JJHGG7272', 1, 1, 4, 1, 2, 3, 8, NULL, 3, 14, 1, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -712,14 +865,16 @@ CREATE TABLE IF NOT EXISTS `product_categories` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `product_categories`
 --
 
 INSERT INTO `product_categories` (`id`, `product_section_id`, `name`, `description`, `image`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Boy Wear', NULL, '/categories/boy_fashion.jpg', NULL, NULL);
+(1, 1, 'Boy Wear', NULL, '/categories/boy_fashion.jpg', NULL, NULL),
+(2, 4, 'Baby Gear', NULL, NULL, NULL, NULL),
+(3, 2, 'Baby Essentials', 'Baby Essentials', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -735,15 +890,16 @@ CREATE TABLE IF NOT EXISTS `product_colors` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `product_colors`
 --
 
 INSERT INTO `product_colors` (`id`, `name`, `code`, `created_at`, `updated_at`) VALUES
-(1, 'Blue', '#111111', NULL, NULL),
-(2, 'Black', '#1b70f7', NULL, NULL);
+(0, 'None', '#ffffff', NULL, NULL),
+(1, 'Black', '#111111', NULL, NULL),
+(2, 'Blue', '#1b70f7', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -848,10 +1004,10 @@ CREATE TABLE IF NOT EXISTS `product_sections` (
 --
 
 INSERT INTO `product_sections` (`id`, `name`, `description`, `image`, `created_at`, `updated_at`) VALUES
-(1, 'Fashion', 'Clothes, Footwear, etc', '/sections/fashion.jpg', NULL, NULL),
-(2, 'Essentials', 'All Essentials stuff', '/sections/essintials.jpg', NULL, NULL),
+(1, 'Fashion', 'Clothes, Footwear, etc', '/sections/toys.jpg', NULL, NULL),
+(2, 'Essentials', 'All Essentials stuff', '/sections/toys.jpg', NULL, NULL),
 (3, 'Toys', 'Children Play toys', '/sections/toys.jpg', NULL, NULL),
-(4, 'Gears', 'Babay and children gears', '/sections/gears.jpg', NULL, NULL);
+(4, 'Gears', 'Babay and children gears', '/sections/toys.jpg', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -867,13 +1023,14 @@ CREATE TABLE IF NOT EXISTS `product_sizes` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `product_sizes`
 --
 
 INSERT INTO `product_sizes` (`id`, `name`, `sub_category_id`, `created_at`, `updated_at`) VALUES
+(0, '', 0, NULL, NULL),
 (1, 'Small', 1, NULL, NULL),
 (2, 'Medium', 1, NULL, NULL),
 (3, 'Large', 1, NULL, NULL);
@@ -918,14 +1075,17 @@ CREATE TABLE IF NOT EXISTS `product_sub_categories` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `product_sub_categories`
 --
 
 INSERT INTO `product_sub_categories` (`id`, `product_category_id`, `name`, `description`, `image`, `created_at`, `updated_at`) VALUES
-(1, 1, 'T-Shirts', NULL, '/subcategories/t-shirts.jpg', NULL, NULL);
+(1, 1, 'T-Shirts', NULL, '/subcategories/t-shirts.jpg', NULL, NULL),
+(2, 2, 'Car Seats', NULL, '/subcategories/t-shirts.jpg', NULL, NULL),
+(3, 3, 'Baby Diapers', 'Baby Diapers', '/subcategories/t-shirts.jpg', NULL, NULL),
+(4, 1, 'Pants', 'pants', '/subcategories/t-shirts.jpg', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -959,7 +1119,7 @@ CREATE TABLE IF NOT EXISTS `product_variants` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `product_variants`
@@ -971,7 +1131,9 @@ INSERT INTO `product_variants` (`id`, `product_id`, `product_color_id`, `product
 (3, 1, 1, 3, '25x25', '0.5', 'FFDDSS', NULL, NULL),
 (4, 1, 2, 1, '25x25', '0.5', 'FFDDSS', NULL, NULL),
 (5, 1, 2, 2, '25x25', '0.5', 'FFDDSS', NULL, NULL),
-(6, 1, 2, 3, '25x25', '0.5', 'FFDDSS', NULL, NULL);
+(6, 1, 2, 3, '25x25', '0.5', 'FFDDSS', NULL, NULL),
+(9, 2, 0, 0, '60x80', '5', 'KKKJHT76', NULL, NULL),
+(10, 3, 0, 0, '60x80', '0.5', 'KKKJHT76', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -987,25 +1149,27 @@ CREATE TABLE IF NOT EXISTS `product_variant_images` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `product_variant_images`
 --
 
 INSERT INTO `product_variant_images` (`id`, `product_variant_id`, `image`, `created_at`, `updated_at`) VALUES
-(1, 1, 'products/1/zara-tshirt-basic-black-1.jpg', NULL, NULL),
-(2, 2, 'products/1/zara-tshirt-basic-black-1.jpg', NULL, NULL),
-(3, 3, 'products/1/zara-tshirt-basic-black-1.jpg', NULL, NULL),
-(5, 1, 'products/1/zara-tshirt-basic-black-2.jpg', NULL, NULL),
-(6, 2, 'products/1/zara-tshirt-basic-black-2.jpg', NULL, NULL),
-(7, 3, 'products/1/zara-tshirt-basic-black-2.jpg', NULL, NULL),
-(8, 1, 'products/1/zara-tshirt-basic-blue-1.jpg', NULL, NULL),
-(9, 2, 'products/1/zara-tshirt-basic-blue-1.jpg', NULL, NULL),
-(10, 3, 'products/1/zara-tshirt-basic-blue-1.jpg', NULL, NULL),
-(11, 1, 'products/1/zara-tshirt-basic-blue-2.jpg', NULL, NULL),
-(12, 2, 'products/1/zara-tshirt-basic-blue-2.jpg', NULL, NULL),
-(13, 3, 'products/1/zara-tshirt-basic-blue-2.jpg', NULL, NULL);
+(1, 1, '/products/1/zara-tshirt-basic-black-1.jpg', NULL, NULL),
+(2, 2, '/products/1/zara-tshirt-basic-black-1.jpg', NULL, NULL),
+(3, 3, '/products/1/zara-tshirt-basic-black-1.jpg', NULL, NULL),
+(5, 1, '/products/1/zara-tshirt-basic-black-2.jpg', NULL, NULL),
+(6, 2, '/products/1/zara-tshirt-basic-black-2.jpg', NULL, NULL),
+(7, 3, '/products/1/zara-tshirt-basic-black-2.jpg', NULL, NULL),
+(8, 4, '/products/1/zara-tshirt-basic-blue-1.jpg', NULL, NULL),
+(9, 5, '/products/1/zara-tshirt-basic-blue-1.jpg', NULL, NULL),
+(10, 6, '/products/1/zara-tshirt-basic-blue-1.jpg', NULL, NULL),
+(11, 4, '/products/1/zara-tshirt-basic-blue-2.jpg', NULL, NULL),
+(12, 5, '/products/1/zara-tshirt-basic-blue-2.jpg', NULL, NULL),
+(13, 6, '/products/1/zara-tshirt-basic-blue-2.jpg', NULL, NULL),
+(14, 9, '/products/2/img1.jpg', NULL, NULL),
+(15, 10, '/products/3/pants.jpg', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1016,28 +1180,57 @@ INSERT INTO `product_variant_images` (`id`, `product_variant_id`, `image`, `crea
 DROP TABLE IF EXISTS `product_variant_stocks`;
 CREATE TABLE IF NOT EXISTS `product_variant_stocks` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
   `product_variant_id` int(11) NOT NULL,
   `vendor_id` int(11) NOT NULL,
   `stock` int(11) NOT NULL,
   `price` double(8,2) NOT NULL,
   `product_revenue_percentage_id` int(11) NOT NULL,
-  `discount_precentage` int(11) NOT NULL,
+  `our_discount_percentage` float NOT NULL DEFAULT '0',
+  `vendor_discount_percentage` float NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `product_variant_stocks`
 --
 
-INSERT INTO `product_variant_stocks` (`id`, `product_variant_id`, `vendor_id`, `stock`, `price`, `product_revenue_percentage_id`, `discount_precentage`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 50, 100.00, 6, 0, NULL, NULL),
-(2, 1, 1, 30, 110.00, 6, 0, NULL, NULL),
-(3, 1, 1, 10, 120.00, 6, 0, NULL, NULL),
-(4, 1, 1, 70, 130.00, 6, 0, NULL, NULL),
-(5, 1, 1, 67, 140.00, 6, 0, NULL, NULL),
-(6, 1, 1, 90, 150.00, 6, 0, NULL, NULL);
+INSERT INTO `product_variant_stocks` (`id`, `product_id`, `product_variant_id`, `vendor_id`, `stock`, `price`, `product_revenue_percentage_id`, `our_discount_percentage`, `vendor_discount_percentage`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 1, 50, 100.00, 6, 0, 0, NULL, NULL),
+(2, 1, 1, 1, 30, 110.00, 6, 0, 0, NULL, NULL),
+(3, 1, 1, 1, 10, 120.00, 6, 0, 0, NULL, NULL),
+(4, 1, 1, 1, 70, 130.00, 6, 0, 0, NULL, NULL),
+(5, 1, 1, 1, 67, 140.00, 6, 0, 0, NULL, NULL),
+(6, 1, 1, 1, 90, 150.00, 6, 0, 0, NULL, NULL),
+(7, 1, 4, 1, 90, 155.00, 6, 0, 0, NULL, NULL),
+(8, 1, 1, 1, 50, 90.00, 6, 7, 7, NULL, NULL),
+(9, 2, 9, 1, 4, 1200.00, 3, 0, 0, NULL, NULL),
+(10, 3, 10, 1, 1, 100.00, 12, 0, 0, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `regions`
+--
+
+DROP TABLE IF EXISTS `regions`;
+CREATE TABLE IF NOT EXISTS `regions` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `regions`
+--
+
+INSERT INTO `regions` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'Cairo', NULL, NULL),
+(2, 'Giza', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1054,7 +1247,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `roles_name_unique` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `roles`
@@ -1062,7 +1255,8 @@ CREATE TABLE IF NOT EXISTS `roles` (
 
 INSERT INTO `roles` (`id`, `name`, `display_name`, `created_at`, `updated_at`) VALUES
 (1, 'admin', 'Administrator', '2020-11-14 12:06:00', '2020-11-14 12:06:00'),
-(2, 'user', 'Normal User', '2020-11-14 12:06:00', '2020-11-14 12:06:00');
+(2, 'user', 'Normal User', '2020-11-14 12:06:00', '2020-11-14 12:06:00'),
+(100, 'customer', 'Customer', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1082,7 +1276,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `group` varchar(191) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `settings_key_unique` (`key`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `settings`
@@ -1098,7 +1292,38 @@ INSERT INTO `settings` (`id`, `key`, `display_name`, `value`, `details`, `type`,
 (7, 'admin.description', 'Admin Description', 'Welcome to Voyager. The Missing Admin for Laravel', '', 'text', 2, 'Admin'),
 (8, 'admin.loader', 'Admin Loader', '', '', 'image', 3, 'Admin'),
 (9, 'admin.icon_image', 'Admin Icon Image', '', '', 'image', 4, 'Admin'),
-(10, 'admin.google_analytics_client_id', 'Google Analytics Client ID (used for admin dashboard)', '', '', 'text', 1, 'Admin');
+(10, 'admin.google_analytics_client_id', 'Google Analytics Client ID (used for admin dashboard)', '', '', 'text', 1, 'Admin'),
+(11, 'admin.free_shipping_min_total', 'Free Shipping Minimum Total', '500', NULL, '', 1, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `shipping_methods`
+--
+
+DROP TABLE IF EXISTS `shipping_methods`;
+CREATE TABLE IF NOT EXISTS `shipping_methods` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
+  `details` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
+  `days_info` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
+  `days_min` int(11) NOT NULL,
+  `days_max` int(11) NOT NULL,
+  `price` double(8,2) NOT NULL,
+  `free_shipping` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `shipping_methods`
+--
+
+INSERT INTO `shipping_methods` (`id`, `name`, `details`, `days_info`, `days_min`, `days_max`, `price`, `free_shipping`, `created_at`, `updated_at`) VALUES
+(2, 'Primum Plan', 'Primum', '3-6 Days', 3, 6, 25.00, 0, NULL, NULL),
+(3, 'Elite Plan', '1 Day', '1-2 Days', 1, 2, 50.00, 0, NULL, NULL),
+(4, 'Same Day', 'Same Day', 'Same Day', 0, 0, 75.00, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1190,8 +1415,9 @@ INSERT INTO `translations` (`id`, `table_name`, `column_name`, `foreign_key`, `l
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `role_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `role_id` bigint(20) UNSIGNED DEFAULT '100',
   `name` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
+  `last_name` varchar(191) COLLATE utf8_unicode_ci DEFAULT NULL,
   `email` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
   `avatar` varchar(191) COLLATE utf8_unicode_ci DEFAULT 'users/default.png',
   `email_verified_at` timestamp NULL DEFAULT NULL,
@@ -1203,14 +1429,21 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`),
   KEY `users_role_id_foreign` (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `avatar`, `email_verified_at`, `password`, `remember_token`, `settings`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Admin', 'admin@admin.com', 'users/default.png', NULL, '$2y$10$tt8PYvmyqrN3oP15d3VCpORXLC8XcS5Y5hT4RT/no.juQqHoTwpra', 's9kCKhbDE4ZxyIcmTVL5Rq7BUrFuDC9B3ljMG0K8hyYXAlJwyLhf5RLPVsnl', NULL, '2020-11-14 12:06:01', '2020-11-14 12:06:01');
+INSERT INTO `users` (`id`, `role_id`, `name`, `last_name`, `email`, `avatar`, `email_verified_at`, `password`, `remember_token`, `settings`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Admin', 'admin', 'admin@admin.com', 'users/default.png', NULL, '$2y$10$tt8PYvmyqrN3oP15d3VCpORXLC8XcS5Y5hT4RT/no.juQqHoTwpra', 'STVUCxuAsACz1BOwd8zPKKajnodzU41i9zWEHt5T0CHhGOUuI40hEI4lPdKN', NULL, '2020-11-14 12:06:01', '2020-11-14 12:06:01'),
+(4, 2, 'Omar', NULL, 'omar@live.com', 'users/default.png', NULL, '$2y$10$0fNi9u6y/w114OFNpHsOD.9wb/ZDuVnxr7hovMouLA84bV9tZEwym', NULL, NULL, '2020-12-05 15:32:52', '2020-12-05 15:32:52'),
+(5, 2, 'asdasd', NULL, 'asdasd@asdasd.com', 'users/default.png', NULL, '$2y$10$MWgGytw/VRQ3l6uvvPwgUedBM4CyMGPz4tN8RH.SmY28/H6CozYSm', NULL, NULL, '2020-12-05 15:37:23', '2020-12-05 15:37:23'),
+(6, 2, 'qweqwe', NULL, 'ascweeq@asdasd.com', 'users/default.png', NULL, '$2y$10$1Rr3YiWQReKYb23MITjcjeWfY1p/HTwzfJfigqACf1rff/zJdt4A.', NULL, NULL, '2020-12-05 15:38:54', '2020-12-05 15:38:54'),
+(7, 2, 'uibyivi', NULL, 'ibiubiu@asda.com', 'users/default.png', NULL, '$2y$10$rCBZsrRsG..fSzp0x2SSEOYMzr/AUoxSUk/sZGkG7eoN6QHIobivm', NULL, NULL, '2020-12-05 15:45:29', '2020-12-05 15:45:29'),
+(8, 100, 'zczcx', NULL, 'fknvfub@asdasd.com', 'users/default.png', NULL, '$2y$10$GHigtvJ4tSWbf0b/V8xZpezdgYZqsKnqPOzMDkdV0h5MTpc9HK2eG', NULL, NULL, '2020-12-05 16:03:32', '2020-12-05 16:03:32'),
+(9, 100, 'El -', NULL, 'jumbo@live.com', 'users/default.png', NULL, '$2y$10$DhjISuZcveu5RQDiTsxfUu0DA3htso8Eofw7wywTxtqoDgAGJGtP.', NULL, NULL, '2020-12-13 15:34:39', '2020-12-13 15:34:39'),
+(10, 100, 'Jumbozo', NULL, 'jumbozo@live.com', 'users/default.png', NULL, '$2y$10$QDULDtbWOSngStEPg7zVgOJ/FItepZvt/DubWzAc6p/bkqj/5ozMu', NULL, NULL, '2020-12-13 15:39:57', '2020-12-13 15:39:57');
 
 -- --------------------------------------------------------
 
@@ -1222,11 +1455,106 @@ DROP TABLE IF EXISTS `user_addresses`;
 CREATE TABLE IF NOT EXISTS `user_addresses` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
+  `region_id` int(11) NOT NULL,
+  `city_id` int(11) NOT NULL,
   `address` text COLLATE utf8_unicode_ci NOT NULL,
+  `default_select` tinyint(4) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `user_addresses`
+--
+
+INSERT INTO `user_addresses` (`id`, `user_id`, `region_id`, `city_id`, `address`, `default_select`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 1, '22 Ali ameen st, 1st floor apt 2', 1, NULL, '2020-12-13 15:17:10'),
+(2, 1, 2, 3, 'address2address2address2address2, address2', 0, NULL, '2020-12-13 15:13:10'),
+(3, 1, 2, 3, 'address3address3address3address3, address3', 0, NULL, '2020-12-13 15:17:10'),
+(6, 9, 1, 1, 'jumbo address', 1, NULL, NULL),
+(7, 4, 1, 1, 'asdadsasd', 1, '2020-12-13 17:13:22', '2020-12-13 17:13:22'),
+(8, 4, 1, 1, 'asdadsasd', 1, '2020-12-13 17:13:37', '2020-12-13 17:13:37');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_cart_items`
+--
+
+DROP TABLE IF EXISTS `user_cart_items`;
+CREATE TABLE IF NOT EXISTS `user_cart_items` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `product_variant_id` int(11) NOT NULL,
+  `product_variant_stock_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `user_cart_items`
+--
+
+INSERT INTO `user_cart_items` (`id`, `user_id`, `product_id`, `product_variant_id`, `product_variant_stock_id`, `quantity`, `created_at`, `updated_at`) VALUES
+(24, 4, 1, 1, 8, 1, '2020-12-10 10:38:11', '2020-12-10 10:38:11'),
+(26, 10, 3, 10, 10, 1, '2020-12-13 15:40:37', '2020-12-13 15:40:37'),
+(27, 9, 3, 10, 10, 1, '2020-12-16 20:20:55', '2020-12-16 20:20:55');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_discounts`
+--
+
+DROP TABLE IF EXISTS `user_discounts`;
+CREATE TABLE IF NOT EXISTS `user_discounts` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `percentage` int(11) NOT NULL,
+  `description` varchar(191) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `used` tinyint(1) NOT NULL DEFAULT '0',
+  `order_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `user_discounts`
+--
+
+INSERT INTO `user_discounts` (`id`, `user_id`, `percentage`, `description`, `used`, `order_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 3, 'Sign Up Discount', 0, NULL, NULL, NULL),
+(2, 1, 2, 'After Problem Discount', 1, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_discount_codes`
+--
+
+DROP TABLE IF EXISTS `user_discount_codes`;
+CREATE TABLE IF NOT EXISTS `user_discount_codes` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `discount_code_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `user_discount_codes`
+--
+
+INSERT INTO `user_discount_codes` (`id`, `user_id`, `discount_code_id`, `order_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 1, NULL, NULL),
+(2, 1, 3, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1241,10 +1569,25 @@ CREATE TABLE IF NOT EXISTS `user_phones` (
   `phone` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
   `confirmation_code` varchar(191) COLLATE utf8_unicode_ci DEFAULT NULL,
   `confirmation_status` int(11) DEFAULT NULL,
+  `default_select` tinyint(4) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `user_phones`
+--
+
+INSERT INTO `user_phones` (`id`, `user_id`, `phone`, `confirmation_code`, `confirmation_status`, `default_select`, `created_at`, `updated_at`) VALUES
+(1, 1, '01114030995', NULL, 0, 0, NULL, '2020-12-10 12:21:09'),
+(2, 1, '01111111111', NULL, 0, 0, NULL, NULL),
+(3, 1, '02222222222', NULL, 0, 0, NULL, NULL),
+(4, 1, '222222222222', NULL, 0, 0, '2020-12-10 12:21:09', '2020-12-10 12:21:23'),
+(5, 1, '5555555555555555', NULL, 0, 1, '2020-12-10 12:21:23', '2020-12-10 12:21:23'),
+(6, 10, '77777777777777', NULL, 0, 1, NULL, NULL),
+(7, 4, '99999999999999', NULL, NULL, 1, '2020-12-13 17:13:37', '2020-12-13 17:13:37'),
+(8, 9, '55555555555555', NULL, NULL, 1, '2020-12-16 20:21:18', '2020-12-16 20:21:18');
 
 -- --------------------------------------------------------
 
