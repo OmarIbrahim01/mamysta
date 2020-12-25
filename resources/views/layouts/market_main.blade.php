@@ -141,10 +141,10 @@
 										<p class="text-center">Hello, {{ Auth::user()->name }}</p>
 									</div><!-- End .dropdown-cart-header -->
 									<div class="row" style="margin: 20px 45px 10px 45px;">
-										<a href="#" class="btn btn-link link-primary"><i class="icon-user-2"></i> Account</a>
+										<a href="{{ route('customer_account_index') }}" class="btn btn-link link-primary"><i class="icon-user-2"></i> Account</a>
 									</div>
 									<div class="row" style="margin: 10px 45px;">
-										<a href="#" class="btn btn-link link-primary"><i class="icon-bag-2"></i> My Orders</a>
+										<a href="{{ route('customer_orders_index') }}" class="btn btn-link link-primary"><i class="icon-bag-2"></i> My Orders</a>
 									</div>
 									<div class="row" style="margin: 10px 45px;">
 										<a href="#" class="btn btn-link link-primary"><i class="icon-wishlist-2"></i> Favourites</a>

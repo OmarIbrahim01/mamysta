@@ -40,7 +40,7 @@
 			<div class="col-lg-9 main-content">
 
 				@if(!isset(request()->section) && !isset(request()->category) && !isset(request()->subcategory))
-				<section class="product-category-panel" style="margin-bottom: 0 !important;">
+				<section class="product-category-panel" style="margin-bottom: 0px;">
 			        <div class="row row-sm">
 			        	@foreach($all_sections as $section)
 			            <div class="col-6 col-sm-4 col-lg-3">
@@ -61,7 +61,7 @@
 			    @endif
 
 				@if(isset(request()->section) && !isset(request()->category) && !isset(request()->subcategory))
-				<section class="product-category-panel">
+				<section class="product-category-panel" style="margin-bottom: 0px;">
 			        <div class="row row-sm">
 			        	@foreach($current_section->product_categories as $category)
 			            <div class="col-6 col-sm-4 col-lg-3">
@@ -82,7 +82,7 @@
 			    @endif
 
 			    @if(isset(request()->section) && isset(request()->category) && !isset(request()->subcategory))
-				<section class="product-category-panel">
+				<section class="product-category-panel" style="margin-bottom: 0px;">
 			        <div class="row row-sm">
 			        	@foreach($current_category->product_subcategories as $subcategory)
 			            <div class="col-6 col-sm-4 col-lg-3">
@@ -102,7 +102,7 @@
 			    </section>
 			    @endif
 
-			    <hr>
+			    <hr style="margin: 0 auto 5.2rem;">
 				<div class="row">
 					@foreach($products as $product)
 					@if($product->variants->count() > 0 && $product->stocks->count() > 0)

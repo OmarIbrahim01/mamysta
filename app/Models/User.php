@@ -59,4 +59,15 @@ class User extends \TCG\Voyager\Models\User
     {
         return $this->hasMany('App\Models\UserAddress');
     }
+
+    public function discount_codes()
+    {
+        return $this->hasMany('App\Models\UserDiscountCode');
+    }
+
+
+    public function orders()
+    {
+        return $this->hasMany('App\Models\Order')->orderByDesc('id');
+    }
 }

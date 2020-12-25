@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PaymentMethod extends Model
+class DiscountCodeType extends Model
 {
     use HasFactory;
 
-    public function orders()
+    public function discount_code()
     {
-    	return $this->hasMany('App\Models\Order');
+    	return $this->hasMany('App\Models\DiscountCode');
     }
 }

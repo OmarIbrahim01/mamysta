@@ -107,6 +107,16 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
+////////// Orders Routes ///////////////////////
+Route::middleware(['auth'])->group(function () {
+
+	// Create New Order
+	Route::post('/shop/orders', [
+		'as' => 'shop_orders_store',
+		'uses' => 'App\Http\Controllers\Shop\OrdersController@store'
+	]);
+
+});
 
 ////////// Market Checkout ///////////////////////
 Route::middleware(['auth'])->group(function () {
@@ -115,7 +125,47 @@ Route::middleware(['auth'])->group(function () {
 		'as' => 'shop_order_review',
 		'uses' => 'App\Http\Controllers\Shop\OrderReviewController@order_review'
 	]);
+
+
+	// Discount Code Check
+	Route::get('/shop/order_review/discount_code_check', [
+		'as' => 'shop_order_review_discount_code_check',
+		'uses' => 'App\Http\Controllers\Shop\OrderReviewController@discount_code_check'
+	]);
+
+
+	// Review index
+	Route::post('/shop/orders/store', [
+		'as' => 'shop_order_store',
+		'uses' => 'App\Http\Controllers\Customer\OrdersController@store'
+	]);
+
 });
+
+
+
+////////// Customer Account Routes ///////////////////////
+Route::middleware(['auth'])->group(function () {
+	// Account index
+	Route::get('/customer/account', [
+		'as' => 'customer_account_index',
+		'uses' => 'App\Http\Controllers\Customer\AccountController@index'
+	]);
+
+	// Orders index
+	Route::get('/customer/orders', [
+		'as' => 'customer_orders_index',
+		'uses' => 'App\Http\Controllers\Customer\OrdersController@index'
+	]);
+
+	// Orders Show
+	Route::get('/customer/orders/{order_id}', [
+		'as' => 'customer_orders_show',
+		'uses' => 'App\Http\Controllers\Customer\OrdersController@show'
+	]);
+});
+
+
 
 
 Route::group(['prefix' => 'voyager_admin'], function () {

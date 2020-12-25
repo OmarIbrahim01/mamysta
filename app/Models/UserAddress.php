@@ -23,4 +23,9 @@ class UserAddress extends Model
     {
         return $this->belongsTo('App\Models\City');
     }
+
+    public function orders()
+    {
+    	return $this->hasMany('App\Models\Order');
+    }
 }

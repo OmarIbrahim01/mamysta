@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UserPhone extends Model
+class UserDiscount extends Model
 {
     use HasFactory;
 
     public function user()
     {
-        return $this->belongTo('App\Models\User');
+    	return $this->belongsTo('App\Models\User', 'user_id');
     }
 
-    public function orders()
+    public function order()
     {
-    	return $this->hasMany('App\Models\Order');
+    	return $this->belongsTo('App\Models\Order', 'order_id');
     }
 }

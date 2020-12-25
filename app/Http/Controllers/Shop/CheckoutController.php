@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Shop;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Auth;
 use App\Models\UserAddress;
 use App\Models\UserPhone;
 use App\Models\Region;
 use App\Models\City;
+use App\Models\ShippingMethod;
 
 class CheckoutController extends Controller
 {
@@ -32,6 +34,7 @@ class CheckoutController extends Controller
 
         $regions = Region::all();
         $cities = City::all();
+        $shipping_methods = ShippingMethod::all();
 
         return view('shop.checkout', [
                         'cart_items' => $cart_items,
@@ -41,7 +44,8 @@ class CheckoutController extends Controller
                         'addresses' => $addresses,
                         'phones' => $phones,
                         'regions' => $regions,
-                        'cities' => $cities
+                        'cities' => $cities,
+                        'shipping_methods' => $shipping_methods
                     ]);
     }
 

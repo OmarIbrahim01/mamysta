@@ -37,22 +37,17 @@
                             @if(isset($selected_address) && $selected_address->count() > 0)
                             <div class="shipping-step-addresses">
 
-                                <div class="shipping-address-box active">
+                                <div class="shipping-address-box">
                                     <address>
                                         {{ $user->name }} {{ $user->last_name }} <br>
                                         {{ $selected_address->address }}, {{ $selected_address->city->name }}, 
                                         {{ $selected_address->region->name }} <br>
                                         Egypt. <br>
                                     </address>
-                                    <input type="hidden" name="selected_address_id" form="checkout_form" value="{{ $selected_address->id }}">
+                                    
                                     <div class="address-box-action clearfix">
-                                        <a href="#" class="btn btn-sm btn-link">
-                                            Edit
-                                        </a>
-
-                                        <a href="#" class="btn btn-sm btn-outline-secondary float-right">
-                                            Ship Here
-                                        </a>
+                                        <input id="selected_address_id" type="radio" form="checkout_form" name="selected_address_id" value="{{ $selected_address->id }}" checked required>
+                                        <label class="form-check-label" for="selected_address_id">Ship Here</label>
                                     </div><!-- End .address-box-action -->
                                 </div><!-- End .hipping-address-box. -->
                                 @foreach($addresses as $address)
@@ -65,18 +60,8 @@
                                     </address>
 
                                     <div class="address-box-action clearfix">
-                                        {{-- <a href="#" class="btn btn-sm btn-link">
-                                            Edit
-                                        </a> --}}
-
-                                        <a href="#" onclick="event.preventDefault(); document.getElementById('change_address_{{ $address->id }}').submit();" class="btn btn-sm btn-outline-secondary float-right">
-                                            Ship Here
-                                        </a>
-                                        <form id="change_address_{{ $address->id }}" method="POST" action="{{ route('shop_checkout_change_selected_address', [$address->id]) }}">
-                                            @csrf
-                                            @method('PUT')
-                                            <input form="change_address_{{ $address->id }}" type="hidden" name="selected_address" value="{{ $address->id }}">
-                                        </form>
+                                        <input id="selected_address_id" type="radio" form="checkout_form" name="selected_address_id" value="{{ $address->id }}" required>
+                                        <label class="form-check-label" for="selected_address_id">Ship Here</label>
                                     </div><!-- End .address-box-action -->
                                 </div><!-- End .shipping-address-box -->
                                 @endforeach
@@ -143,25 +128,16 @@
 
                                 <table class="table table-step-shipping">
                                     <tbody>
+                                        <?php $index = 0; ?>
+                                        @foreach($shipping_methods as $shipping_method)
                                         <tr>
-                                            <td><input type="radio" form="checkout_form" name="shipping_method" value="1" required checked></td>
-                                            <td><strong>+20.00 EGP</strong></td>
-                                            <td>Standard</td>
-                                            <td>4-6 Days</td>
+                                            <td><input type="radio" form="checkout_form" name="shipping_method_id" value="{{ $shipping_method->id }}" @if($index == 0) {{ "checked" }} @endif></td>
+                                            <td><strong>+{{ $shipping_method->price }} EGP</strong></td>
+                                            <td>{{ $shipping_method->name }}</td>
+                                            <td>{{ $shipping_method->days_info }}</td>
                                         </tr>
-
-                                        <tr>
-                                            <td><input type="radio" form="checkout_form" name="shipping_method" value="2" required></td>
-                                            <td><strong>+50.00 EGP</strong></td>
-                                            <td>Next Day</td>
-                                            <td>1 Day</td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="radio" form="checkout_form" name="shipping_method" value="3" required></td>
-                                            <td><strong>+100.00 EGP</strong></td>
-                                            <td>Today</td>
-                                            <td>12 Hours</td>
-                                        </tr>
+                                        <?php $index ++; ?>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div><!-- End .checkout-step-shipping -->
