@@ -106,23 +106,37 @@
 				<div class="row">
 					@foreach($products as $product)
 					@if($product->variants->count() > 0 && $product->stocks->count() > 0)
+
+					<?php 
+					$cheapest_variant_id = $product->cheapest_variant_id($product->id);
+					$cheapest_variant_image = $product->cheapest_variant_image($product->id);
+					$cheapest_variant_price = $product->cheapest_variant_price($product->id);
+					$most_expensive_variant_price = $product->most_expensive_variant_price($product->id);
+
+					$discount_value = $most_expensive_variant_price - $cheapest_variant_price;
+
+
+					$discount_percentage = round((($most_expensive_variant_price - $cheapest_variant_price ) / $most_expensive_variant_price) * 100, 0);
+					?>
+
+
 					<div class="col-6 col-sm-4">
 						<div class="product-default inner-quickview inner-icon">
 							<figure>
-								<a href="{{ route('shop_products_show', [$product->cheapest_variant_id($product->id)]) }}">
-									<img src="{{ $product->cheapest_variant_image($product->id) }}" style="width: 270px; height: 244px; object-fit: contain;">
+								<a href="{{ route('shop_products_show', [$cheapest_variant_id]) }}">
+									<img src="{{ $cheapest_variant_image }}" style="width: 270px; height: 244px; object-fit: contain;">
 								</a>
 								{{-- Labels --}}
 								<div class="label-group">
 									<div class="product-label label-hot">HOT</div>
-									@if($product->cheapest_discount_percentage($product->id) > 0)
-									<div class="product-label label-sale">-{{ $product->cheapest_discount_percentage($product->id) }}%</div>
+									@if($discount_percentage > 0)
+									<div class="product-label label-sale">-{{ $discount_percentage }}%</div>
 									@endif
 								</div>
 								<div class="btn-icon-group">
 									<button class="btn-icon btn-add-cart" data-toggle="modal" data-target="#addCartModal"><i class="icon-shopping-cart"></i></button>
 								</div>
-								<a href="{{ route('shop_products_show', [$product->cheapest_variant_id($product->id)]) }}" class="btn-quickview" title="Quick View">View</a> 
+								<a href="{{ route('shop_products_show', [$product->cheapest_variant_id($product->id)]) }}" class="btn-quickview" title="Quick View">View</a>
 							</figure>
 							<div class="product-details">
 								<div class="category-wrap">
@@ -132,7 +146,7 @@
 									<a href="#" class="btn-icon-wish"><i class="icon-heart"></i></a>
 								</div>
 								<h2 class="product-title">
-									<a href="{{ route('shop_products_show', [$product->cheapest_variant_id($product->id)]) }}">{{ $product->brand->name }} - {{ $product->title }}</a>
+									<a href="{{ route('shop_products_show', [$product->cheapest_variant_id($product->id)]) }}">{{ $product->title }}</a>
 								</h2>
 								<div class="ratings-container">
 									<div class="product-ratings">
@@ -142,8 +156,8 @@
 								</div><!-- End .product-container -->
 								<div class="price-box">
 
-									<span class="old-price">{{ $product->cheapest_price_befor_discount($product->id) }} EGP</span>
-									<span class="product-price">{{ $product->cheapest_price_after_discount($product->id) }} EGP</span>
+									<span class="old-price">{{ ceil($product->most_expensive_variant_price($product->id)) }} EGP</span>
+									<span class="product-price">{{ ceil($product->cheapest_variant_price($product->id)) }} EGP</span>
 								</div><!-- End .price-box -->
 							</div><!-- End .product-details -->
 						</div>

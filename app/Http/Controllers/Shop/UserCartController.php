@@ -16,9 +16,11 @@ class UserCartController extends Controller
      */
     public function index()
     {
-        $cart_items = Auth::user()->cart_items;
+        $cart_items = UserCartItem::where('user_id', Auth::id())->get();
+        $cart_total = UserCartItem::cart_total();
         return view('shop.shopping_cart', [
-                            'cart_items' => $cart_items
+                            'cart_items' => $cart_items,
+                            'cart_total' => $cart_total
                         ]);
     }
 

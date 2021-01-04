@@ -14,6 +14,7 @@ use App\Models\PaymentMethod;
 use App\Models\DiscountCode;
 use App\Models\UserDiscountCode;
 use App\Models\UserDiscount;
+use App\Models\UserCartItem;
 
 class OrderReviewController extends Controller
 {
@@ -76,23 +77,14 @@ class OrderReviewController extends Controller
 
         $cart_items = Auth::user()->cart_items;
 
-        $cart_total = 0;
-        foreach($cart_items as $cart_item){
-            $item_price =  $cart_item->stock->price;
-            $item_discount_percentage = $cart_item->stock->our_discount_percentage + $cart_item->stock->vendor_discount_percentage;
-            $item_total = $item_price - ($item_price * $item_discount_percentage / 100);
-            $running_cost_percentage = $cart_item->product->running_cost_percentage->percent;
-            $sub_total = $item_total + ($item_total * $running_cost_percentage / 100);
-            $final_total = $sub_total * $cart_item->quantity;
+        $cart_total = UserCartItem::cart_total();
+        $taxes = UserCartItem::cart_taxes();
 
-            $cart_total += $final_total;
-        }
-
-        $taxes = $cart_total * 14 / 100;
+        
 
         $user_discounts = UserDiscount::where('user_id', Auth::id())->where('used', 0)->get();
         $user_discount_percentage = $user_discounts->sum('percentage');
-
+        $user_discount_value = $cart_total * $user_discount_percentage / 100;
 
         return view('shop.order_review', [
                         'user_address' => $user_address,
@@ -102,6 +94,7 @@ class OrderReviewController extends Controller
                         'cart_total' => $cart_total,
                         'taxes' => $taxes,
                         'user_discount_percentage' => $user_discount_percentage,
+                        'user_discount_value' => $user_discount_value,
                         'user_discounts' => $user_discounts,
                         'payment_methods' => $payment_methods
                     ]);

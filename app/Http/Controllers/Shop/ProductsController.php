@@ -109,25 +109,50 @@ class ProductsController extends Controller
      */
     public function show($variant_id)
     {
-
+        // Current Variant
         $product_variant = ProductVariant::findOrFAil($variant_id);
         $product = $product_variant->product;
         $product_stock = $product_variant->stocks->where('stock', '>', 0)->sortBy('price')->first();
 
         $product_stock_price = $product_stock->price;
-
         $product_stock_vendor_discount_percentage = $product_stock->vendor_discount_percentage;
-        $product_stock_our_discount_percentage = $product_stock->our_discount_percentage;
-        $product_stock_total_discount_percentage = $product_stock_vendor_discount_percentage + $product_stock_our_discount_percentage;
+        $product_stock_vendor_discount_value = $product_stock_price * $product_stock_vendor_discount_percentage / 100;
 
-        $product_stock_price_after_discount = $product_stock_price - ($product_stock_price * $product_stock_total_discount_percentage / 100);
+        $product_stock_vendor_price = $product_stock_price - $product_stock_vendor_discount_value;
 
         $product_running_cost_percent = $product->running_cost_percentage->percent;
+        $product_running_cost_value = $product_stock_vendor_price * $product_running_cost_percent / 100;
+
+        $product_stock_sub_price = $product_stock_vendor_price + $product_running_cost_value;
+
+        $product_stock_our_discount_percentage = $product_stock->our_discount_percentage;
+        $product_stock_our_discount_value = $product_stock_sub_price * $product_stock_our_discount_percentage / 100;
+
+        $product_stock_final_price = $product_stock_sub_price - $product_stock_our_discount_value;
+        $product_stock_final_price = ceil($product_stock_final_price);
 
 
-        $product_total_price_before_discount = $product_stock_price + ($product_stock_price * $product_running_cost_percent /100);
-        $product_total_price = $product_stock_price_after_discount + ($product_stock_price_after_discount * $product_running_cost_percent /100);
-        
+        // Most Expinsive Variant
+        $me_product_variant = ProductVariant::findOrFAil($variant_id);
+        $me_product = $me_product_variant->product;
+        $me_product_stock = $me_product->stocks->where('stock', '>', 0)->sortByDesc('price')->first();
+
+        $me_product_stock_price = $me_product_stock->price;
+        $me_product_stock_vendor_discount_percentage = $me_product_stock->vendor_discount_percentage;
+        $me_product_stock_vendor_discount_value = $me_product_stock_price * $me_product_stock_vendor_discount_percentage / 100;
+
+        $me_product_stock_vendor_price = $me_product_stock_price - $me_product_stock_vendor_discount_value;
+
+        $me_product_running_cost_percent = $me_product->running_cost_percentage->percent;
+        $me_product_running_cost_value = $me_product_stock_vendor_price * $me_product_running_cost_percent / 100;
+
+        $me_product_stock_sub_price = $me_product_stock_vendor_price + $me_product_running_cost_value;
+
+        $me_product_stock_our_discount_percentage = $me_product_stock->our_discount_percentage;
+        $me_product_stock_our_discount_value = $me_product_stock_sub_price * $me_product_stock_our_discount_percentage / 100;
+
+        $me_product_stock_final_price = $me_product_stock_sub_price - $me_product_stock_our_discount_value;
+        $me_product_stock_final_price = ceil($me_product_stock_final_price);
 
 
 
@@ -135,8 +160,8 @@ class ProductsController extends Controller
                         'product' => $product,
                         'product_variant' => $product_variant,
                         'product_stock' => $product_stock,
-                        'product_total_price_before_discount' => number_format((float)$product_total_price_before_discount, 2, '.', ''),
-                        'product_total_price' => number_format((float)$product_total_price, 2, '.', '')
+                        'product_stock_final_price' => $product_stock_final_price,
+                        'me_product_stock_final_price' => $me_product_stock_final_price,
                     ]);
     }
 

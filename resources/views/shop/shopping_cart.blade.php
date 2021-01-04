@@ -31,7 +31,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $cart_total = 0; ?>
                             @foreach($cart_items as $cart_item)
                             {{-- Product Row --}}
                             <tr class="product-row">
@@ -42,7 +41,7 @@
                                         </a>
                                     </figure>
                                     <h5 class="product-title">
-                                        <a href="{{ route('shop_products_show', [$cart_item->variant->id]) }}">{{ $cart_item->product->brand->name }} {{ $cart_item->product->title }}</a>
+                                        <a href="{{ route('shop_products_show', [$cart_item->variant->id]) }}">{{ $cart_item->product->title }}</a>
                                     </h5>
                                 </td>
                                 <td>{{ $cart_item->stock->total($cart_item->stock->id) }} EGP</td>
@@ -61,17 +60,16 @@
                                     </form>
                                 </td>
 
-                                <td>{{ number_format((float)$cart_item->stock->total($cart_item->stock->id) * $cart_item->quantity, 2, '.', '') }} EGP</td>
-                                <?php $cart_total += $cart_item->stock->total($cart_item->stock->id) * $cart_item->quantity; ?>
+                                <td>{{ $cart_item->stock->total($cart_item->stock->id) * $cart_item->quantity }} EGP</td>
                             </tr>
                             <tr class="product-action-row">
                                 <td colspan="4" class="clearfix">
                                     <div class="float-left">
-                                        <a href="#" class="btn-move"><i class="icon-wishlist"></i> Move to Wishlist</a>
+                                        <a href="#" class="btn-move">Move to Wishlist</a>
                                     </div><!-- End .float-left -->
                                     
                                     <div class="float-right">
-                                        <a href="#" onclick="event.preventDefault(); document.getElementById('remove_cart_item_{{ $cart_item->id }}').submit();" title="Remove product"><span class="sr-only">Remove</span><i class="icon-cancel"></i>  Remove</a>
+                                        <a href="#" onclick="event.preventDefault(); document.getElementById('remove_cart_item_{{ $cart_item->id }}').submit();" title="Remove product"><span class="sr-only"></span>Remove</a>
                                         <form id="remove_cart_item_{{ $cart_item->id }}" action="{{ route('shop_cart_delete_item', [$cart_item->id]) }}" method="POST" style="display: none;">
                                             @method('delete')
                                             @csrf
@@ -83,7 +81,7 @@
                             @endforeach
                         </tbody>
 
-                        <tfoot>
+                        {{-- <tfoot>
                             <tr>
                                 <td colspan="4" class="clearfix">
                                     <div class="float-left">
@@ -99,7 +97,7 @@
                                     </div><!-- End .float-right -->
                                 </td>
                             </tr>
-                        </tfoot>
+                        </tfoot> --}}
                     </table>
                 </div><!-- End .cart-table-container -->
             </div><!-- End .col-lg-8 -->
@@ -112,13 +110,14 @@
                             <tr>
                                 <td>Order Total</td>
 
-                                <td>{{ number_format((float)$cart_total, 2, '.', '') }} EGP</td>
+                                <td>{{ ceil($cart_total) }} EGP</td>
                             </tr>
                         </tfoot>
+                        <p>Prices Not Including Taxes</p>
                     </table>
 
                     <div class="checkout-methods">
-                        <p>Discounts and Promo codes are added and calculated in checkout</p>
+                        <p>Taxes, discounts and Promo codes are added and calculated in checkout</p>
                         <a href="{{ route('shop_checkout') }}" class="btn btn-block btn-sm btn-primary">Go to Checkout</a>
                     </div><!-- End .checkout-methods -->
                 </div><!-- End .cart-summary -->

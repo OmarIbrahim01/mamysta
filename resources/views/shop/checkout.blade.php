@@ -153,7 +153,7 @@
                             <a data-toggle="collapse" href="#order-cart-section" class="collapsed" role="button" aria-expanded="false" aria-controls="order-cart-section">2 products in Cart</a>
                         </h4>
 
-                        <div class="collapse show" id="order-cart-section">
+                        <div class="collapse" id="order-cart-section">
                             <table class="table table-mini-cart">
                                 <tbody>
                                     @foreach($cart_items as $cart_item)
@@ -166,18 +166,32 @@
                                             </figure>
                                             <div>
                                                 <h2 class="product-title">
-                                                    <a href="{{ route('shop_products_show', [$cart_item->variant->id]) }}">{{ $cart_item->product->brand->name }} {{ $cart_item->product->title }}</a>
+                                                    <a href="{{ route('shop_products_show', [$cart_item->variant->id]) }}">{{ $cart_item->product->title }}</a>
                                                 </h2>
-
-                                                <span class="product-qty">Qty: {{ $cart_item->quantity }}</span>
+                                                <span class="product-qty">Quantity: {{ $cart_item->quantity }}</span>
                                             </div>
                                         </td>
-                                        <td class="price-col">{{ number_format((float)$cart_item->stock->total($cart_item->stock->id) * $cart_item->quantity, 2, '.', '') }} EGP</td>
+                                        <td class="price-col">{{ ceil($cart_item->stock->total($cart_item->stock->id) * $cart_item->quantity) }} EGP</td>
                                     </tr>
                                     @endforeach
-                                </tbody>    
+                                </tbody> 
                             </table>
                         </div><!-- End #order-cart-section -->
+
+                        <table class="table table-totals">
+                            <tfoot>
+                                <tr>
+                                    <td>Cart Total</td>
+
+                                    <td>{{ ceil($cart_total) }} EGP</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div class="checkout-methods text-center">
+                            <p>Taxes, discounts and Promo codes are added and calculated in next-step</p>
+                            <a href="{{ route('shop_cart_index') }}" style="text-decoration: underline;">Edit Cart</a>
+                        </div><!-- End .checkout-methods -->
+
                     </div><!-- End .order-summary -->
                 </div><!-- End .col-lg-4 -->
             </div><!-- End .row -->

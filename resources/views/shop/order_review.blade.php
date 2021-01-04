@@ -47,13 +47,13 @@
                                         </figure>
                                         <div>
                                             <h2 class="product-title">
-                                                <a href="{{ route('shop_products_show', [$cart_item->variant->id]) }}">{{ $cart_item->product->brand->name }} {{ $cart_item->product->title }}</a>
+                                                <a href="{{ route('shop_products_show', [$cart_item->variant->id]) }}">{{ $cart_item->product->title }}</a>
                                             </h2>
 
                                             <span class="product-qty">Qty: {{ $cart_item->quantity }}</span>
                                         </div>
                                     </td>
-                                    <td class="price-col">{{ number_format((float)$cart_item->stock->total($cart_item->stock->id) * $cart_item->quantity, 2, '.', '') }} EGP</td>
+                                    <td class="price-col">{{ ceil($cart_item->stock->total($cart_item->stock->id) * $cart_item->quantity) }} EGP</td>
                                 </tr>
                                 @endforeach
                             </tbody>    
@@ -96,7 +96,6 @@
 									<tr>
 										<td><input type="radio" name="payment_method" value="{{ $payment_method->id }}" checked required></td>
 										<td><strong>{{ $payment_method->name }}</strong></td>
-										<td>+ {{ $payment_method->cost }} EGP</td>
 									</tr>
 									@endforeach
 								</tbody>
@@ -126,22 +125,17 @@
 								<tbody>
 									<tr>
 										<td>Subtotal</td>
-										<td>{{ $cart_total }} EGP</td>
+										<td>{{ ceil($cart_total) }} EGP</td>
 									</tr>
 
 									<tr id="discount_value_field">
 										<td id="total_discount_percentage"></td>
 										<td id="total_discount_value"></td>
 									</tr>
-									@if(isset($user_discounts) && $user_discounts->count() > 0)
+									
 									<tr>
-										<td>Discount ({{ $user_discount_percentage }}%)</td>
-										<td>{{ $cart_total * $user_discount_percentage / 100 }} EGP</td>
-									</tr>
-									@endif
-									<tr>
-										<td>Tax</td>
-										<td>{{ $taxes }} EGP</td>
+										<td>Taxes</td>
+										<td id="total_taxes"></td>
 									</tr>
 									<tr>
 										<td>Shipping & Handling</td>
@@ -151,7 +145,7 @@
 								<tfoot>
 									<tr>
 										<td>Order Total</td>
-										<td id="order_final_total">{{ $cart_total - $user_discount_percentage + $taxes + $shipping_method->price }} EGP</td>
+										<td id="order_final_total"></td>
 									</tr>
 								</tfoot>
 							</table>
@@ -179,8 +173,28 @@
 @section('js')
 
 <script>
+	var cartTotal = {{ $cart_total }};
+	var taxes = {{ $taxes }};
+	var shippingPrice = {{ $shipping_method->price }};
 
-	$("#discount_value_field").hide();
+	var userDicountPercentage = {{ $user_discount_percentage }};
+	var userDiscountValue = {{ $user_discount_value }};
+
+	var totalDiscountPercentage = {{ $user_discount_percentage }};
+	var totalDiscountValue = Math.floor({{ $user_discount_value }});
+
+	var totalTaxes = Math.ceil(taxes - (taxes * totalDiscountPercentage / 100));
+
+	var finalTotal = (cartTotal - totalDiscountValue) + totalTaxes + shippingPrice;
+
+
+	$("#total_discount_percentage").text("Discount (" + totalDiscountPercentage  + "%)");
+	$("#total_discount_value").text('-' + totalDiscountValue  + " EGP");
+
+	$("#total_taxes").text(totalTaxes  + " EGP");
+
+	$("#order_final_total").text(Math.ceil(finalTotal)  + " EGP");
+
 
 	$("#code_check_button").click(function() {
         $.ajax({
@@ -193,38 +207,31 @@
           success: function(data) {
             if (data.discount_code_status != 'false') {
                         
-                        var discountId = data.discount_code_id;
-                        var discountCodeCode = data.discount_code_code;
-                        var discountPercentage = data.discount_code_discount_percentage;
-                        var userDicountPercentage = {{ $user_discount_percentage }};
+                var discountCodeId = data.discount_code_id;
+                var discountCodeCode = data.discount_code_code;
+                var discountCodePercentage = data.discount_code_discount_percentage;
+                var discountCodeValue = cartTotal * discountCodePercentage / 100;
+
+                totalDiscountPercentage = userDicountPercentage + discountCodePercentage;
+				totalDiscountValue = Math.floor(userDiscountValue + discountCodeValue);
+
+				totalTaxes = Math.ceil(taxes - (taxes * totalDiscountPercentage / 100));
+                
+                finalTotal = (cartTotal - totalDiscountValue) + totalTaxes + shippingPrice;
+                
+                $("#discount_code_input").prop( "value", data.discount_code_code );
+                $("#discount_code_input").attr("readonly", true); 
+                $("#code_check_button").hide();
+                $("#promo_valid").show();
+                $("#promo_unvalid").hide();
 
 
-                        var cartTotal = {{ $cart_total }};
+                $("#total_discount_percentage").text("Discount (" + totalDiscountPercentage  + "%)");
+				$("#total_discount_value").text('-' + totalDiscountValue  + " EGP");
 
-                        var codeDiscountValue = cartTotal * discountPercentage / 100;
-                        var userDicountValue = cartTotal * userDicountPercentage / 100;
+				$("#total_taxes").text(totalTaxes  + " EGP");
 
-                        var totalAfterDiscount = cartTotal - (codeDiscountValue + userDicountValue);
-
-                        var taxes = {{ $taxes }};
-
-                        var shippingPrice = {{ $shipping_method->price }};
-
-                        var finalTotal = totalAfterDiscount + taxes + shippingPrice;
-                        
-                        
-                        $("#discount_code_input").prop( "value", data.discount_code_code );
-                        $("#discount_code_input").attr("readonly", true); 
-                        $("#code_check_button").hide();
-                        $("#promo_valid").show();
-                        $("#promo_unvalid").hide();
-
-                        $("#discount_value_field").show();
-
-                        $("#total_discount_percentage").text("Promo Code Discount (" + discountPercentage + "%)");
-						$("#total_discount_value").text(codeDiscountValue.toFixed(2) + " EGP");
-
-						$("#order_final_total").text(finalTotal.toFixed(2) + " EGP");
+				$("#order_final_total").text(Math.ceil(finalTotal)  + " EGP");
 						
             }
             else{
@@ -237,6 +244,13 @@
 
         });
     });
+
+
+
+
+
+
+
 </script>
 
 @endsection

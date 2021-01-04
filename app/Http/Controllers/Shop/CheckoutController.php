@@ -11,6 +11,7 @@ use App\Models\UserPhone;
 use App\Models\Region;
 use App\Models\City;
 use App\Models\ShippingMethod;
+use App\Models\UserCartItem;
 
 class CheckoutController extends Controller
 {
@@ -23,6 +24,7 @@ class CheckoutController extends Controller
     {
         $user = Auth::user();
         $cart_items = $user->cart_items;
+        $cart_total = UserCartItem::cart_total();
         $selected_address = $user->addresses->where('default_select', 1)->first();
         $selected_phone = $user->phones->where('default_select', 1)->first();
 
@@ -38,6 +40,7 @@ class CheckoutController extends Controller
 
         return view('shop.checkout', [
                         'cart_items' => $cart_items,
+                        'cart_total' => $cart_total,
                         'user' => $user,
                         'selected_address' => $selected_address,
                         'selected_phone' => $selected_phone,

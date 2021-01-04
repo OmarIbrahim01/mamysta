@@ -178,10 +178,11 @@
 									</div><!-- End .dropdown-cart-header -->
 									
 									<div class="dropdown-cart-products">
-										<?php $items_total_price = 0; ?>
+										
 										@if($user_cart_items->count() > 0)
+										<?php $total = 0; ?>
 										@foreach($user_cart_items as $user_cart_item)
-										<?php $items_total_price += $user_cart_item->stock->total($user_cart_item->stock->id) * $user_cart_item->quantity; ?>
+										<?php $total += $user_cart_item->stock->total($user_cart_item->stock->id) * $user_cart_item->quantity; ?>
 										<div class="product">
 											<div class="product-details">
 												<h4 class="product-title">
@@ -190,7 +191,7 @@
 												
 												<span class="cart-product-info">
 													<span class="cart-product-qty">{{ $user_cart_item->quantity }}</span>
-													x <span style="color: darkred;">{{ $user_cart_item->stock->total($user_cart_item->stock->id) }} EGP </span>
+													x <span style="color: darkred;">{{ ceil($user_cart_item->stock->total($user_cart_item->stock->id) * $user_cart_item->quantity) }} EGP </span>
 												</span>
 											</div><!-- End .product-details -->
 												
@@ -209,11 +210,11 @@
 										@endif
 										
 									</div><!-- End .cart-product -->
-									
+									@if($user_cart_items->count() > 0)
 									<div class="dropdown-cart-total">
 										<span>Total</span>
 										
-										<span class="cart-total-price float-right">{{ $items_total_price }} EGP</span>
+										<span class="cart-total-price float-right">{{ ceil($total) }} EGP</span>
 									</div><!-- End .dropdown-cart-total -->
 									
 									<div class="dropdown-cart-action">
@@ -222,6 +223,7 @@
 									<div class="dropdown-cart-action">
 										<a href="{{ route('shop_checkout') }}" class="btn btn-primary btn-block">Proceed To Checkout</a>
 									</div><!-- End .dropdown-cart-total -->
+									@endif
 								</div><!-- End .dropdownmenu-wrapper -->
 							</div><!-- End .dropdown-menu -->
 						</div><!-- End .dropdown -->

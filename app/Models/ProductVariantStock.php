@@ -41,18 +41,20 @@ class ProductVariantStock extends Model
 
         $price = $product_variant_stock->price;
         $vendor_discount_percent = $product_variant_stock->vendor_discount_percentage;
-        $our_discount_percent = $product_variant_stock->our_discount_percentage;
+        $vendor_discount_value = $price * $vendor_discount_percent / 100;
 
-
-        $price_after_discount = $price - ($price * ($vendor_discount_percent + $our_discount_percent)/100);
+        $vendor_price = $price - $vendor_discount_value;
 
         $running_cost_percent = $product->running_cost_percentage->percent;
+        $running_cost_value = $vendor_price * $running_cost_percent / 100;
 
+        $product_sub_price = $vendor_price + $running_cost_value;
 
-        $final_price = $price_after_discount + ($price_after_discount * $running_cost_percent / 100);
+        $our_discount_percent = $product_variant_stock->our_discount_percentage;
+        $our_discount_value = $product_sub_price * $our_discount_percent / 100;
 
+        $product_price = $product_sub_price - $our_discount_value;
 
-
-        return number_format((float)$final_price, 2, '.', '');
+        return ceil($product_price);
     }
 }

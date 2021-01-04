@@ -168,6 +168,26 @@ Route::middleware(['auth'])->group(function () {
 
 
 
+////////////////////////////////////////////////
+//////////////// Admin Routes /////////////////
+//////////////////////////////////////////////
+Route::middleware(['admin'])->group(function () {
+
+	Route::get('/admin/', [
+		'as' => 'admin_home',
+		'uses' => 'App\Http\Controllers\Admin\HomeController@index'
+	]);
+
+
+	//////////////////Shop Routes/////////////////
+	Route::get('/admin/shop/dashboard', [
+		'as' => 'admin_shop_dashboared',
+		'uses' => 'App\Http\Controllers\Admin\Shop\DashboardController@index'
+	]);
+
+});
+
+
 Route::group(['prefix' => 'voyager_admin'], function () {
     Voyager::routes();
 });

@@ -59,10 +59,10 @@
 
 
 					<div class="price-box">
-						<span class="old-price">{{ $product_total_price_before_discount }} EGP</span>
-						<span class="product-price">{{ $product_total_price }} EGP</span>
+						<span class="old-price">{{ $me_product_stock_final_price }} EGP</span>
+						<span class="product-price">{{ $product_stock_final_price }} EGP</span>
+						<span class="product-price" style="font-size: 10px; margin-left: 11px; color: #777;">(Prices doesnt include taxes)</span>
 					</div><!-- End .price-box -->
-
 
 					<div class="product-desc">
 						<p>

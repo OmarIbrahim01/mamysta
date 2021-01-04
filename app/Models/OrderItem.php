@@ -44,26 +44,37 @@ class OrderItem extends Model
         $item = OrderItem::findOrFail($item_id);
 
         $price = $item->price;
-        $product_revenue_percentage = $item->product_revenue_percentage;
-        $our_discount_percentage = $item->our_discount_percentage;
         $vendor_discount_percentage = $item->vendor_discount_percentage;
-        $taxes_percentage = $item->taxes_percentage;
+        $vendor_discount_value = $price * $vendor_discount_percentage / 100;
+
+        $vendor_price = $price - $vendor_discount_value;
+
+        $running_cost_percent = $item->running_cost_percentage;
+        $running_cost_value = $vendor_price * $running_cost_percent / 100;
+
+        $product_sub_price = $vendor_price + $running_cost_value;
+
+        $our_discount_percentage = $item->our_discount_percentage;
+        $our_discount_value = $product_sub_price * $our_discount_percentage / 100;
+
+        $product_price = $product_sub_price - $our_discount_value;
+        
+
         $discount_code_percentage = $item->discount_code_percentage;
         $user_discount_percentage = $item->user_discount_percentage;
+        $total_discount_percentage = $discount_code_percentage + $user_discount_percentage;
+        $total_discount_value = $product_price * $total_discount_percentage / 100;
 
-        $total_stock_discount = $our_discount_percentage + $vendor_discount_percentage;
+        $product_sub_total = $product_price - $total_discount_value;
+        
+        $taxes_percentage = $item->taxes_percentage;
+        $taxes_value = $item->taxes_percentage;
 
-        $item_total_price = $price - ($price * $total_stock_discount / 100);
 
-        $item_total = $item_total_price + ($item_total_price * $product_revenue_percentage / 100);
+        $product_final_total = $product_sub_total + $taxes_value;
 
-        $item_extra_discounts = $discount_code_percentage + $user_discount_percentage;
 
-        $item_sub_total = $item_total - ($item_total * $item_extra_discounts / 100);
-
-        $item_final_total = $item_sub_total + ($item_sub_total * $taxes_percentage / 100);
-
-        return number_format((float)$item_final_total, 2, '.', '');
+        return ceil($product_final_total);
     }
 
 
