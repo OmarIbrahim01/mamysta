@@ -14,6 +14,31 @@ class Product extends Model
     	return $this->belongsTo('App\Models\ProductSubCategory', 'product_sub_category_id');
     }
 
+    public function category()
+    {
+        return $this->belongsTo('App\Models\ProductCategory', 'product_category_id');
+    }
+
+    public function section()
+    {
+        return $this->belongsTo('App\Models\ProductSection', 'product_section_id');
+    }
+
+    public function gender()
+    {
+        return $this->belongsTo('App\Models\Gender', 'gender_id');
+    }
+
+    public function min_age()
+    {
+        return $this->belongsTo('App\Models\Age', 'min_age_id');
+    }
+
+    public function max_age()
+    {
+        return $this->belongsTo('App\Models\Age', 'max_age_id');
+    }
+
     public function brand()
     {
     	return $this->belongsTo('App\Models\Brand');
@@ -36,7 +61,7 @@ class Product extends Model
 
     public function status()
     {
-        return $this->belongsTo('App\Models\ProductStatus');
+        return $this->belongsTo('App\Models\ProductStatus', 'product_status_id');
     }
 
     public function stocks()

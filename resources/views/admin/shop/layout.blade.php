@@ -80,7 +80,7 @@
                with font-awesome or any other icon font library -->
 
           <li class="nav-item">
-            <a href="#" class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}">
+            <a href="{{ route('admin_shop_dashboared') }}" class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -143,7 +143,7 @@
               </li>
               <hr style="border-color: #555;">
               <li class="nav-item">
-                <a href="#" class="nav-link {{ request()->is('products/all') ? 'active' : '' }}">
+                <a href="{{ route('admin_shop_products_index') }}" class="nav-link {{ request()->is('products/all') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon text-primary"></i>
                   <p>View All Products</p>
                 </a>
@@ -226,5 +226,7 @@
 <script src="/admin_panel/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/admin_panel/dist/js/adminlte.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="/admin_panel/dist/js/demo.js"></script>
 </body>
 </html>

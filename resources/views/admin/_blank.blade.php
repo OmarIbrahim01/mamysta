@@ -25,7 +25,7 @@
 @endsection
 
 
-@section('main')
+@section('content')
 <!-- Main content -->
 <section class="content">
   

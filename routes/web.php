@@ -179,11 +179,57 @@ Route::middleware(['admin'])->group(function () {
 	]);
 
 
-	//////////////////Shop Routes/////////////////
+	//////////////////Dashboared Routes/////////////////
 	Route::get('/admin/shop/dashboard', [
 		'as' => 'admin_shop_dashboared',
 		'uses' => 'App\Http\Controllers\Admin\Shop\DashboardController@index'
 	]);
+
+
+	//////////////////Shop Products Index/////////////////
+	Route::get('/admin/shop/products', [
+		'as' => 'admin_shop_products_index',
+		'uses' => 'App\Http\Controllers\Admin\Shop\ProductsController@index'
+	]);
+
+	//////////////////Shop Products Show/////////////////
+	Route::get('/admin/shop/products/{id}', [
+		'as' => 'admin_shop_products_show',
+		'uses' => 'App\Http\Controllers\Admin\Shop\ProductsController@show'
+	]);
+
+
+	//////////////////Add Variant Images/////////////////
+	Route::post('/admin/shop/products/{product_id}/{variant_id}/add_images', [
+		'as' => 'admin_shop_products_add_images',
+		'uses' => 'App\Http\Controllers\Admin\Shop\ProductsController@addImages'
+	]);
+
+	//////////////////Remove Variant Images/////////////////
+	Route::delete('/admin/shop/products/{product_id}/{variant_id}/remove_image', [
+		'as' => 'admin_shop_products_remove_image',
+		'uses' => 'App\Http\Controllers\Admin\Shop\ProductsController@removeImage'
+	]);
+
+	//////////////////Edit Variant Attribute/////////////////
+	Route::put('/admin/shop/products/{product_id}/{variant_id}/edit_attributes', [
+		'as' => 'admin_shop_products_updateAttr',
+		'uses' => 'App\Http\Controllers\Admin\Shop\ProductsController@updateAttr'
+	]);
+
+
+	//////////////////Store Stock/////////////////
+	Route::post('/admin/shop/product/{product_id}/{variant_id}/store_stock', [
+		'as' => 'admin_shop_stocks_store',
+		'uses' => 'App\Http\Controllers\Admin\Shop\ProductsController@storeStock'
+	]);
+
+	//////////////////Update Stock/////////////////
+	Route::put('/admin/shop/stocks/{stock_id}/update', [
+		'as' => 'admin_shop_products_updateStock',
+		'uses' => 'App\Http\Controllers\Admin\Shop\ProductsController@updateStock'
+	]);
+
 
 });
 
