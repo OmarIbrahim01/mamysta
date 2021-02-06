@@ -141,19 +141,21 @@
 							<div class="product-details">
 								<div class="category-wrap">
 									<div class="category-list">
-										<a href="#" class="product-category">product subcategory</a>
+										<a href="#" class="product-category">{{ $product->subcategory->name }}</a>
 									</div>
 									<a href="#" class="btn-icon-wish"><i class="icon-heart"></i></a>
 								</div>
 								<h2 class="product-title">
 									<a href="{{ route('shop_products_show', [$product->cheapest_variant_id($product->id)]) }}">{{ $product->title }}</a>
 								</h2>
+								{{--  
 								<div class="ratings-container">
 									<div class="product-ratings">
 										<span class="ratings" style="width:100%"></span><!-- End .ratings -->
 										<span class="tooltiptext tooltip-top"></span>
 									</div><!-- End .product-ratings -->
 								</div><!-- End .product-container -->
+								--}}
 								<div class="price-box">
 
 									<span class="old-price">{{ ceil($product->most_expensive_variant_price($product->id)) }} EGP</span>

@@ -41,9 +41,7 @@
 
 				<div class="col-md-7 product-single-details">
 					<h1 class="product-title">
-						{{ $product->brand->name }} 
-						{{ $product->title }} - 
-						{{ $product->sku }}
+						{{ $product->title }}
 
 					</h1>
 					<p>Color: ({{ $product_variant->color->name }}) - Size: ({{ $product_variant->size->name }})</p>
@@ -61,12 +59,12 @@
 					<div class="price-box">
 						<span class="old-price">{{ $me_product_stock_final_price }} EGP</span>
 						<span class="product-price">{{ $product_stock_final_price }} EGP</span>
-						<span class="product-price" style="font-size: 10px; margin-left: 11px; color: #777;">(Prices doesnt include taxes)</span>
+						<span class="product-price" style="font-size: 10px; margin-left: 11px; color: #777;">(Prices doesn't include taxes)</span>
 					</div><!-- End .price-box -->
 
 					<div class="product-desc">
 						<p>
-							{{ $product->description }}
+							{!! $product->description !!}
 						</p>
 					</div><!-- End .product-desc -->
 					<div class="product-filters-container">

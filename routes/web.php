@@ -173,11 +173,18 @@ Route::middleware(['auth'])->group(function () {
 //////////////////////////////////////////////
 Route::middleware(['admin'])->group(function () {
 
+	////////////////////////////////////////////////
+	//////////// Main Admin Routes/////////////////
+	//////////////////////////////////////////////
 	Route::get('/admin/', [
 		'as' => 'admin_home',
 		'uses' => 'App\Http\Controllers\Admin\HomeController@index'
 	]);
 
+
+	////////////////////////////////////////////////
+	//////////// Shop Admin Routes/////////////////
+	//////////////////////////////////////////////
 
 	//////////////////Dashboared Routes/////////////////
 	Route::get('/admin/shop/dashboard', [
@@ -186,10 +193,26 @@ Route::middleware(['admin'])->group(function () {
 	]);
 
 
+	////////////////////////////////////////////////
+	//////////// Products Admin Routes/////////////
+	//////////////////////////////////////////////
+
 	//////////////////Shop Products Index/////////////////
 	Route::get('/admin/shop/products', [
 		'as' => 'admin_shop_products_index',
 		'uses' => 'App\Http\Controllers\Admin\Shop\ProductsController@index'
+	]);
+
+	//////////////////Shop Products Create/////////////////
+	Route::get('/admin/shop/products/create', [
+		'as' => 'admin_shop_products_create',
+		'uses' => 'App\Http\Controllers\Admin\Shop\ProductsController@create'
+	]);
+
+	//////////////////Shop Products Store/////////////////
+	Route::post('/admin/shop/products/', [
+		'as' => 'admin_shop_products_store',
+		'uses' => 'App\Http\Controllers\Admin\Shop\ProductsController@store'
 	]);
 
 	//////////////////Shop Products Show/////////////////
@@ -228,6 +251,19 @@ Route::middleware(['admin'])->group(function () {
 	Route::put('/admin/shop/stocks/{stock_id}/update', [
 		'as' => 'admin_shop_products_updateStock',
 		'uses' => 'App\Http\Controllers\Admin\Shop\ProductsController@updateStock'
+	]);
+
+
+
+	////////////////////////////////////////////////
+	////////////// Orders Admin Routes/////////////
+	//////////////////////////////////////////////
+	
+
+	//////////////////Orders Index/////////////////
+	Route::get('/admin/shop/orders', [
+		'as' => 'admin_shop_orders_index',
+		'uses' => 'App\Http\Controllers\Admin\Shop\OrdersController@index'
 	]);
 
 

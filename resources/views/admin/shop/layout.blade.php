@@ -14,6 +14,8 @@
   <link rel="stylesheet" href="/admin_panel/dist/css/adminlte.min.css">
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="/admin_panel/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+  {{-- Section CSS --}}
+  @yield('css')
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -99,7 +101,7 @@
             </a>
             <ul class="nav nav-treeview" style="margin-top: 10px; margin-bottom: 30px;">
               <li class="nav-item">
-                <a href="#" class="nav-link {{ request()->is('orders/all') ? 'active' : '' }}">
+                <a href="{{ route('admin_shop_orders_index') }}" class="nav-link {{ request()->is('orders/all') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon text-primary"></i>
                   <p>View All Orders</p>
                 </a>
@@ -136,7 +138,7 @@
             </a>
             <ul class="nav nav-treeview" style="margin-top: 10px; margin-bottom: 30px;">
               <li class="nav-item">
-                <a href="#" class="nav-link {{ request()->is('products/create') ? 'active' : '' }}">
+                <a href="{{ route('admin_shop_products_create') }}" class="nav-link {{ request()->is('products/create') ? 'active' : '' }}">
                   <i class="fas fa-plus-circle nav-icon text-info"></i>
                   <p>Add New Product</p>
                 </a>
@@ -228,5 +230,8 @@
 <script src="/admin_panel/dist/js/adminlte.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="/admin_panel/dist/js/demo.js"></script>
+{{-- Section JS --}}
+@yield('js')
+
 </body>
 </html>

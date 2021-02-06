@@ -45,7 +45,7 @@
           <div class="row">
             <div class="col-6 col-sm-12">
               <h3 class="my-3">{{ $product->title }}</h3>
-              <p>{{ $product->description }}</p>
+              <p>{!! $product->description !!}</p>
             </div>
           </div>
         </div>
