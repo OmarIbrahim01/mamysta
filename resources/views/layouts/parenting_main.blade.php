@@ -143,6 +143,9 @@
 									<div class="row" style="margin: 20px 45px 10px 45px;">
 										<a href="{{ route('customer_account_index') }}" class="btn btn-link link-primary"><i class="icon-user-2"></i> Account</a>
 									</div>
+									<div class="row" style="margin: 20px 45px 10px 45px;">
+										<a href="{{ route('customer_questions_and_answers_index') }}" class="btn btn-link link-primary"><i class="icon-question-circle"></i> My Q&A</a>
+									</div>
 									<div class="row" style="margin: 10px 45px;">
 										<a href="{{ route('customer_orders_index') }}" class="btn btn-link link-primary"><i class="icon-bag-2"></i> My Orders</a>
 									</div>
@@ -241,41 +244,26 @@
 					<nav class="main-nav w-100">
 						<ul class="menu">
 							<li>
-								<a href="{{ route('shop_home') }}">Home</a>
+								<a href="{{ route('parenting_home') }}">Home</a>
 							</li>
 
 							<li>
-								<a href="{{ route('shop_products_index') }}">All Products</a>
+								<a href="{{ route('parenting_questions_and_answers') }}">Q&A</a>
 							</li>
 
-
-							@foreach($product_sections as $product_section)
 							<li>
-								<a href="{{ route('shop_products_index', ['section' => $product_section->id]) }}">{{ $product_section->name }}</a>
-								<div class="megamenu megamenu-fixed-width">
-									<div class="row">
-										@foreach($product_section->product_categories as $product_category)
-										<div class="col-lg-3">
-											<a href="{{ route('shop_products_index', ['section' => $product_section->id, 'category' => $product_category->id]) }}" class="black-text">{{ $product_category->name }}</a>
-											<ul class="submenu">
-												@foreach($product_category->product_subcategories as $product_subcategory)
-												<li><a href="{{ route('shop_products_index', ['section' => $product_section->id, 'category' => $product_category->id , 'subcategory' => $product_subcategory->id ]) }}">{{ $product_subcategory->name }}</a></li>
-												@endforeach
-											</ul>
-										</div><!-- End .col-lg-4 -->
-										@endforeach
-										
-
-										<div class="col-lg-3 p-0 span-right">
-											<img src="/assets/images/menu-bg.png" alt="Menu banner" class="product-promo">
-										</div><!-- End .col-lg-4 -->
-									</div><!-- End .row -->
-								</div><!-- End .megamenu -->
+								<a href="{{ route('parenting_topics_index') }}">Topics</a>
 							</li>
-							@endforeach
 
-							
-							<li class="float-right"><a href="{{ route('parenting_home') }}" class="outlined-btn outlined-btn-success">Mamysta Parenting</a></li>
+							<li>
+								<a href="#">Groth Tracker</a>
+							</li>
+
+							<li>
+								<a href="#">Vaccine Finder</a>
+							</li>
+
+							<li class="float-right"><a class="outlined-btn outlined-btn-success">Mamysta Shop</a></li>
 						</ul>
 					</nav>
 				</div><!-- End .container -->

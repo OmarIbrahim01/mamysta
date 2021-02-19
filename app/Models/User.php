@@ -70,4 +70,16 @@ class User extends \TCG\Voyager\Models\User
     {
         return $this->hasMany('App\Models\Order')->orderByDesc('id');
     }
+
+
+    public function questions()
+    {
+        return $this->hasMany('App\Models\ParentingQuestion');
+    }
+
+
+    public function topics()
+    {
+        return $this->hasMany('App\Models\ParentingTopic');
+    }
 }

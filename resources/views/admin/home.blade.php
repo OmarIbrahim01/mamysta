@@ -68,7 +68,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </div>
           <!-- /.col-md-6 -->
           <div class="col-lg-5 mx-auto">
-            <a href="#">
+            <a href="{{ route('admin_parenting_dashboared') }}">
               <div class="card card-success card-outline">
                 <div class="card-body">
                   <h1><i class="fas fa-baby"></i> Parenting</h1>

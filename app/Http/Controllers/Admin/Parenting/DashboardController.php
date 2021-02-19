@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Customer;
+namespace App\Http\Controllers\Admin\Parenting;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Auth;
 
-
-class AccountController extends Controller
+class DashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +14,7 @@ class AccountController extends Controller
      */
     public function index()
     {
-        return view('customer.account.index');
+        return view('admin.parenting.dashboard.index');
     }
 
     /**
@@ -84,6 +82,4 @@ class AccountController extends Controller
     {
         //
     }
-
-
 }

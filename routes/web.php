@@ -168,6 +168,117 @@ Route::middleware(['auth'])->group(function () {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////
+//////////////////Parenting Routes/////////////////////
+//////////////////////////////////////////////////////
+
+// Parenting Home
+Route::get('/parenting', [
+	'as' => 'parenting_home',
+	'uses' => 'App\Http\Controllers\Parenting\HomeController@index'
+]);
+
+// Parenting Q&A Index
+Route::get('/parenting/questions_and_answers', [
+	'as' => 'parenting_questions_and_answers',
+	'uses' => 'App\Http\Controllers\Parenting\QuestionsController@index'
+]);
+
+// Parenting Topics Index
+Route::get('/parenting/topics', [
+	'as' => 'parenting_topics_index',
+	'uses' => 'App\Http\Controllers\Parenting\TopicsController@index'
+]);
+
+// Parenting Topics Show
+Route::get('/parenting/topics/{id}', [
+	'as' => 'parenting_topics_show',
+	'uses' => 'App\Http\Controllers\Parenting\TopicsController@show'
+]);
+
+
+////////// Parenting Customer Account Routes ///////////////////////
+Route::middleware(['auth'])->group(function () {
+
+	// Parenting Q&A Store
+	Route::post('/parenting/questions', [
+		'as' => 'parenting_questions_store',
+		'uses' => 'App\Http\Controllers\Parenting\QuestionsController@store'
+	]);
+
+	// Questions And Answers index
+	Route::get('/customer/questions_and_answers', [
+		'as' => 'customer_questions_and_answers_index',
+		'uses' => 'App\Http\Controllers\Customer\QuestionsAndAnswersController@index'
+	]);
+
+	// Questions And Answers index
+	Route::post('/customer/questions_and_answers/{question_id}/submit_answer', [
+		'as' => 'customer_questions_and_answers_answer_store',
+		'uses' => 'App\Http\Controllers\Customer\QuestionsAndAnswersController@answer_store'
+	]);
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ////////////////////////////////////////////////
 //////////////// Admin Routes /////////////////
 //////////////////////////////////////////////
@@ -255,16 +366,118 @@ Route::middleware(['admin'])->group(function () {
 
 
 
-	////////////////////////////////////////////////
-	////////////// Orders Admin Routes/////////////
-	//////////////////////////////////////////////
-	
-
 	//////////////////Orders Index/////////////////
 	Route::get('/admin/shop/orders', [
 		'as' => 'admin_shop_orders_index',
 		'uses' => 'App\Http\Controllers\Admin\Shop\OrdersController@index'
 	]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	/////////////////////////////////////////////////
+	//////////// Parenting Admin Routes/////////////
+	///////////////////////////////////////////////
+	
+
+	//////////////////Dashboared Routes/////////////////
+
+	//Dashboared Index
+	Route::get('/admin/parenting/dashboard', [
+		'as' => 'admin_parenting_dashboared',
+		'uses' => 'App\Http\Controllers\Admin\Parenting\DashboardController@index'
+	]);
+
+
+	//////////////////Parenting Q&A Index/////////////////
+
+	//Q&A Index
+	Route::get('/admin/parenting/questions', [
+		'as' => 'admin_parenting_questions_index',
+		'uses' => 'App\Http\Controllers\Admin\Parenting\QuestionsController@index'
+	]);
+
+
+
+	/////////////////////// Parenting Topics  /////////////////////////
+
+	//Topics Index
+	Route::get('/admin/parenting/topics', [
+		'as' => 'admin_parenting_topics_index',
+		'uses' => 'App\Http\Controllers\Admin\Parenting\TopicsController@index'
+	]);
+
+	//Topics Create
+	Route::get('/admin/parenting/topics/create', [
+		'as' => 'admin_parenting_topics_create',
+		'uses' => 'App\Http\Controllers\Admin\Parenting\TopicsController@create'
+	]);
+
+	//Topics Store
+	Route::post('/admin/parenting/topics', [
+		'as' => 'admin_parenting_topics_store',
+		'uses' => 'App\Http\Controllers\Admin\Parenting\TopicsController@store'
+	]);
+
+	//Topics Show
+	Route::get('/admin/parenting/topics/{id}', [
+		'as' => 'admin_parenting_topics_show',
+		'uses' => 'App\Http\Controllers\Admin\Parenting\TopicsController@show'
+	]);
+
+	//Topics Edit
+	Route::get('/admin/parenting/topics/{id}/edit', [
+		'as' => 'admin_parenting_topics_edit',
+		'uses' => 'App\Http\Controllers\Admin\Parenting\TopicsController@edit'
+	]);
+
+	//Topics Update
+	Route::put('/admin/parenting/topics/{id}', [
+		'as' => 'admin_parenting_topics_update',
+		'uses' => 'App\Http\Controllers\Admin\Parenting\TopicsController@update'
+	]);
+
+	
+
+
+
+
+
+
+
+	
 
 
 });

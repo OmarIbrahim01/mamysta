@@ -159,7 +159,7 @@ class ProductsController extends Controller
 
         // Add Images for first variant
         foreach($request->file('images') as $image){
-            $image_new_name = $variant->id.'_'.$image->getClientOriginalName();
+            $image_new_name = $variant->id.'.'.$image->getClientOriginalName();
             Storage::disk('products')->putFileAs('/'. $product->id .'/'.$variant->id.'/', $image, $image_new_name);
             $variant_image = new ProductVariantImage;
             $variant_image->product_variant_id = $variant->id;

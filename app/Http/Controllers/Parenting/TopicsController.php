@@ -1,22 +1,33 @@
 <?php
 
-namespace App\Http\Controllers\Customer;
+namespace App\Http\Controllers\Parenting;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Auth;
 
+use App\Models\ParentingTopic;
+use App\Models\ParentingTopicCategory;
 
-class AccountController extends Controller
+class TopicsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('customer.account.index');
+        $categories = ParentingTopicCategory::all();
+        $topics = ParentingTopic::all()->sortByDesc('id');
+
+        if(isset($request->category)){
+            $topics = $topics->where('parenting_topic_category_id', $request->category);
+        }
+
+        return view('parenting.topics.index', [
+                                'topics' => $topics,
+                                'categories' => $categories
+                    ]);
     }
 
     /**
@@ -48,7 +59,13 @@ class AccountController extends Controller
      */
     public function show($id)
     {
-        //
+        $categories = ParentingTopicCategory::all();
+        $topic = ParentingTopic::findOrFail($id);
+
+        return view('parenting.topics.show', [ 
+                                'topic' => $topic,
+                                'categories' => $categories
+                            ]);
     }
 
     /**
@@ -84,6 +101,4 @@ class AccountController extends Controller
     {
         //
     }
-
-
 }
