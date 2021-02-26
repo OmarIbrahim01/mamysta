@@ -93,6 +93,7 @@
           <!-- /.card-header -->
           <div class="card-body">
             <!-- post text -->
+            <p>{{ $question->category->name }} {{ "( " . $question->subcategory->name . " )" }}</p>
             <p>{!! $question->question !!}</p>
             <span class="float-right text-muted">{{ $question->answers->count() }} Answers</span>
           </div>
@@ -120,19 +121,20 @@
 
           <!-- /.card-footer -->
           <div class="card-footer">
-            <form action="#" method="post">
+            <form action="{{ route('admin_parenting_questions_submit_answer', [$question->id]) }}" method="post">
+              @csrf
               <img class="img-fluid img-circle img-sm" src="{{ Auth::user()->avatar }}" alt="Alt Text">
               <!-- .img-push is used to add margin to elements next to floating images -->
               <div class="img-push">
                 <div class="row">
                   <div class="col-md-12">
-                    <textarea class="textarea" placeholder="Post Your Answer"></textarea>
+                    <textarea class="textarea" placeholder="Post Your Answer" name="answer" required></textarea>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
-                      <select class="form-control" name="size" required>
-                        @foreach($answering_statuses as $answering_status)
-                        <option value="{{ $answering_status->id }}">{{ $answering_status->name }}</option>
+                      <select class="form-control" name="question_statuse" required>
+                        @foreach($question_statuses as $question_statuse)
+                        <option value="{{ $question_statuse->id }}">{{ $question_statuse->name }}</option>
                         @endforeach
                       </select>
                     </div>

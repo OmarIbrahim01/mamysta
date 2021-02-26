@@ -5,17 +5,10 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
-
-
-use App\Models\ParentingQuestion;
-use App\Models\ParentingAnswer;
-use App\Models\ParentingAnswerType;
-use App\Models\ParentingQuestionCategory;
-use App\Models\ParentingQuestionStatus;
-use App\Models\ParentingQuestionSubcategory;
 use App\Models\Gender;
+use App\Models\UserChild;
 
-class QuestionsAndAnswersController extends Controller
+class ChildrenController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,15 +17,13 @@ class QuestionsAndAnswersController extends Controller
      */
     public function index()
     {
-        $genders = Gender::all()->take(3);
-        $categories = ParentingQuestionCategory::all();
-        $user = Auth::user();
-        $questions = $user->questions->sortByDesc('parenting_questions_status_id');
-        return view('customer.questions_and_answers.index', [
-                        'questions' => $questions,
-                        'categories' => $categories,
-                        'genders' => $genders
-                    ]);
+        $genders = Gender::all()->take(2);
+        $children = Auth::user()->children->all();
+
+        return view('customer.children.index', [
+                        'genders' => $genders,
+                        'children' => $children,
+                 ]);
     }
 
     /**
@@ -53,26 +44,17 @@ class QuestionsAndAnswersController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
 
-    public function answer_store(Request $request, $question_id)
-    {
+        $child = new UserChild;
+        $child->user_id = Auth::id();
+        $child->gender_id = $request->gender;
+        $child->name = $request->name;
+        $child->birthday = $request->year.'-'.$request->month.'-'.$request->day;
+        $child->save();
 
-        $answer = new ParentingAnswer;
-        $answer->parenting_question_id = $question_id;
-        $answer->user_id = Auth::id();
-        $answer->parenting_answer_type_id = 2;
-        $answer->parenting_answer_status_id = 2;
-        $answer->answer = $request->user_answer;
-        $answer->save();
-
-        $question = ParentingQuestion::findOrFail($question_id);
-        $question->parenting_questions_status_id = 1;
-        $question->update();
-
-        session()->flash('message', 'New Answer Have been Submited Successfully');
+        session()->flash('message', 'Child Have Been Added Successfully');
         return redirect()->back();
+
     }
 
     /**
@@ -94,7 +76,13 @@ class QuestionsAndAnswersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $genders = Gender::all()->take(2);
+        $child = UserChild::findOrFail($id);
+
+        return view('customer.children.edit', [
+                        'genders' => $genders,
+                        'child' => $child,
+                 ]);
     }
 
     /**
@@ -106,7 +94,16 @@ class QuestionsAndAnswersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        $child = UserChild::findOrFail($id);
+        $child->user_id = Auth::id();
+        $child->gender_id = $request->gender;
+        $child->name = $request->name;
+        $child->birthday = $request->year.'-'.$request->month.'-'.$request->day;
+        $child->save();
+
+        session()->flash('message', 'Child Have Been Update Successfully');
+        return redirect()->route('user_children_index');
     }
 
     /**

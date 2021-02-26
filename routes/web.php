@@ -209,8 +209,77 @@ Route::get('/parenting/topics/{id}', [
 ]);
 
 
+
+
+
+////////////////////////////////////////////////////////
+//////////////Groth Tracker Routes/////////////////////
+//////////////////////////////////////////////////////
+
+
+// Groth Tracker Index
+Route::get('/parenting/groth_tracker', [
+	'as' => 'parenting_groth_tracker_index',
+	'uses' => 'App\Http\Controllers\Parenting\GrothTrackerController@index'
+]);
+
+
+
+
+
+
+
 ////////// Parenting Customer Account Routes ///////////////////////
 Route::middleware(['auth'])->group(function () {
+
+
+	/////////////////// User Children Routes ///////////////////////
+
+	// User Children index
+	Route::get('/customer/children', [
+		'as' => 'user_children_index',
+		'uses' => 'App\Http\Controllers\Customer\ChildrenController@index'
+	]);
+
+	// User Children create
+	Route::get('/customer/children/create', [
+		'as' => 'user_children_create',
+		'uses' => 'App\Http\Controllers\Customer\ChildrenController@create'
+	]);
+
+	// User Children store
+	Route::post('/customer/children', [
+		'as' => 'user_children_store',
+		'uses' => 'App\Http\Controllers\Customer\ChildrenController@store'
+	]);
+
+	// User Children show
+	Route::get('/customer/children/{id}', [
+		'as' => 'user_children_show',
+		'uses' => 'App\Http\Controllers\Customer\ChildrenController@show'
+	]);
+
+	// User Children edit
+	Route::get('/customer/children/{id}/edit', [
+		'as' => 'user_children_edit',
+		'uses' => 'App\Http\Controllers\Customer\ChildrenController@edit'
+	]);
+
+	// User Children update
+	Route::put('/customer/children/{id}', [
+		'as' => 'user_children_update',
+		'uses' => 'App\Http\Controllers\Customer\ChildrenController@update'
+	]);
+
+	// User Children destroy
+	Route::delete('/customer/children/{id}', [
+		'as' => 'user_children_destroy',
+		'uses' => 'App\Http\Controllers\Customer\ChildrenController@destroy'
+	]);
+
+
+
+	/////////////////// Parenting Q&A Routes ///////////////////////
 
 	// Parenting Q&A Store
 	Route::post('/parenting/questions', [
@@ -218,13 +287,13 @@ Route::middleware(['auth'])->group(function () {
 		'uses' => 'App\Http\Controllers\Parenting\QuestionsController@store'
 	]);
 
-	// Questions And Answers index
+	// Customer Q&A Index
 	Route::get('/customer/questions_and_answers', [
 		'as' => 'customer_questions_and_answers_index',
 		'uses' => 'App\Http\Controllers\Customer\QuestionsAndAnswersController@index'
 	]);
 
-	// Questions And Answers index
+	// Customer Q&A Submit Required Info
 	Route::post('/customer/questions_and_answers/{question_id}/submit_answer', [
 		'as' => 'customer_questions_and_answers_answer_store',
 		'uses' => 'App\Http\Controllers\Customer\QuestionsAndAnswersController@answer_store'
@@ -429,6 +498,12 @@ Route::middleware(['admin'])->group(function () {
 		'uses' => 'App\Http\Controllers\Admin\Parenting\QuestionsController@index'
 	]);
 
+	//Q&A Submit Answer
+	Route::post('/admin/parenting/questions/{id}/submit_answer', [
+		'as' => 'admin_parenting_questions_submit_answer',
+		'uses' => 'App\Http\Controllers\Admin\Parenting\QuestionsController@submit_answer'
+	]);
+
 
 
 	/////////////////////// Parenting Topics  /////////////////////////
@@ -488,5 +563,7 @@ Route::group(['prefix' => 'voyager_admin'], function () {
 });
 
 Auth::routes();
+
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

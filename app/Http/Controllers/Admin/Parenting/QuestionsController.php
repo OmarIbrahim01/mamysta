@@ -24,7 +24,7 @@ class QuestionsController extends Controller
     public function index(Request $request)
     {
         $statuses = ParentingQuestionStatus::all();
-        $answering_statuses = ParentingQuestionStatus::all()->skip(2)->take(2)->sortByDesc('id');
+        $question_statuses = ParentingQuestionStatus::all()->skip(2)->take(2)->sortByDesc('id');
         $all_questions_count = ParentingQuestion::count();
         $questions = ParentingQuestion::all();
 
@@ -35,7 +35,7 @@ class QuestionsController extends Controller
         $questions = $questions->sortBy('id')->sortBy('parenting_questions_status_id');
 
         return view('admin.parenting.questions.index', [
-                            'answering_statuses' => $answering_statuses,
+                            'question_statuses' => $question_statuses,
                             'statuses' => $statuses,
                             'all_questions_count' => $all_questions_count,
                             'questions' => $questions
@@ -58,9 +58,36 @@ class QuestionsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function submit_answer(Request $request, $question_id)
     {
-        //
+        
+        $answer = new ParentingAnswer;
+        $answer->parenting_question_id = $question_id;
+        $answer->user_id = Auth::id();
+        $answer->answer = $request->answer;
+        $answer->parenting_answer_status_id = 2;
+
+        if($request->question_statuse == 1){
+            $answer->parenting_answer_type_id = 3;
+        }elseif($request->question_statuse == 2){
+            $answer->parenting_answer_type_id = 3;
+        }elseif($request->question_statuse == 3){
+            $answer->parenting_answer_type_id = 1;
+        }elseif($request->question_statuse == 4){
+            $answer->parenting_answer_type_id = 3;
+        }elseif($request->question_statuse == 5){
+            $answer->parenting_answer_type_id = 3;
+        }
+
+        $answer->save();
+
+        $question = ParentingQuestion::findOrFail($question_id);
+        $question->parenting_questions_status_id = $request->question_statuse;
+        $question->update();
+        
+        session()->flash('message', 'Question Have Been Answerd Successfully');
+        return redirect()->back();
+
     }
 
     /**

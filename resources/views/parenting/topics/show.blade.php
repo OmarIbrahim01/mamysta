@@ -27,7 +27,7 @@
 				<article class="post single">
 					<div class="post-media">
 						<div class="post-slider owl-carousel owl-theme">
-							<img src="{{ $topic->image }}" alt="Post">
+							<img src="{{ $topic->image }}" alt="Post" style="width: 100%; height: 320px; object-fit: cover;">
 						</div><!-- End .post-slider -->
 					</div><!-- End .post-media -->
 

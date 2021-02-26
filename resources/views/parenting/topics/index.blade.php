@@ -29,7 +29,7 @@
 				<article class="post">
 					<div class="post-media">
 						<a href="{{ route('parenting_topics_show', [$topic->id]) }}">
-							<img src="{{ $topic->image }}" alt="Post">
+							<img src="{{ $topic->image }}" alt="Post" style="width: 100%; height: 320px; object-fit: cover;">
 						</a>
 					</div><!-- End .post-media -->
 

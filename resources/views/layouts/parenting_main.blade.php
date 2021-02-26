@@ -263,7 +263,7 @@
 								<a href="#">Vaccine Finder</a>
 							</li>
 
-							<li class="float-right"><a class="outlined-btn outlined-btn-success">Mamysta Shop</a></li>
+							<li class="float-right"><a href="{{ route('shop_home') }}" class="outlined-btn outlined-btn-success">Mamysta Shop</a></li>
 						</ul>
 					</nav>
 				</div><!-- End .container -->

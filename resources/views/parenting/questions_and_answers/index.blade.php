@@ -45,7 +45,7 @@
 
                             
                             <!-- Modal -->
-                            <div class="modal fade" id="ask_question" tabindex="-1" role="dialog" aria-labelledby="addressModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="ask_question" tabindex="-1" role="dialog" >
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <form id="add_new_question" method="POST" action="{{ route('parenting_questions_store') }}">
@@ -111,7 +111,7 @@
 
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-link btn-sm" data-dismiss="modal">Cancel</button>
-                                                <button type="submit" form="add_new_address" class="btn btn-primary btn-sm">Submit Question</button>
+                                                <button type="submit" class="btn btn-primary btn-sm">Submit Question</button>
                                             </div><!-- End .modal-footer -->
                                         </form>
                                     </div><!-- End .modal-content -->

@@ -18,7 +18,7 @@ class TopicsController extends Controller
     public function index(Request $request)
     {
         $categories = ParentingTopicCategory::all();
-        $topics = ParentingTopic::all()->sortByDesc('id');
+        $topics = ParentingTopic::all()->where('parenting_topic_status_id', 3)->sortByDesc('id');
 
         if(isset($request->category)){
             $topics = $topics->where('parenting_topic_category_id', $request->category);

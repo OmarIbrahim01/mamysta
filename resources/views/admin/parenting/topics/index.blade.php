@@ -68,6 +68,8 @@
                       <img src="{{ $topic->image }}" style="width: 200px; height: 75px; object-fit: cover;">
                       <br/>
                       <h4>{{ $topic->title }}</h4>
+                      <small style="color: #333;">Author: {{ $topic->user->name }} {{ $topic->user->last_name }}</small>
+                      <br>
                       <small>Created: {{ $topic->created_at->format('d M, Y') }}</small>
                     </a>
                   </td>
@@ -82,7 +84,7 @@
                           </i>
                           View
                       </a>
-                      <a class="btn btn-info btn-sm" href="{{ route('admin_parenting_topics_edit', [$topic->id]) }}">
+                      <a class="btn btn-warning btn-sm" href="{{ route('admin_parenting_topics_edit', [$topic->id]) }}">
                           <i class="fas fa-pencil-alt">
                           </i>
                           Edit

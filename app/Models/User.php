@@ -20,6 +20,7 @@ class User extends \TCG\Voyager\Models\User
         'name',
         'email',
         'password',
+        'have_children',
     ];
 
     /**
@@ -58,6 +59,11 @@ class User extends \TCG\Voyager\Models\User
     public function addresses()
     {
         return $this->hasMany('App\Models\UserAddress');
+    }
+
+    public function children()
+    {
+        return $this->hasMany('App\Models\UserChild');
     }
 
     public function discount_codes()
