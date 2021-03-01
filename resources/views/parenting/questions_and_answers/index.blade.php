@@ -62,16 +62,16 @@
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group required-field" style="max-width: 100%;">
-                                                    <label>Gender</label>
-                                                    <div class="select-custom">
-                                                        <select id="gender" class="form-control" name="gender" required>
-                                                           <option value="" disabled selected>Select Gender</option>
-                                                           @foreach($genders as $gender)
-                                                           <option value="{{ $gender->id }}">{{ $gender->name }}</option>
-                                                           @endforeach
-                                                        </select>
-                                                    </div><!-- End .select-custom -->
-                                                </div><!-- End .form-group -->
+                                                            <label>Gender</label>
+                                                            <div class="select-custom">
+                                                                <select id="gender" class="form-control" name="gender" required>
+                                                                   <option value="" disabled selected>Select Gender</option>
+                                                                   @foreach($genders as $gender)
+                                                                   <option value="{{ $gender->id }}">{{ $gender->name }}</option>
+                                                                   @endforeach
+                                                                </select>
+                                                            </div><!-- End .select-custom -->
+                                                        </div><!-- End .form-group -->
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group required-field">

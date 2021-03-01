@@ -4,15 +4,11 @@ namespace App\Http\Controllers\Parenting;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Auth;
 use App\Models\Gender;
-use App\Models\UserChild;
-use App\Models\GrothTracker;
 use App\Models\GrothCalculatorValue;
 use Carbon\Carbon;
 
-
-class GrothTrackerController extends Controller
+class GrothCalculatorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,14 +18,42 @@ class GrothTrackerController extends Controller
     public function index()
     {
         $genders = Gender::all()->take(2);
-        $children = Auth::user()->children;
         $groth_values = GrothCalculatorValue::all();
 
-        return view('parenting.groth_tracker.index', [
-                    'genders' => $genders,
-                    'children' => $children,
-                    'groth_values' => $groth_values,
+        return view('parenting.groth_calculator.index', [
+                            'genders' => $genders,
+                    ]);
+    }
+
+
+    public function result(Request $request)
+    {
+
+        $request->validate([
+            'gender' => 'required|integer|between:1,2',
+            'day' => 'required|integer|between:1,31',
+            'month' => 'required|integer|between:1,12',
+            'year' => 'required|integer|digits:4',
         ]);
+
+        $genders = Gender::all()->take(2);
+        $groth_values = GrothCalculatorValue::all();
+
+        $gender = Gender::findOrFail($request->gender);
+        $birthdate = Carbon::createFromFormat('d/m/Y', $request->day . '/' . $request->month . '/' . $request->year);
+        $age_in_months = (int) round($birthdate->diffInDays(Carbon::now()) / 30);
+
+        $groth_calculator_value = $groth_values->where('gender_id', $request->gender)->where('age', $age_in_months)->first();
+
+
+        return view('parenting.groth_calculator.result', [
+                            'genders' => $genders,
+                            'groth_values' => $groth_values,
+                            'birthdate' => $birthdate,
+                            'gender' => $gender,
+                            'age_in_months' => $age_in_months,
+                            'groth_calculator_value' => $groth_calculator_value,
+                    ]);
     }
 
     /**
@@ -48,19 +72,9 @@ class GrothTrackerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $child_id)
+    public function store(Request $request)
     {
-        // dd($request->all());
-
-        $record = new GrothTracker;
-        $record->user_child_id = $child_id;
-        $record->date = Carbon::createFromFormat('d/m/Y',$request->date_of_measurement);
-        $record->weight = $request->weight;
-        $record->height = $request->height;
-        $record->save();
-
-        session()->flash('message', 'Record Have Been Added Successfully');
-        return redirect()->back();
+        //
     }
 
     /**

@@ -18,5 +18,10 @@ class UserChild extends Model
     {
         return $this->belongsTo('App\Models\Gender');
     }
+
+    public function groth_tracker_records()
+    {
+    	return $this->hasMany('App\Models\GrothTracker');
+    }
     
 }

@@ -256,8 +256,14 @@
 							</li>
 
 							<li>
-								<a href="#">Groth Tracker</a>
+								<a href="#" class="sf-with-ul">Child Groth</a>
+								<ul style="display: none;">
+									<li><a href="{{ route('parenting_groth_calaculator_index') }}">Groth Calculator</a></li>
+									<li><a href="{{ route('parenting_groth_tracker_index') }}">Groth Tracker</a></li>
+								</ul>
 							</li>
+
+
 
 							<li>
 								<a href="#">Vaccine Finder</a>

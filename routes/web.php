@@ -217,11 +217,20 @@ Route::get('/parenting/topics/{id}', [
 //////////////////////////////////////////////////////
 
 
-// Groth Tracker Index
-Route::get('/parenting/groth_tracker', [
-	'as' => 'parenting_groth_tracker_index',
-	'uses' => 'App\Http\Controllers\Parenting\GrothTrackerController@index'
+//////////////Groth Calculator Routes/////////////////////
+
+// Groth Calculator Index
+Route::get('/parenting/groth_calaculator', [
+	'as' => 'parenting_groth_calaculator_index',
+	'uses' => 'App\Http\Controllers\Parenting\GrothCalculatorController@index'
 ]);
+
+// Groth Calculator Result
+Route::get('/parenting/groth_tracker_calaculator/result', [
+	'as' => 'parenting_groth_tracker_calaculator_result',
+	'uses' => 'App\Http\Controllers\Parenting\GrothCalculatorController@result'
+]);
+
 
 
 
@@ -231,6 +240,26 @@ Route::get('/parenting/groth_tracker', [
 
 ////////// Parenting Customer Account Routes ///////////////////////
 Route::middleware(['auth'])->group(function () {
+
+
+	//////////////Groth Tracker Routes/////////////////////
+
+	// Groth Tracker Index
+	Route::get('/parenting/groth_tracker', [
+		'as' => 'parenting_groth_tracker_index',
+		'uses' => 'App\Http\Controllers\Parenting\GrothTrackerController@index'
+	]);
+
+	// Groth Tracker Store
+	Route::post('/parenting/groth_tracker/{child_id}', [
+		'as' => 'parenting_groth_tracker_store',
+		'uses' => 'App\Http\Controllers\Parenting\GrothTrackerController@store'
+	]);
+
+
+
+
+
 
 
 	/////////////////// User Children Routes ///////////////////////
