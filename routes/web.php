@@ -39,6 +39,13 @@ Route::get('/shop/products/', [
 	'uses' => 'App\Http\Controllers\Shop\ProductsController@index'
 ]);
 
+
+// Product Seaech 
+Route::get('/shop/products/search', [
+	'as' => 'shop_products_search',
+	'uses' => 'App\Http\Controllers\Shop\ProductsController@search'
+]);
+
 // Product Products Show
 Route::get('/shop/products/{product_variant_id}', [
 	'as' => 'shop_products_show',
@@ -234,12 +241,66 @@ Route::get('/parenting/groth_tracker_calaculator/result', [
 
 
 
+//////////////Vaccines Routes/////////////////////
+
+// Vaccines Index
+Route::get('/parenting/vaccines', [
+	'as' => 'parenting_vaccines_index',
+	'uses' => 'App\Http\Controllers\Parenting\VaccinesController@index'
+]);
+
+// Vaccines show
+Route::get('/parenting/vaccines/{id}', [
+	'as' => 'parenting_vaccines_show',
+	'uses' => 'App\Http\Controllers\Parenting\VaccinesController@show'
+]);
+
+
+
+//////////////Vaccine Places Routes/////////////////////
+
+// Vaccine Places Index
+Route::get('/parenting/vaccine_places', [
+	'as' => 'parenting_vaccine_places_index',
+	'uses' => 'App\Http\Controllers\Parenting\VaccinePlacesController@index'
+]);
+
+// Vaccine Places show
+Route::get('/parenting/vaccine_places/{id}', [
+	'as' => 'parenting_vaccine_places_show',
+	'uses' => 'App\Http\Controllers\Parenting\VaccinePlacesController@show'
+]);
+
+
+
+
+
 
 
 
 
 ////////// Parenting Customer Account Routes ///////////////////////
 Route::middleware(['auth'])->group(function () {
+
+
+
+	//////////////Vaccine Tracker Routes/////////////////////
+
+	// Vaccine Tracker Index
+	Route::get('/parenting/vaccine_tracker', [
+		'as' => 'parenting_vaccine_tracker_index',
+		'uses' => 'App\Http\Controllers\Parenting\VaccineTrackerController@index'
+	]);
+
+	// Vaccine Tracker Store
+	Route::post('/parenting/vaccine_tracker/{child_id}/store', [
+		'as' => 'parenting_vaccine_tracker_store',
+		'uses' => 'App\Http\Controllers\Parenting\VaccineTrackerController@store'
+	]);
+
+
+
+
 
 
 	//////////////Groth Tracker Routes/////////////////////

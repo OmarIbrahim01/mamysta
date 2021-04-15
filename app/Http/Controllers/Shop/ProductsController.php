@@ -11,6 +11,7 @@ use App\Models\ProductSubCategory;
 use App\Models\Brand;
 
 use App\Models\Product;
+use App\Models\ProductTag;
 use App\Models\ProductVariant;
 use App\Models\ProductRevenuePercent;
 
@@ -79,6 +80,43 @@ class ProductsController extends Controller
                                     'products' => $products                                
                                 ]);
     }
+
+
+
+    public function search(Request $request)
+    {
+
+        $searchTerm = $request->searchTerm;
+
+        $products_by_title = Product::where('title', 'LIKE', "%{$searchTerm}%")->get();
+        
+        $products_by_tags = Product::whereHas('tags', function($q) use($searchTerm){
+            $q->where('name', 'LIKE', "%{$searchTerm}%");
+        })->get();
+
+        $products_by_section = Product::whereHas('section', function($q) use($searchTerm){
+            $q->where('name', 'LIKE', "%{$searchTerm}%");
+        })->get();
+
+        $products_by_category = Product::whereHas('category', function($q) use($searchTerm){
+            $q->where('name', 'LIKE', "%{$searchTerm}%");
+        })->get();
+
+        $products_by_subcategory = Product::whereHas('subcategory', function($q) use($searchTerm){
+            $q->where('name', 'LIKE', "%{$searchTerm}%");
+        })->get();
+
+        $products = $products_by_title->merge($products_by_tags);
+        $products = $products->merge($products_by_section);
+        $products = $products->merge($products_by_category);
+        $products = $products->merge($products_by_subcategory);
+        
+        return view('shop.product_search', [
+                                    'searchTerm' => $searchTerm,
+                                    'products' => $products                                
+                                ]);
+    }
+
 
     /**
      * Show the form for creating a new resource.

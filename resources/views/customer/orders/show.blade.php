@@ -29,10 +29,10 @@
                                 Details
                             </div><!-- End .card-header -->
                             <div class="card-body">
-                                <h4>Order Number <span style="color: #d93c81;">#1212</span></h4>
+                                <h4>Order Number <span style="color: #d93c81;">#{{ $order->id }}</span></h4>
                                 <p>
-                                    Items: 1<br>
-                                    Place On: 12/12/2020<br>
+                                    Items: {{ $order->items->count() }}<br>
+                                    Placed On: {{ $order->created_at->format('d/m/Y') }}<br>
                                 </p>
                             </div><!-- End .card-body -->
                         </div><!-- End .card -->
@@ -43,7 +43,7 @@
                                 Order Status
                             </div><!-- End .card-header -->
                             <div class="card-body text-center">
-                                <h2><span class="badge badge-primary">Placed</span></h2>
+                                <h2><span class="badge badge-primary">{{ $order->status->name }}</span></h2>
                                 <p>Excpected Delivery From: 12/12/2020 To: 17/12/2020</p>
                             </div><!-- End .card-body -->
                         </div><!-- End .card -->
@@ -94,7 +94,7 @@
                             </div><!-- End .card-header -->
                             <div class="card-body">
                                 <h4>Payment Method</h4>
-                                <p>Cash On Delivery</p>
+                                <p>{{ $order->payment_method->name }}</p>
                                 <br>
                                 <h4>Payment Details</h4>
                                 <table class="table table-totals">
@@ -126,16 +126,16 @@
                                 DELIVERY INFORMATION
                             </div><!-- End .card-header -->
                             <div class="card-body">
-                                <h4>Delivery Method</h4>
-                                <p>Standard Door Delivery</p>
+                                <h4>Shipping Method</h4>
+                                <p>{{ $order->shipping_method->name }}</p>
                                 <br>
                                 <h4>Shipping Address</h4>
                                 <p>
-                                    Omar Ibrahim<br>
-                                    22 ali ameen st, first floor apt.1<br>
-                                    Nasr City Al Manteqah Al Oula, Cairo<br>
+                                    {{ $order->user->name }} {{ $order->user->last_name }}<br>
+                                    {{ $order->user_address->address }}<br>
+                                    {{ $order->user_address->city->name }}, {{ $order->user_address->region->name }}<br>
                                 </p>
-                                <p>Phone: 01114030995</p>
+                                <p>Phone: {{ $order->user_phone->phone}}</p>
                             </div><!-- End .card-body -->
                         </div><!-- End .card -->
                     </div>

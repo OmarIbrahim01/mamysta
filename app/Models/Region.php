@@ -13,4 +13,9 @@ class Region extends Model
     {
         return $this->hasMany('App\Models\City');
     }
+
+    public function vaccine_places()
+    {
+        return $this->hasMany('App\Models\VaccinePlace', 'region_id');
+    }
 }

@@ -13,6 +13,7 @@ use App\Models\ShippingMethod;
 use App\Models\PaymentMethod;
 use App\Models\UserDiscount;
 use App\Models\DiscountCode;
+use App\Models\UserDiscountCode;
 use App\Models\Order;
 use App\Models\OrderItem;
 
@@ -60,14 +61,65 @@ class OrdersController extends Controller
         $user_phone = UserPhone::findOrFail($request->user_phone);
         $shipping_method = ShippingMethod::findOrFail($request->shipping_method);
         $payment_method = PaymentMethod::findOrFail($request->payment_method);
+
+
+        // Discount Code Check and Apply
         if(!empty($request->discount_code)){
-            $discount_code = DiscountCode::where('code', $request->discount_code)->first();
-            $discount_code_percentage = $discount_code->discount_percentage;
+            $discount_code = DiscountCode::where('code', $request->discount_code)->first();            
+            // Discount Code Found
+            if(isset($discount_code) && $discount_code->count() > 0){
+
+                //If Discount type (Use Multple Times)
+                if($discount_code->type->id == 1){
+                    
+                    $user_discount_code = UserDiscountCode::where( 'user_id', Auth::id() )->where( 'discount_code_id', $discount_code->id)->first();
+
+                    //If Discount Code have been used before by user
+                    if(isset($user_discount_code) && $user_discount_code->count() > 0){
+                        // Unvalid Code
+                        $discount_code = null;
+                        $discount_code_percentage = 0;
+                    }
+                    //If Discount code havent been used before by user
+                    else{
+                        // Valid Code
+                        $discount_code_percentage = $discount_code->discount_percentage;
+                    }
+                }
+                //If Discount type (Use Once)
+                elseif($discount_code->type->id == 2){
+
+                    $user_discount_code = UserDiscountCode::where( 'discount_code_id', $discount_code->id)->first();
+
+                    //If Discount Code have been used before by anyone
+                    if(isset($user_discount_code) && $user_discount_code->count() > 0){
+                        // Unvalid Code
+                        $discount_code = null;
+                        $discount_code_percentage = 0;
+                    }
+                    //If Discount code havent been used before by anyone
+                    else{
+                        // Valid Code
+                        $discount_code_percentage = $discount_code->discount_percentage;
+                    }
+
+                }
+
+            }else{
+                $discount_code = null;
+                $discount_code_percentage = 0;
+            }
         }else{
+            $discount_code = null;
             $discount_code_percentage = 0;
         }
+
+
+
+
         $user_discounts = UserDiscount::where('user_id', Auth::id())->where('used', 0)->get();
         $user_discount_percentage = $user_discounts->sum('percentage');
+
 
         // Create New Order
         $order = new Order;
@@ -110,6 +162,24 @@ class OrdersController extends Controller
 
             $cart_item->delete();
 
+        }
+
+
+        // Create UserDiscountCode Log
+        if(!empty($discount_code)){
+            $user_discount_code = new UserDiscountCode;
+            $user_discount_code->user_id = Auth::id();
+            $user_discount_code->discount_code_id = $discount_code->id;
+            $user_discount_code->order_id = $order->id; 
+            $user_discount_code->save();
+        }
+
+
+        // Log And Empty UserDiscounts
+        foreach($user_discounts as $user_discount){
+            $user_discount->used = 1;
+            $user_discount->order_id = $order->id;
+            $user_discount->update();
         }
 
 

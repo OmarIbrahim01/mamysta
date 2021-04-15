@@ -64,7 +64,7 @@
                                 <a href="{{ route('customer_orders_show', [$order->id]) }}" class="btn btn-primary btn-sm">See Details</a>
                                 <ul class="list-group" style="margin-top: 30px;">
                                   <li class="list-group-item" style="background-color: #d93c81; color: white;">Total</li>
-                                  <li class="list-group-item">0.00 EGP</li>
+                                  <li class="list-group-item">{{ $order->total($order->id) }} EGP</li>
                                 </ul>
                             </div>
                         </div>

@@ -91,7 +91,7 @@
 						<button class="mobile-menu-toggler mr-2" type="button">
 							<i class="icon-menu"></i>
 						</button>
-						<a href="index.html" class="logo">
+						<a href="{{ route('home') }}" class="logo">
 							<img src="/assets/images/logo.png" alt="Porto Logo">
 						</a>
 					</div><!-- End .header-left -->
@@ -99,30 +99,9 @@
 					<div class="header-right w-lg-max ml-0">
 						<div class="header-icon header-search header-search-inline header-search-category w-lg-max pl-3" style="margin-right: 100px;">
 							<a href="#" class="search-toggle" role="button"><i class="icon-search-3"></i></a>
-							<form action="#" method="get">
+							<form action="{{ route('shop_products_search') }}" method="GET">
 								<div class="header-search-wrapper">
-									<input type="search" class="form-control" name="q" id="q" placeholder="Search..." required>
-									<div class="select-custom">
-										<select id="cat" name="cat">
-											<option value="">All Categories</option>
-											<option value="4">Fashion</option>
-											<option value="12">- Women</option>
-											<option value="13">- Men</option>
-											<option value="66">- Jewellery</option>
-											<option value="67">- Kids Fashion</option>
-											<option value="5">Electronics</option>
-											<option value="21">- Smart TVs</option>
-											<option value="22">- Cameras</option>
-											<option value="63">- Games</option>
-											<option value="7">Home &amp; Garden</option>
-											<option value="11">Motors</option>
-											<option value="31">- Cars and Trucks</option>
-											<option value="32">- Motorcycles &amp; Powersports</option>
-											<option value="33">- Parts &amp; Accessories</option>
-											<option value="34">- Boats</option>
-											<option value="57">- Auto Tools &amp; Supplies</option>
-										</select>
-									</div><!-- End .select-custom -->
+									<input type="search" class="form-control" name="searchTerm" id="q" placeholder="Search..." required>
 									<button class="btn icon-search-3" type="submit"></button>
 								</div><!-- End .header-search-wrapper -->
 							</form>
@@ -172,10 +151,26 @@
 
 							<div class="dropdown-menu">
 								<div class="dropdownmenu-wrapper">
+									@if($cart_items_count > 0)
 									<div class="dropdown-cart-header">
 										<span>{{ $cart_items_count }}</span>
 										<a href="{{ route('shop_cart_index') }}" class="float-right">View Cart</a>
 									</div><!-- End .dropdown-cart-header -->
+									@else
+									<div class="dropdown-cart-header">
+										<div class="row">
+											<div class="col-md-12 text-center">
+												<i class="icon-cart" style="font-size: 6em;"></i>
+											</div>
+											<div class="col-md-12 text-center">
+												<p>Your Shopping Cart Is Empty!</p>
+											</div>
+											<div class="col-md-12 text-center">
+												<a href="{{ route('home') }}" class="btn btn-primary btn-sm" style="color: white; margin-bottom: 30px; margin-top: 10px;">Start Shopping Now</a>
+											</div>
+										</div>
+									</div><!-- End .dropdown-cart-header -->
+									@endif
 									
 									<div class="dropdown-cart-products">
 										
@@ -436,96 +431,43 @@
 		<div class="mobile-menu-wrapper">
 			<span class="mobile-menu-close"><i class="icon-cancel"></i></span>
 			<nav class="mobile-nav">
+
+				<div class="row" style="margin-bottom: 20px;">
+					<div class="col-md-12 text-center">
+						<a href="{{ route('parenting_home') }}" class="btn outlined-btn outlined-btn-success btn-sm">Mamysta Parenting</a>
+					</div>
+				</div>
+
 				<ul class="mobile-menu mb-3">
-					<li class="active"><a href="index.html">Home</a></li>
+
+					<li><a href="{{ route('home') }}">Home</a></li>
+
+					<li><a href="{{ route('shop_products_index') }}">All Products</a></li>
+
+					@foreach($product_sections as $product_section)
 					<li>
-						<a href="category.html">Categories<span class="tip tip-new">New</span></a>
+						<a href="{{ route('shop_products_index', ['section' => $product_section->id]) }}">{{ $product_section->name }}</a>
 						<ul>
-							<li><a href="category-banner-full-width.html">Full Width Banner</a></li>
-							<li><a href="category-banner-boxed-slider.html">Boxed Slider Banner</a></li>
-							<li><a href="category-banner-boxed-image.html">Boxed Image Banner</a></li>
-							<li><a href="category-sidebar-left.html">Left Sidebar</a></li>
-							<li><a href="category-sidebar-right.html">Right Sidebar</a></li>
-							<li><a href="category-flex-grid.html">Product Flex Grid</a></li>
-							<li><a href="category-horizontal-filter1.html">Horizontal Filter 1</a></li>
-							<li><a href="category-horizontal-filter2.html">Horizontal Filter 2</a></li>
-							<li><a href="#">List Types</a></li>
-							<li><a href="category-infinite-scroll.html">Ajax Infinite Scroll<span class="tip tip-new">New</span></a></li>
-							<li><a href="category.html">3 Columns Products</a></li>
-							<li><a href="category-4col.html">4 Columns Products</a></li>
-							<li><a href="category-5col.html">5 Columns Products</a></li>
-							<li><a href="category-6col.html">6 Columns Products</a></li>
-							<li><a href="category-7col.html">7 Columns Products</a></li>
-							<li><a href="category-8col.html">8 Columns Products</a></li>
-						</ul>
-					</li>
-					<li>
-						<a href="product.html">Products</a>
-						<ul>
+							@foreach($product_section->product_categories as $product_category)
 							<li>
-								<a href="#">Variations</a>
+								<a href="{{ route('shop_products_index', ['section' => $product_section->id, 'category' => $product_category->id]) }}">{{ $product_category->name }}</a>
 								<ul>
-									<li><a href="product.html">Horizontal Thumbs</a></li>
-									<li><a href="product-full-width.html">Vertical Thumbnails<span class="tip tip-hot">Hot!</span></a></li>
-									<li><a href="product.html">Inner Zoom</a></li>
-									<li><a href="product-addcart-sticky.html">Addtocart Sticky</a></li>
-									<li><a href="product-sidebar-left.html">Accordion Tabs</a></li>
+									@foreach($product_category->product_subcategories as $product_subcategory)
+									<li><a href="{{ route('shop_products_index', ['section' => $product_section->id, 'category' => $product_category->id , 'subcategory' => $product_subcategory->id ]) }}">{{ $product_subcategory->name }}</a></li>
+									@endforeach
 								</ul>
 							</li>
-							<li>
-								<a href="#">Variations</a>
-								<ul>
-									<li><a href="product-sticky-tab.html">Sticky Tabs</a></li>
-									<li><a href="product-simple.html">Simple Product</a></li>
-									<li><a href="product-sidebar-left.html">With Left Sidebar</a></li>
-								</ul>
-							</li>
-							<li>
-								<a href="#">Product Layout Types</a>
-								<ul>
-									<li><a href="product.html">Default Layout</a></li>
-									<li><a href="product-extended-layout.html">Extended Layout</a></li>
-									<li><a href="product-full-width.html">Full Width Layout</a></li>
-									<li><a href="product-grid-layout.html">Grid Images Layout</a></li>
-									<li><a href="product-sticky-both.html">Sticky Both Side Info<span class="tip tip-hot">Hot!</span></a></li>
-									<li><a href="product-sticky-info.html">Sticky Right Side Info</a></li>
-								</ul>
-							</li>
+							@endforeach
 						</ul>
 					</li>
-					<li>
-						<a href="#">Pages<span class="tip tip-hot">Hot!</span></a>
-						<ul>
-							<li><a href="cart.html">Shopping Cart</a></li>
-							<li>
-								<a href="#">Checkout</a>
-								<ul>
-									<li><a href="checkout-shipping.html">Checkout Shipping</a></li>
-									<li><a href="checkout-shipping-2.html">Checkout Shipping 2</a></li>
-									<li><a href="checkout-review.html">Checkout Review</a></li>
-								</ul>
-							</li>
-							<li><a href="about.html">About</a></li>
-							<li><a href="#" class="login-link">Login</a></li>
-							<li><a href="forgot-password.html">Forgot Password</a></li>
-						</ul>
-					</li>
-					<li><a href="blog.html">Blog</a>
-						<ul>
-							<li><a href="single.html">Blog Post</a></li>
-						</ul>
-					</li>
-					<li><a href="contact.html">Contact Us</a></li>
-					<li><a href="#">Special Offer!<span class="tip tip-hot">Hot!</span></a></li>
-					<li><a href="https://1.envato.market/DdLk5" target="_blank">Buy Porto!</a></li>
+					@endforeach
+
 				</ul>
 
 				<ul class="mobile-menu">
-					<li><a href="my-account.html">Track Order </a></li>
-					<li><a href="about.html">About</a></li>
-					<li><a href="category.html">Our Stores</a></li>
-					<li><a href="blog.html">Blog</a></li>
-					<li><a href="contact.html">Contact</a></li>
+					<li><a href="#">Track Order </a></li>
+					<li><a href="#">About</a></li>
+					<li><a href="#">Contact</a></li>
 					<li><a href="#">Help &amp; FAQs</a></li>
 				</ul>
 			</nav><!-- End .mobile-nav -->

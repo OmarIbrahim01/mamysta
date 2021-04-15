@@ -4,6 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Vaccine;
+use App\Models\UserChild;
+use Auth;
+use Carbon\Carbon;
 
 class UserChild extends Model
 {
@@ -23,5 +27,13 @@ class UserChild extends Model
     {
     	return $this->hasMany('App\Models\GrothTracker');
     }
+
+
+    public function vaccines()
+    {
+        return $this->hasMany('App\Models\ChildVaccine');
+    }
+
+
     
 }

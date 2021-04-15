@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 01, 2021 at 08:24 PM
+-- Generation Time: Apr 15, 2021 at 11:08 AM
 -- Server version: 5.7.26
 -- PHP Version: 7.3.5
 
@@ -88,6 +88,35 @@ CREATE TABLE IF NOT EXISTS `categories` (
 INSERT INTO `categories` (`id`, `parent_id`, `order`, `name`, `slug`, `created_at`, `updated_at`) VALUES
 (1, NULL, 1, 'Category 1', 'category-1', '2020-11-14 12:06:01', '2020-11-14 12:06:01'),
 (2, NULL, 1, 'Category 2', 'category-2', '2020-11-14 12:06:01', '2020-11-14 12:06:01');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `child_vaccines`
+--
+
+DROP TABLE IF EXISTS `child_vaccines`;
+CREATE TABLE IF NOT EXISTS `child_vaccines` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_child_id` int(11) NOT NULL,
+  `vaccine_id` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `child_vaccines`
+--
+
+INSERT INTO `child_vaccines` (`id`, `user_child_id`, `vaccine_id`, `date`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, '2021-02-01', NULL, NULL),
+(2, 1, 2, '2021-02-01', NULL, NULL),
+(3, 2, 1, '2021-02-01', NULL, NULL),
+(4, 2, 2, '2021-02-01', NULL, NULL),
+(5, 1, 3, '2021-03-16', '2021-03-17 17:31:14', '2021-03-17 17:31:14'),
+(6, 1, 1, '2021-01-11', '2021-03-17 17:31:34', '2021-03-17 17:31:34');
 
 -- --------------------------------------------------------
 
@@ -508,7 +537,7 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `migrations`
@@ -590,7 +619,11 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (73, '2021_02_09_173359_create_parenting_topic_statuses_table', 17),
 (74, '2021_02_24_154132_create_user_children_table', 18),
 (75, '2021_02_28_160038_create_groth_calculator_values_table', 19),
-(76, '2021_03_01_171903_create_groth_trackers_table', 20);
+(76, '2021_03_01_171903_create_groth_trackers_table', 20),
+(77, '2021_03_13_175235_create_vaccines_table', 21),
+(78, '2021_03_13_175302_create_vaccine_places_table', 21),
+(79, '2021_03_13_175319_create_vaccine_place_vaccines_table', 21),
+(80, '2021_03_17_162633_create_child_vaccines_table', 22);
 
 -- --------------------------------------------------------
 
@@ -614,7 +647,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `orders`
@@ -626,7 +659,17 @@ INSERT INTO `orders` (`id`, `user_id`, `order_status_id`, `user_adress_id`, `use
 (9, 1, 4, 1, 5, 2, 25, 1, 0, NULL, NULL, '2020-12-28 14:49:20', '2020-12-28 14:49:20'),
 (10, 1, 3, 1, 5, 2, 25, 1, 0, NULL, NULL, '2020-12-28 16:08:44', '2020-12-28 16:08:44'),
 (11, 1, 2, 1, 5, 2, 25, 1, 0, NULL, NULL, '2020-12-28 16:15:25', '2020-12-28 16:15:25'),
-(12, 1, 1, 1, 5, 2, 25, 1, 0, NULL, NULL, '2021-01-20 21:43:59', '2021-01-20 21:43:59');
+(12, 1, 1, 1, 5, 2, 25, 1, 0, NULL, NULL, '2021-01-20 21:43:59', '2021-01-20 21:43:59'),
+(13, 1, 1, 1, 5, 2, 25, 1, 0, NULL, NULL, '2021-03-27 14:39:18', '2021-03-27 14:39:18'),
+(14, 1, 1, 1, 5, 2, 25, 1, 0, NULL, NULL, '2021-03-27 14:40:37', '2021-03-27 14:40:37'),
+(15, 1, 1, 1, 5, 2, 25, 1, 0, NULL, NULL, '2021-03-27 14:41:29', '2021-03-27 14:41:29'),
+(16, 1, 1, 1, 5, 2, 25, 1, 0, NULL, NULL, '2021-03-27 14:41:54', '2021-03-27 14:41:54'),
+(17, 1, 1, 1, 5, 2, 25, 1, 0, NULL, NULL, '2021-03-27 14:43:20', '2021-03-27 14:43:20'),
+(18, 1, 1, 1, 5, 2, 25, 1, 0, NULL, NULL, '2021-03-27 14:45:33', '2021-03-27 14:45:33'),
+(19, 1, 1, 1, 5, 2, 25, 1, 0, NULL, NULL, '2021-03-27 14:45:59', '2021-03-27 14:45:59'),
+(20, 1, 1, 1, 5, 2, 25, 1, 0, NULL, NULL, '2021-03-27 14:47:10', '2021-03-27 14:47:10'),
+(21, 1, 1, 1, 5, 2, 25, 1, 0, NULL, NULL, '2021-03-27 16:21:11', '2021-03-27 16:21:11'),
+(22, 1, 1, 1, 5, 2, 25, 1, 0, NULL, NULL, '2021-03-27 16:23:14', '2021-03-27 16:23:14');
 
 -- --------------------------------------------------------
 
@@ -653,7 +696,7 @@ CREATE TABLE IF NOT EXISTS `order_items` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `order_items`
@@ -669,7 +712,14 @@ INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `product_variant_id`,
 (40, 10, 1, 1, 1, 1, 100, 3, 15, 5, 10, 14, 0, 0, '2020-12-28 16:08:45', '2020-12-28 16:08:45'),
 (41, 11, 1, 1, 1, 1, 100, 3, 15, 5, 10, 14, 0, 0, '2020-12-28 16:15:25', '2020-12-28 16:15:25'),
 (42, 12, 1, 1, 1, 1, 100, 3, 15, 5, 10, 14, 0, 0, '2021-01-20 21:43:59', '2021-01-20 21:43:59'),
-(43, 12, 5, 12, 15, 1, 100, 5, 13, 0, 0, 14, 0, 0, '2021-01-20 21:43:59', '2021-01-20 21:43:59');
+(43, 12, 5, 12, 15, 1, 100, 5, 13, 0, 0, 14, 0, 0, '2021-01-20 21:43:59', '2021-01-20 21:43:59'),
+(44, 13, 1, 1, 12, 1, 30, 3, 1, 3, 2, 14, 0, 5, '2021-03-27 14:39:18', '2021-03-27 14:39:18'),
+(45, 17, 1, 4, 7, 1, 155, 3, 6, 0, 0, 14, 0, 5, '2021-03-27 14:43:20', '2021-03-27 14:43:20'),
+(46, 18, 1, 1, 12, 1, 30, 3, 1, 3, 2, 14, 0, 5, '2021-03-27 14:45:33', '2021-03-27 14:45:33'),
+(47, 18, 1, 1, 12, 1, 30, 3, 1, 3, 2, 14, 0, 5, '2021-03-27 14:45:33', '2021-03-27 14:45:33'),
+(48, 20, 1, 1, 12, 1, 30, 3, 1, 3, 2, 14, 0, 0, '2021-03-27 14:47:10', '2021-03-27 14:47:10'),
+(49, 20, 1, 4, 7, 1, 155, 3, 6, 0, 0, 14, 0, 0, '2021-03-27 14:47:10', '2021-03-27 14:47:10'),
+(50, 22, 1, 1, 12, 1, 30, 3, 1, 3, 2, 14, 0, 0, '2021-03-27 16:23:14', '2021-03-27 16:23:14');
 
 -- --------------------------------------------------------
 
@@ -1520,10 +1570,22 @@ INSERT INTO `product_sub_categories` (`id`, `product_category_id`, `name`, `desc
 DROP TABLE IF EXISTS `product_tags`;
 CREATE TABLE IF NOT EXISTS `product_tags` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
+  `product_id` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `product_tags`
+--
+
+INSERT INTO `product_tags` (`id`, `name`, `product_id`, `created_at`, `updated_at`) VALUES
+(1, 'zara', 1, NULL, NULL),
+(2, 't shirt', 1, NULL, NULL),
+(3, 'shirt', 1, NULL, NULL),
+(4, 'kkk', 2, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1875,7 +1937,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `role_id`, `name`, `last_name`, `email`, `avatar`, `email_verified_at`, `password`, `remember_token`, `settings`, `bio`, `birthdate`, `have_children`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Admin', 'admin', 'admin@admin.com', '/users/default.png', NULL, '$2y$10$tt8PYvmyqrN3oP15d3VCpORXLC8XcS5Y5hT4RT/no.juQqHoTwpra', 'Zgh3E3p0cfQChaoHOQXtr6eOlG4ftP7NYdUO2cIHooO9ogaGzZ5S7m34jp5a', NULL, 'Ut consequat nisl et neque congue hendrerit. Aenean eget odio enim. Duis lacus elit, auctor id porta ut, suscipit vitae tellus. Quisque imperdiet sed massa id iaculis. Nam est orci, auctor id nunc eu, sollicitudin lobortis magna. Ut faucibus purus eu mauris egestas dictum. Etiam rutrum erat in magna auctor, vel vulputate diam rhoncus. Donec at pharetra dolor. Pellentesque venenatis tortor ac elit maximus bibendum. Sed sollicitudin sapien sed quam egestas suscipit. Morbi sed imperdiet leo. Nam sodales sapien nec libero laoreet, in mollis arcu vehicula. Aliquam eu nisl pharetra, consequat mi eu, finibus ligula. Nulla nec felis dui.Ut consequat nisl et neque congue hendrerit. Aenean eget odio enim. Duis lacus elit, auctor id porta ut, suscipit vitae tellus. Quisque imperdiet sed massa id iaculis. Nam est orci, auctor id nunc eu, sollicitudin lobortis magna. Ut', NULL, 0, '2020-11-14 12:06:01', '2020-11-14 12:06:01'),
+(1, 1, 'Admin', 'admin', 'admin@admin.com', '/users/default.png', NULL, '$2y$10$tt8PYvmyqrN3oP15d3VCpORXLC8XcS5Y5hT4RT/no.juQqHoTwpra', 'NYPMqK5zMnNI1OTwxDcMrjTbOSLCghasR3vR30tpbMLS7gp9FusVyFcbIZ30', NULL, 'Ut consequat nisl et neque congue hendrerit. Aenean eget odio enim. Duis lacus elit, auctor id porta ut, suscipit vitae tellus. Quisque imperdiet sed massa id iaculis. Nam est orci, auctor id nunc eu, sollicitudin lobortis magna. Ut faucibus purus eu mauris egestas dictum. Etiam rutrum erat in magna auctor, vel vulputate diam rhoncus. Donec at pharetra dolor. Pellentesque venenatis tortor ac elit maximus bibendum. Sed sollicitudin sapien sed quam egestas suscipit. Morbi sed imperdiet leo. Nam sodales sapien nec libero laoreet, in mollis arcu vehicula. Aliquam eu nisl pharetra, consequat mi eu, finibus ligula. Nulla nec felis dui.Ut consequat nisl et neque congue hendrerit. Aenean eget odio enim. Duis lacus elit, auctor id porta ut, suscipit vitae tellus. Quisque imperdiet sed massa id iaculis. Nam est orci, auctor id nunc eu, sollicitudin lobortis magna. Ut', NULL, 0, '2020-11-14 12:06:01', '2020-11-14 12:06:01'),
 (4, 2, 'Omar', 'Ibrahim', 'omar@live.com', '/users/default.png', NULL, '$2y$10$0fNi9u6y/w114OFNpHsOD.9wb/ZDuVnxr7hovMouLA84bV9tZEwym', NULL, NULL, 'Ut consequat nisl et neque congue hendrerit. Aenean eget odio enim. Duis lacus elit, auctor id porta ut, suscipit vitae tellus. Quisque imperdiet sed massa id iaculis. Nam est orci, \r\n\r\n', NULL, 0, '2020-12-05 15:32:52', '2020-12-05 15:32:52'),
 (5, 2, 'asdasd', NULL, 'asdasd@asdasd.com', '/users/default.png', NULL, '$2y$10$MWgGytw/VRQ3l6uvvPwgUedBM4CyMGPz4tN8RH.SmY28/H6CozYSm', NULL, NULL, 'Ut consequat nisl et neque congue hendrerit. Aenean eget odio enim. Duis lacus elit, auctor id porta ut, suscipit vitae tellus. Quisque imperdiet sed massa id iaculis. Nam est orci, auctor id nunc eu, sollicitudin lobortis magna. Ut faucibus purus eu mauris egestas dictum. Etiam rutrum erat in magna auctor, vel vulputate diam rhoncus. Donec at pharetra dolor. Pellentesque venenatis tortor ac elit maximus bibendum. Sed sollicitudin sapien sed quam egestas suscipit. Morbi sed imperdiet leo. Nam sodales sapien nec libero laoreet, in mollis arcu vehicula. Aliquam eu nisl pharetra, consequat mi eu, finibus ligula. Nulla nec felis dui.Ut consequat nisl et neque congue hendrerit. Aenean eget odio enim. Duis lacus elit, auctor id porta ut, suscipit vitae tellus. Quisque imperdiet sed massa id iaculis. Nam est orci, auctor id nunc eu, sollicitudin lobortis magna. Ut', NULL, 0, '2020-12-05 15:37:23', '2020-12-05 15:37:23'),
 (6, 2, 'qweqwe', NULL, 'ascweeq@asdasd.com', '/users/default.png', NULL, '$2y$10$1Rr3YiWQReKYb23MITjcjeWfY1p/HTwzfJfigqACf1rff/zJdt4A.', NULL, NULL, 'Ut consequat nisl et neque congue hendrerit. Aenean eget odio enim. Duis lacus elit, auctor id porta ut, suscipit vitae tellus. Quisque imperdiet sed massa id iaculis. Nam est orci, auctor id nunc eu, sollicitudin lobortis magna. Ut faucibus purus eu mauris egestas dictum. Etiam rutrum erat in magna auctor, vel vulputate diam rhoncus. Donec at pharetra dolor. Pellentesque venenatis tortor ac elit maximus bibendum. Sed sollicitudin sapien sed quam egestas suscipit. Morbi sed imperdiet leo. Nam sodales sapien nec libero laoreet, in mollis arcu vehicula. Aliquam eu nisl pharetra, consequat mi eu, finibus ligula. Nulla nec felis dui.Ut consequat nisl et neque congue hendrerit. Aenean eget odio enim. Duis lacus elit, auctor id porta ut, suscipit vitae tellus. Quisque imperdiet sed massa id iaculis. Nam est orci, auctor id nunc eu, sollicitudin lobortis magna. Ut', NULL, 0, '2020-12-05 15:38:54', '2020-12-05 15:38:54'),
@@ -1932,7 +1994,7 @@ CREATE TABLE IF NOT EXISTS `user_cart_items` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `user_cart_items`
@@ -1941,8 +2003,7 @@ CREATE TABLE IF NOT EXISTS `user_cart_items` (
 INSERT INTO `user_cart_items` (`id`, `user_id`, `product_id`, `product_variant_id`, `product_variant_stock_id`, `quantity`, `created_at`, `updated_at`) VALUES
 (33, 10, 1, 1, 1, 5, '2020-12-27 18:50:04', '2020-12-27 18:50:04'),
 (34, 10, 2, 9, 9, 3, '2020-12-27 18:50:16', '2020-12-27 18:50:16'),
-(35, 10, 3, 10, 10, 8, '2020-12-27 18:50:30', '2020-12-27 18:50:30'),
-(36, 1, 1, 1, 12, 1, '2021-02-08 15:54:11', '2021-02-08 15:54:11');
+(35, 10, 3, 10, 10, 8, '2020-12-27 18:50:30', '2020-12-27 18:50:30');
 
 -- --------------------------------------------------------
 
@@ -1967,7 +2028,7 @@ CREATE TABLE IF NOT EXISTS `user_children` (
 --
 
 INSERT INTO `user_children` (`id`, `user_id`, `gender_id`, `name`, `birthday`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 'Jumbo Junior', '2020-08-26', NULL, NULL),
+(1, 1, 1, 'Jumbo Junior', '2020-08-26', NULL, '2021-02-24 16:21:48'),
 (2, 1, 1, 'Baby Jumbo', '2020-12-12', '2021-02-24 16:01:07', '2021-02-24 16:21:48'),
 (3, 10, 1, 'Baby Jumbo', '2020-12-12', '2021-02-24 17:29:17', '2021-02-24 17:29:17');
 
@@ -1995,8 +2056,8 @@ CREATE TABLE IF NOT EXISTS `user_discounts` (
 --
 
 INSERT INTO `user_discounts` (`id`, `user_id`, `percentage`, `description`, `used`, `order_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 3, 'Sign Up Discount', 1, NULL, NULL, NULL),
-(2, 1, 2, 'After Problem Discount', 1, NULL, NULL, NULL);
+(1, 1, 3, 'Sign Up Discount', 1, 19, NULL, '2021-03-27 14:45:59'),
+(2, 1, 2, 'After Problem Discount', 1, 19, NULL, '2021-03-27 14:45:59');
 
 -- --------------------------------------------------------
 
@@ -2070,6 +2131,95 @@ CREATE TABLE IF NOT EXISTS `user_roles` (
   KEY `user_roles_user_id_index` (`user_id`),
   KEY `user_roles_role_id_index` (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vaccines`
+--
+
+DROP TABLE IF EXISTS `vaccines`;
+CREATE TABLE IF NOT EXISTS `vaccines` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `age` int(11) NOT NULL,
+  `name` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
+  `description` text COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `vaccines`
+--
+
+INSERT INTO `vaccines` (`id`, `age`, `name`, `description`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Vaccine 1', 'Vaccine Description Vaccine Description Vaccine Description Vaccine Description Vaccine DescriptionVaccine DescriptionVaccine Description Vaccine Description Vaccine Description Vaccine Description Vaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine Description', NULL, NULL),
+(2, 2, 'Vaccine 2', 'Vaccine Description Vaccine Description Vaccine Description Vaccine Description Vaccine DescriptionVaccine DescriptionVaccine Description Vaccine Description Vaccine Description Vaccine Description Vaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine Description', NULL, NULL),
+(3, 3, 'Vaccine 3', 'Vaccine Description Vaccine Description Vaccine Description Vaccine Description Vaccine DescriptionVaccine DescriptionVaccine Description Vaccine Description Vaccine Description Vaccine Description Vaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine Description', NULL, NULL),
+(4, 4, 'Vaccine 4', 'Vaccine Description Vaccine Description Vaccine Description Vaccine Description Vaccine DescriptionVaccine DescriptionVaccine Description Vaccine Description Vaccine Description Vaccine Description Vaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine DescriptionVaccine Description', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vaccine_places`
+--
+
+DROP TABLE IF EXISTS `vaccine_places`;
+CREATE TABLE IF NOT EXISTS `vaccine_places` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
+  `region_id` int(11) NOT NULL,
+  `city_id` int(11) NOT NULL,
+  `address` text COLLATE utf8_unicode_ci NOT NULL,
+  `map_link` text COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `vaccine_places`
+--
+
+INSERT INTO `vaccine_places` (`id`, `name`, `region_id`, `city_id`, `address`, `map_link`, `created_at`, `updated_at`) VALUES
+(1, 'Vaccine Place 1', 1, 1, 'Bulding No, Street Name, City, Region', '#', NULL, NULL),
+(2, 'Vaccine Place 2', 1, 1, 'Bulding No, Street Name, City, Region', '#', NULL, NULL),
+(3, 'Vaccine Place 3', 1, 1, 'Bulding No, Street Name, City, Region', '#', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vaccine_place_vaccines`
+--
+
+DROP TABLE IF EXISTS `vaccine_place_vaccines`;
+CREATE TABLE IF NOT EXISTS `vaccine_place_vaccines` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `vaccine_id` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
+  `vaccine_place_id` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `vaccine_place_vaccines`
+--
+
+INSERT INTO `vaccine_place_vaccines` (`id`, `vaccine_id`, `vaccine_place_id`, `created_at`, `updated_at`) VALUES
+(1, '1', '1', NULL, NULL),
+(2, '1', '2', NULL, NULL),
+(3, '1', '3', NULL, NULL),
+(4, '2', '1', NULL, NULL),
+(5, '2', '2', NULL, NULL),
+(6, '2', '3', NULL, NULL),
+(7, '3', '1', NULL, NULL),
+(8, '3', '2', NULL, NULL),
+(9, '3', '3', NULL, NULL),
+(10, '4', '1', NULL, NULL),
+(11, '4', '2', NULL, NULL),
+(12, '4', '3', NULL, NULL);
 
 -- --------------------------------------------------------
 

@@ -42,51 +42,53 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <table class="table table-bordered text-center">
-              <thead>                  
-                <tr>
-                  <th>#ID</th>
-                  <th>Items</th>
-                  <th>Customer</th>
-                  <th>Created</th>
-                  <th>Shipping</th>
-                  <th>Total</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                @foreach($orders as $order)
-                <tr>
-                  <td class="align-middle">{{ $order->id }}</td>
-                  <td class="align-middle">
-                    @foreach($order->items as $item)
-                    <p>{{ $item->product->title }} ({{ $item->vendor->name }})</p>
-                    @endforeach
-                  </td>
-                  <td class="align-middle">
-                    <p>{{ $order->user->name }} {{ $order->user->last_name }}</p>
-                  </td>
-                  <td class="align-middle">
-                    <p>{{ $order->created_at->format('d/m/Y') }}</p>
-                    <p>{{ $order->created_at->diffForHumans() }}</p>
-                  </td>
-                  <td class="align-middle">
-                    <p>{{ $order->shipping_method->name }} ({{ $order->shipping_method->days_min }}-{{ $order->shipping_method->days_max }} Days)</p>
-                    <p>Expected Delivery: {{ $order->created_at->addDay($order->shipping_method->days_max)->diffForHumans() }} ({{ $order->created_at->addDay($order->shipping_method->days_max)->format('d/m/Y') }})</p>
-                    <p>Address: {{ $order->user_address->address }}, {{ $order->user_address->city->name }}, {{ $order->user_address->region->name }}<br>Phone: {{ $order->user_phone->phone }}</p>
-                  </td>
-                  <td class="align-middle">{{ $order->total($order->id) }} EGP</td>
-                  <td class="align-middle">
-                    <h6><span class="badge" style="color: white; background-color: {{ $order->status->color }};">{{ $order->status->name }}</span></h6>
-                  </td>
-                  <td class="align-middle">
-                    <a href="#" class="btn btn-primary">View</a>
-                  </td>
-                </tr>
-                @endforeach
-              </tbody>
-            </table>
+            <div class="table-responsive">
+              <table class="table table-bordered text-center">
+                <thead>                  
+                  <tr>
+                    <th>#ID</th>
+                    <th>Items</th>
+                    <th>Customer</th>
+                    <th>Created</th>
+                    <th>Shipping</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach($orders as $order)
+                  <tr>
+                    <td class="align-middle">{{ $order->id }}</td>
+                    <td class="align-middle">
+                      @foreach($order->items as $item)
+                      <p>{{ $item->product->title }} ({{ $item->vendor->name }})</p>
+                      @endforeach
+                    </td>
+                    <td class="align-middle">
+                      <p>{{ $order->user->name }} {{ $order->user->last_name }}</p>
+                    </td>
+                    <td class="align-middle">
+                      <p>{{ $order->created_at->format('d/m/Y') }}</p>
+                      <p>{{ $order->created_at->diffForHumans() }}</p>
+                    </td>
+                    <td class="align-middle">
+                      <p>{{ $order->shipping_method->name }} ({{ $order->shipping_method->days_min }}-{{ $order->shipping_method->days_max }} Days)</p>
+                      <p>Expected Delivery: {{ $order->created_at->addDay($order->shipping_method->days_max)->diffForHumans() }} ({{ $order->created_at->addDay($order->shipping_method->days_max)->format('d/m/Y') }})</p>
+                      <p>Address: {{ $order->user_address->address }}, {{ $order->user_address->city->name }}, {{ $order->user_address->region->name }}<br>Phone: {{ $order->user_phone->phone }}</p>
+                    </td>
+                    <td class="align-middle">{{ $order->total($order->id) }} EGP</td>
+                    <td class="align-middle">
+                      <h6><span class="badge" style="color: white; background-color: {{ $order->status->color }};">{{ $order->status->name }}</span></h6>
+                    </td>
+                    <td class="align-middle">
+                      <a href="#" class="btn btn-primary">View</a>
+                    </td>
+                  </tr>
+                  @endforeach
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
         <!-- /.card -->

@@ -36,64 +36,66 @@
       <h3 class="card-title">Topics</h3>
     </div>
     <div class="card-body p-0">
-      <table class="table table-striped projects">
-          <thead>
-              <tr>
-                  <th style="width: 1%">
-                      ID
-                  </th>
-                  <th style="width: 25%">
-                      Title
-                  </th>
-                  <th>
-                      Topic
-                  </th>
-                  <th>
-                      Category
-                  </th>
-                  <th style="width: 8%" class="text-center">
-                      Status
-                  </th>
-                  <th style="width: 18%">
-                    Actions
-                  </th>
-              </tr>
-          </thead>
-          <tbody>
-              @foreach($topics as $topic)
-              <tr>
-                  <td>{{ $topic->id }}</td>
-                  <td>
-                    <a href="{{ route('admin_parenting_topics_show', [$topic->id]) }}">
-                      <img src="{{ $topic->image }}" style="width: 200px; height: 75px; object-fit: cover;">
-                      <br/>
-                      <h4>{{ $topic->title }}</h4>
-                      <small style="color: #333;">Author: {{ $topic->user->name }} {{ $topic->user->last_name }}</small>
-                      <br>
-                      <small>Created: {{ $topic->created_at->format('d M, Y') }}</small>
-                    </a>
-                  </td>
-                  <td style="max-width: 200px;">{!! Str::limit($topic->topic, 300)  !!}</td>
-                  <td>{{ $topic->category->name }}</td>
-                  <td class="project-state">
-                      <span class="badge badge-success" style="background-color: {{ $topic->status->color }};">{{ $topic->status->name }}</span>
-                  </td>
-                  <td class="project-actions text-right">
-                      <a class="btn btn-primary btn-sm" href="{{ route('admin_parenting_topics_show', [$topic->id]) }}">
-                          <i class="fas fa-folder">
-                          </i>
-                          View
+      <div class="table-responsive">
+        <table class="table table-striped projects">
+            <thead>
+                <tr>
+                    <th style="width: 1%">
+                        ID
+                    </th>
+                    <th style="width: 25%">
+                        Title
+                    </th>
+                    <th>
+                        Topic
+                    </th>
+                    <th>
+                        Category
+                    </th>
+                    <th style="width: 8%" class="text-center">
+                        Status
+                    </th>
+                    <th style="width: 18%">
+                      Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($topics as $topic)
+                <tr>
+                    <td>{{ $topic->id }}</td>
+                    <td>
+                      <a href="{{ route('admin_parenting_topics_show', [$topic->id]) }}">
+                        <img src="{{ $topic->image }}" style="width: 200px; height: 75px; object-fit: cover;">
+                        <br/>
+                        <h4>{{ $topic->title }}</h4>
+                        <small style="color: #333;">Author: {{ $topic->user->name }} {{ $topic->user->last_name }}</small>
+                        <br>
+                        <small>Created: {{ $topic->created_at->format('d M, Y') }}</small>
                       </a>
-                      <a class="btn btn-warning btn-sm" href="{{ route('admin_parenting_topics_edit', [$topic->id]) }}">
-                          <i class="fas fa-pencil-alt">
-                          </i>
-                          Edit
-                      </a>
-                  </td>
-              </tr>
-              @endforeach
-          </tbody>
-      </table>
+                    </td>
+                    <td style="max-width: 200px;">{!! Str::limit($topic->topic, 300)  !!}</td>
+                    <td>{{ $topic->category->name }}</td>
+                    <td class="project-state">
+                        <span class="badge badge-success" style="background-color: {{ $topic->status->color }};">{{ $topic->status->name }}</span>
+                    </td>
+                    <td class="project-actions text-right">
+                        <a class="btn btn-primary btn-sm" href="{{ route('admin_parenting_topics_show', [$topic->id]) }}">
+                            <i class="fas fa-folder">
+                            </i>
+                            View
+                        </a>
+                        <a class="btn btn-warning btn-sm" href="{{ route('admin_parenting_topics_edit', [$topic->id]) }}">
+                            <i class="fas fa-pencil-alt">
+                            </i>
+                            Edit
+                        </a>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+      </div>
     </div>
     <!-- /.card-body -->
   </div>

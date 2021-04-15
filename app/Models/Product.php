@@ -69,6 +69,11 @@ class Product extends Model
         return $this->hasMany('App\Models\ProductVariantStock');
     }
 
+    public function tags()
+    {
+        return $this->hasMany('App\Models\ProductTag');
+    }
+
 
 
     public function most_expensive_variant_price($product_id){

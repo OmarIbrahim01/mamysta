@@ -58,6 +58,7 @@ class OrderItem extends Model
         $our_discount_value = $product_sub_price * $our_discount_percentage / 100;
 
         $product_price = $product_sub_price - $our_discount_value;
+
         
 
         $discount_code_percentage = $item->discount_code_percentage;
@@ -66,9 +67,10 @@ class OrderItem extends Model
         $total_discount_value = $product_price * $total_discount_percentage / 100;
 
         $product_sub_total = $product_price - $total_discount_value;
+
         
         $taxes_percentage = $item->taxes_percentage;
-        $taxes_value = $item->taxes_percentage;
+        $taxes_value = $product_sub_total * $taxes_percentage / 100;
 
 
         $product_final_total = $product_sub_total + $taxes_value;

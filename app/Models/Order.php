@@ -48,7 +48,7 @@ class Order extends Model
 
     public function payment_method()
     {
-    	return $this->belongsTo('App\Models\PaymentMethod', 'payment_method_id ');
+    	return $this->belongsTo('App\Models\PaymentMethod', 'payment_method_id');
     }
 
 
@@ -86,7 +86,7 @@ class Order extends Model
             $product_sub_total = $product_price - $total_discount_value;
             
             $taxes_percentage = $item->taxes_percentage;
-            $taxes_value = $item->taxes_percentage;
+            $taxes_value = $product_sub_total * $taxes_percentage / 100;
 
 
             $product_final_total = $product_sub_total + $taxes_value;
@@ -138,7 +138,7 @@ class Order extends Model
             $product_sub_total = $product_price - $total_discount_value;
             
             $taxes_percentage = $item->taxes_percentage;
-            $taxes_value = $item->taxes_percentage;
+            $taxes_value = $product_sub_total * $taxes_percentage / 100;
 
 
             $product_final_total = $product_sub_total + $taxes_value;

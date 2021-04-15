@@ -110,7 +110,7 @@ class OrderReviewController extends Controller
         // Discount Code Found
         if(isset($discount_code) && $discount_code->count() > 0){
 
-            //If Discount type (Used Multple Times)
+            //If Discount type (Use Multple Times)
             if($discount_code->type->id == 1){
                 
                 $user_discount_code = UserDiscountCode::where( 'user_id', Auth::id() )->where( 'discount_code_id', $discount_code->id)->first();
@@ -131,7 +131,7 @@ class OrderReviewController extends Controller
                     ), 200);
                 }
             }
-            //If Discount type (Used Once)
+            //If Discount type (Use Once)
             elseif($discount_code->type->id == 2){
 
                 $user_discount_code = UserDiscountCode::where( 'discount_code_id', $discount_code->id)->first();
